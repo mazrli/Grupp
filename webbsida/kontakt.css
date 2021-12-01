@@ -148,7 +148,7 @@ a {
 }
 
 .contact-section {
-	background: url(bilder/wp6862100-tumblr-4k-pc-wallpapers.jpg) no-repeat center;
+	background: url(bilder/pexels-josh-willink-286625.jpg) no-repeat center ;
 	background-size: cover;
 	padding: 40px 0;
 	width: 100%;
@@ -273,7 +273,7 @@ textarea.contact-form-text {
 
 .btn:hover {
 	color: white;
-	background: #005255;
+	background: #1c656885;
 }
 
 .text-input {
@@ -298,4 +298,3 @@ textarea.contact-form-text {
 	border: none;
 }
 
-footer
