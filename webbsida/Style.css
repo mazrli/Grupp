@@ -10,8 +10,9 @@
 
 #startsida_bild{
     background-color: rgb(226, 248, 226);
-    background-image:  url(bilder/pexels-roman-verton-10210260.jpg);
+    background-image:  url(bilder/viktigt.jpg);
     background-size: 100%;
+
     
 }
 
@@ -24,8 +25,11 @@
 }
 
 #startsida h1 {
-    margin: 50px auto;
-    padding: 30%;
+    
+    margin: 3% auto;
+    padding: 3%;
+    color: rgb(255, 255, 255);
+    text-align: center;
 
 }
 
