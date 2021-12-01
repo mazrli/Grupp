@@ -7,13 +7,17 @@
 	box-sizing: border-box;
 }
 .body{
-	background-color: #297fb970 ;
+    background-color: rgba(226, 248, 226, 0.37);
+
+
+	
 }
 
 .container {
 	display: flex;
 	width: 100%;
 	height: 100vh;
+	
 	
 }
 .nav-section {
@@ -94,10 +98,9 @@
 .img {
 	width: 100%;
 	height: 100%;
-	background-image: url(bilder/);
+	background-image: url(bilder/pexels-vlada-karpovich-5790837.jpg);
 	background-size: cover;
 	position: absolute;
-
 	left: 0;
 	top: 0;
 	z-index: -1;

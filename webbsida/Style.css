@@ -33,7 +33,7 @@
     
     margin: 3% auto;
     padding: 3%;
-    color: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
     text-align: center;
 
 }
@@ -70,13 +70,26 @@ input::placeholder {
     border: none;
     font-size: 20px;
     font-weight: bold;
-    background-color: rgba(253, 253, 253, 0.158);
-    color: #444;
+    background-color: #1c656885;
+    color: rgb(8, 8, 8);
     margin: 25px auto;
 	cursor: pointer;
+    padding: .7rem 1.3rem;
+
+
     
 	
 }
+#startsida button:hover{
+	color: white;
+	background: #69e6eb98;
+}
+
+
+
+
+
+
 
 #startsida span {
     display: block;
@@ -122,7 +135,7 @@ input::placeholder {
     line-height: 50px;
     border-radius: 50%;
     background-color: none;
-    color: rgba(104, 101, 101, 0.938);
+    color: rgba(0, 0, 0, 0.938);
     font-weight: bold;
     position: absolute;
     top:auto;
