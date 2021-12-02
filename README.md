@@ -22,11 +22,11 @@ $ npm install
 $ npm start
 ```
 
-  [Trello]
+  * [Trello]
   
   [Trello]: https://trello.com/b/9EBDE9Be/tuesday "Gå till trello"
 
-  [Hemsida]
+  * [Hemsida]
 
   [Hemsida]: https://www.youtube.com/watch?v=dQw4w9WgXcQ "Gå till hemsidan"
   
