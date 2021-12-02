@@ -1,5 +1,5 @@
-**Sahlgrenska sjukhus**
-## Table of contents
+
+## Sahlgrenska sjukhus
 * [General info](#general-info)
 * [Technologies](#technologies)
 * [Setup](#setup)
