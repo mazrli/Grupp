@@ -1,11 +1,11 @@
-<mxfile host="app.diagrams.net" modified="2021-12-03T09:06:59.946Z" agent="5.0 (Windows)" etag="KPuawVyN23-laZVGCs-k" version="15.8.8" type="github">
+<mxfile host="app.diagrams.net" modified="2021-12-03T09:11:49.474Z" agent="5.0 (Windows)" etag="X3X3dChztVZPAC7ak1l_" version="15.8.8" type="github">
   <diagram id="0UoRlzi65-XZR-ADYtH_" name="Page-1">
-    <mxGraphModel dx="2162" dy="1779" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="2504" dy="1956" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
         <mxCell id="B5mQjCqMpTKeqFQhilP3-2" value="&lt;h1 style=&quot;font-size: 30px;&quot;&gt;&lt;font style=&quot;font-size: 30px;&quot;&gt;&lt;span class=&quot;markedContent&quot; id=&quot;page3R_mcid2&quot; style=&quot;font-size: 30px;&quot;&gt;&lt;span style=&quot;left: 118.04px; top: 198.054px; font-size: 30px; font-family: sans-serif; transform: scaleX(0.930393);&quot; dir=&quot;ltr&quot;&gt;Sahlgrenska sjukhus&lt;/span&gt;&lt;/span&gt;&lt;/font&gt;&lt;/h1&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeWidth=8;fontSize=30;fontStyle=0" parent="1" vertex="1">
-          <mxGeometry x="55" y="-490" width="370" height="40" as="geometry" />
+          <mxGeometry x="55" y="-460" width="370" height="40" as="geometry" />
         </mxCell>
         <mxCell id="B5mQjCqMpTKeqFQhilP3-4" value="Person" style="swimlane;fontStyle=2;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fontSize=12;strokeWidth=1;" parent="1" vertex="1">
           <mxGeometry x="610" y="130" width="160" height="150" as="geometry" />
@@ -295,7 +295,7 @@
         <mxCell id="B5mQjCqMpTKeqFQhilP3-61" value="int maxCapacity" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;fontSize=12;" parent="B5mQjCqMpTKeqFQhilP3-59" vertex="1">
           <mxGeometry y="60" width="160" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="q-ojMvLr_y8LTL2l0AsS-10" value="Map&lt;Item, int&gt; storage " style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;fontSize=12;" parent="B5mQjCqMpTKeqFQhilP3-59" vertex="1">
+        <mxCell id="q-ojMvLr_y8LTL2l0AsS-10" value="Map&lt;Item, Integer&gt; storage " style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;fontSize=12;" parent="B5mQjCqMpTKeqFQhilP3-59" vertex="1">
           <mxGeometry y="90" width="160" height="30" as="geometry" />
         </mxCell>
         <mxCell id="nRXnl9KmNHgFB3vZUYHG-32" value="List&lt;Person&gt; persons" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;fontSize=12;" parent="B5mQjCqMpTKeqFQhilP3-59" vertex="1">
@@ -699,10 +699,10 @@
         <mxCell id="q-ojMvLr_y8LTL2l0AsS-24" value="Order" style="swimlane;fontStyle=2;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fontSize=12;strokeWidth=1;" parent="1" vertex="1">
           <mxGeometry x="-700" y="-240" width="210" height="230" as="geometry" />
         </mxCell>
-        <mxCell id="q-ojMvLr_y8LTL2l0AsS-26" value="Map&lt;Item, int&gt; shoppingcart" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;fontSize=12;" parent="q-ojMvLr_y8LTL2l0AsS-24" vertex="1">
+        <mxCell id="q-ojMvLr_y8LTL2l0AsS-26" value="Map&lt;Item, Integer&gt; shoppingCart" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;fontSize=12;" parent="q-ojMvLr_y8LTL2l0AsS-24" vertex="1">
           <mxGeometry y="30" width="210" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="q-ojMvLr_y8LTL2l0AsS-30" value="long totalSum;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;fontSize=12;" parent="q-ojMvLr_y8LTL2l0AsS-24" vertex="1">
+        <mxCell id="q-ojMvLr_y8LTL2l0AsS-30" value="float totalCost;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;fontSize=12;" parent="q-ojMvLr_y8LTL2l0AsS-24" vertex="1">
           <mxGeometry y="70" width="210" height="40" as="geometry" />
         </mxCell>
         <mxCell id="q-ojMvLr_y8LTL2l0AsS-32" value="LocalDateTime date;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;fontSize=12;" parent="q-ojMvLr_y8LTL2l0AsS-24" vertex="1">
