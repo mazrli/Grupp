@@ -1,13 +1,11 @@
 
-## Sahlgrenska sjukhus projekt
+## Projekt Sahlgrenska!!
 
   * [Trello]
-  * [Hemsida]
 
 
 
   [Trello]: https://trello.com/b/9EBDE9Be/tuesday "Gå till trello"
-  [Hemsida]: https://www.youtube.com/watch?v=dQw4w9WgXcQ "Gå till hemsidan"
   
   
  
