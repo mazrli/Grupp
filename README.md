@@ -1,5 +1,5 @@
 
-## Sahlgrenska sjukhus projekt
+## Projekt Sahlgrenska 
 
   * [Trello]
 
