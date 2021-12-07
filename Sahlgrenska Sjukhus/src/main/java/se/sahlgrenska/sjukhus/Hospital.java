@@ -5,7 +5,7 @@ import se.sahlgrenska.sjukhus.person.Person;
 
 import java.util.List;
 
-public class Sjukhus {
+public class Hospital {
     private String name;
     private int maxCapacity;
     private List<Item> items;
