@@ -46,6 +46,13 @@ public class LogInGUI extends HelperGUI {
                 passwordField.setText("");
 
                 if (true) {
+                    setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+
+                    try {
+                        Thread.sleep(1200);
+                    } catch (Exception exception) {}
+
+                    setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
                     setVisible(false);
                     Driver.setMainMenu(employee);
                 }
