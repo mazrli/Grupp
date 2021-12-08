@@ -2,6 +2,7 @@ package se.sahlgrenska.gui.Booking;
 
 import se.sahlgrenska.gui.util.HelperGUI;
 import se.sahlgrenska.sjukhus.Booking;
+import se.sahlgrenska.sjukhus.person.employee.Accessibility;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -68,7 +69,7 @@ public class BookingGUI extends HelperGUI {
 
 
     public BookingGUI() {
-        init(mainPanel, "Create Booking", minWindowSize,maxWindowSize);
+        init(mainPanel, "Create Booking", new Dimension(minWindowSize,maxWindowSize), Accessibility.RECEPTIONIST);
       //  this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE); //Använder denna sålänge för smidigare under testning men ska vara dispose egentligen
      //   setResizable(false);
