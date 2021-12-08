@@ -10,8 +10,10 @@ public class Driver {
     private Hospital hospital;
 
     public static void main(String[] args) {
+
         LogInGUI logInGUI = new LogInGUI();
         logInGUI.setVisible(true);
+
     }
 
 }
