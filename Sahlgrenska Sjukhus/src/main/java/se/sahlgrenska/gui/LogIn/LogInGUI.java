@@ -1,8 +1,13 @@
 package se.sahlgrenska.gui.LogIn;
 
-import javax.swing.*;
+import se.sahlgrenska.gui.Menu.MenuGUI;
+import se.sahlgrenska.gui.util.HelperGUI;
 
-public class LogInGUI extends JFrame { //extenda JFrame
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class LogInGUI extends HelperGUI {
     private JPanel mainPanel;
     private JPanel topPanel;
     private JPanel contentPanel;
@@ -15,14 +20,18 @@ public class LogInGUI extends JFrame { //extenda JFrame
     private JButton quitButton;
 
     public LogInGUI() { //constructor
+        init(mainPanel, "Logga in", 350, 350);
 
-        this.setContentPane(mainPanel); //lägg till mainpanel i vår super class (JFrame)
+        loginButton.addActionListener(new LoginButtonActionListener());
+    }
 
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //programmet avslutas när man trycker X
 
-        this.setLocationRelativeTo(null); //lägg den i center.
-
-        this.pack(); // ??
+    private class LoginButtonActionListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            setVisible(false);
+            HelperGUI.toggleMainMenu();
+        }
     }
 
 
