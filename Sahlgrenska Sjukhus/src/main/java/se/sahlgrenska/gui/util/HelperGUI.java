@@ -24,7 +24,7 @@ public abstract class HelperGUI extends JFrame {
 
         //sätt preferred size
         setPreferredSize(new Dimension(width, height));
-        
+
         //packa ihop allt
         pack();
 
@@ -38,6 +38,11 @@ public abstract class HelperGUI extends JFrame {
     //toggla main menyn
     public static void toggleMainMenu() {
         menu.setVisible(!menu.isVisible());
+    }
+
+    //getter
+    public JFrame getMainMenu() {
+        return getMainMenu();
     }
 
 }
