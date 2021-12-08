@@ -2,8 +2,10 @@ package se.sahlgrenska.gui.LogIn;
 
 import se.sahlgrenska.gui.Menu.MenuGUI;
 import se.sahlgrenska.gui.util.HelperGUI;
+import se.sahlgrenska.sjukhus.person.employee.Accessibility;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -20,7 +22,8 @@ public class LogInGUI extends HelperGUI {
     private JButton quitButton;
 
     public LogInGUI() { //constructor
-        init(mainPanel, "Logga in", 350, 350);
+        init(mainPanel, "Sahlgrenska sjukhus", new Dimension(350, 350));
+        setVisible(true);
 
         loginButton.addActionListener(new LoginButtonActionListener());
     }
@@ -29,8 +32,15 @@ public class LogInGUI extends HelperGUI {
     private class LoginButtonActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            setVisible(false);
-            HelperGUI.toggleMainMenu();
+
+            Accessibility accessibility = Accessibility.DOCTOR;
+
+            if(true) {
+                setVisible(false);
+
+                HelperGUI.setMainMenu(accessibility);
+                HelperGUI.toggleMainMenu();
+            }
         }
     }
 
