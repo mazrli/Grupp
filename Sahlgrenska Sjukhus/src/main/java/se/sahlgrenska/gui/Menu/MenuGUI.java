@@ -2,60 +2,99 @@ package se.sahlgrenska.gui.Menu;
 
 import se.sahlgrenska.gui.util.HelperGUI;
 import se.sahlgrenska.main.Driver;
+import se.sahlgrenska.main.Util;
 import se.sahlgrenska.sjukhus.person.employee.Accessibility;
 import se.sahlgrenska.sjukhus.person.employee.Employee;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MenuGUI extends HelperGUI {
 
     private JPanel mainPanel;
     private JPanel topPanel;
+    private JPanel bottomPanel;
     private JPanel contentPanel;
+    private JPanel rightPanel;
+    private JPanel leftPanel;
+
 
     private JScrollPane scrollPane;
 
     private JLabel userLabel;
     private JLabel employeeIDLabel;
+    private JLabel dateLabel;
+
+    private JTextField userTextField;
+    private JTextField employeeIDTextField;
 
     private JButton logoutButton;
+
 
     private final Employee currentUser;
 
     public MenuGUI(Employee currentUser) {
         this.currentUser = currentUser;
 
-        mainPanel = new JPanel();
-        BoxLayout mainPanelBoxLayout = new BoxLayout(mainPanel, BoxLayout.Y_AXIS);
-        mainPanel.setLayout(mainPanelBoxLayout);
+        setLayout(new BorderLayout());
+
+        mainPanel = new JPanel(new BorderLayout());
         mainPanel.setBackground(Color.blue);
 
-
         topPanel = new JPanel();
-        topPanel.setBackground(Color.green);
-
-        userLabel = new JLabel("User: " + currentUser.getLoginDetails().getUsername());
-        employeeIDLabel = new JLabel("Employee id: " + currentUser.getId());
+        GridLayout topPanelLayout = new GridLayout(2, 3, 10, 10);
+        topPanel.setLayout(topPanelLayout);
+        topPanel.setBackground(Color.ORANGE);
+        userLabel = new JLabel("User:");
+        userLabel.setFont(Util.biggerFont);
+        dateLabel = new JLabel(LocalDateTime.now().format(Util.dateFormatter));
+        dateLabel.setFont(Util.biggerFont);
+        employeeIDLabel = new JLabel("Employee id:");
+        employeeIDLabel.setFont(Util.biggerFont);
+        userTextField = new JTextField(currentUser.getLoginDetails().getUsername());
+        userTextField.setFont(Util.biggerFont);
+        userTextField.setEditable(false);
+        employeeIDTextField = new JTextField(currentUser.getId());
+        employeeIDTextField.setFont(Util.biggerFont);
+        employeeIDTextField.setEditable(false);
         topPanel.add(userLabel);
+        topPanel.add(userTextField);
+        topPanel.add(dateLabel);
         topPanel.add(employeeIDLabel);
+        topPanel.add(employeeIDTextField);
+        topPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        mainPanel.add(topPanel, BorderLayout.NORTH);
 
+        leftPanel = new JPanel();
+        mainPanel.add(leftPanel, BorderLayout.WEST);
+        leftPanel.setBackground(Color.GREEN);
+        leftPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 20));
 
-        mainPanel.add(topPanel);
+        rightPanel = new JPanel();
+        mainPanel.add(rightPanel, BorderLayout.EAST);
+        rightPanel.setBackground(Color.BLUE);
+        rightPanel.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 0));
+
 
         contentPanel = new JPanel();
-        BoxLayout contentPanelBoxLayout = new BoxLayout(contentPanel, BoxLayout.Y_AXIS);
-        contentPanel.setLayout(contentPanelBoxLayout);
-        logoutButton = new JButton("Logga ut");
-
         contentPanel.setBackground(Color.RED);
-        contentPanel.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 20));
+        contentPanel.setBorder(BorderFactory.createEmptyBorder(50, 0, 50, 0 ));
+
+        mainPanel.add(contentPanel, BorderLayout.CENTER);
 
 
-        mainPanel.add(contentPanel);
+        bottomPanel = new JPanel();
+        bottomPanel.setBackground(Color.YELLOW);
+        logoutButton = new JButton("Logga ut");
+        bottomPanel.add(logoutButton);
+        mainPanel.add(bottomPanel, BorderLayout.SOUTH);
 
 
         logoutButton.addActionListener(new AbstractAction() {
@@ -66,15 +105,34 @@ public class MenuGUI extends HelperGUI {
             }
         });
 
+
+        List<HelperGUI> availableMenus = new ArrayList<>();
         for(HelperGUI subMenu: Driver.subMenus) {
-            // lägg endast till knappen om currentUser har tillåtelse.
-            if(subMenu.getAccessibility() == currentUser.getAccessibility() || currentUser.getAccessibility() == Accessibility.ALL) {
-                addButton(subMenu);
+
+            if(currentUser.getAccessibility() == subMenu.getAccessibility() || currentUser.getAccessibility() == Accessibility.ALL) {
+                availableMenus.add(subMenu);
             }
 
         }
 
-        contentPanel.add(logoutButton);
+        GridLayout contentPanelLayout = new GridLayout(availableMenus.size(), 1, 10, 5);
+        contentPanel.setLayout(contentPanelLayout);
+
+        if(false) {
+            int num = (int) (Math.random() * 6) + 1;
+
+            for (int i = 0; i < num; i++) {
+                JButton button = new JButton("test " + i);
+                button.setPreferredSize(new Dimension(80, 30));
+                button.setFont(Util.biggerFont);
+                button.setAlignmentX(Component.CENTER_ALIGNMENT);
+                contentPanel.add(button);
+            }
+        }
+
+        for(HelperGUI helperGUI : availableMenus) {
+            addButton(helperGUI);
+        }
 
         setVisible(true);
 
@@ -91,7 +149,7 @@ public class MenuGUI extends HelperGUI {
 
     private void addButton(HelperGUI helperGUI) {
         JButton button = new JButton(helperGUI.getTitle());
-        System.out.println("Added menu -> " + helperGUI.getTitle());
+
         button.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -99,6 +157,11 @@ public class MenuGUI extends HelperGUI {
                 helperGUI.setVisible(true);
             }
         });
+
+        button.setPreferredSize(new Dimension(80, 30));
+        button.setFont(Util.biggerFont);
+        button.setAlignmentX(Component.CENTER_ALIGNMENT);
+
         contentPanel.add(button);
     }
 }
