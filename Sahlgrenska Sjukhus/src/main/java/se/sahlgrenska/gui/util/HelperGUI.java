@@ -7,22 +7,36 @@ import java.awt.*;
 
 public abstract class HelperGUI extends JFrame {
 
-    private static final JFrame menu = new MenuGUI(); //statisk referens till main menyn
+    //statisk referens till main menyn
+    private static final JFrame menu = new MenuGUI();
 
     protected void init(JPanel mainPanel, String title) {
-        init(mainPanel, title, 500, 500); //500 * 500 är default size
+        //500 * 500 är default size
+        init(mainPanel, title, 500, 500);
     }
 
     protected void init(JPanel mainPanel, String title, int width, int height) {
-        setContentPane(mainPanel); //sätt mainPanel
-        setTitle(title); //sätt titeln
-        setPreferredSize(new Dimension(width, height)); //sätt preferred size
-        pack(); //packa ihop allt
-        setResizable(false); //ej resizable till default (ni kan ändra annars)
-        setLocationRelativeTo(null); //lägg den i center av skärmen.
+        //sätt mainPanel
+        setContentPane(mainPanel);
+
+        //sätt titeln
+        setTitle(title);
+
+        //sätt preferred size
+        setPreferredSize(new Dimension(width, height));
+        
+        //packa ihop allt
+        pack();
+
+        //ej resizable till default (ni kan ändra annars)
+        setResizable(false);
+
+        //lägg den i center av skärmen.
+        setLocationRelativeTo(null);
     }
 
-    public static void toggleMainMenu() { //toggla main menyn
+    //toggla main menyn
+    public static void toggleMainMenu() {
         menu.setVisible(!menu.isVisible());
     }
 
