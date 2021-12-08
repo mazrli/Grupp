@@ -1,8 +1,12 @@
 package se.sahlgrenska.gui.Journal;
 
 import se.sahlgrenska.gui.util.HelperGUI;
+import se.sahlgrenska.sjukhus.Journal;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class JournalGUI extends HelperGUI {
 
@@ -42,11 +46,42 @@ public class JournalGUI extends HelperGUI {
     private JScrollPane JournalDataScrollPane;
     private JScrollPane DiseaseDataScrollPane;
 
+    ArrayList<Journal> journals = new ArrayList<Journal>();
+
+
     public JournalGUI() {
-        init(MainPanel, "Create Journal");
+        init(MainPanel, "Journal");
+        setSize(550, 600);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+        RaderaButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+
+        ÅngraButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+
+        SparaButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+
+        AvbrytButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
     }
 
-    public static void main(String[] args) {
-        new JournalGUI().setVisible(true);
-    }
+
 }
