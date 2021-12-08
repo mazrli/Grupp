@@ -1,8 +1,10 @@
 package se.sahlgrenska.gui.Journal;
 
+import se.sahlgrenska.gui.util.HelperGUI;
+
 import javax.swing.*;
 
-public class JournalGUI {
+public class JournalGUI extends HelperGUI {
 
 
     private JPanel MainPanel;
@@ -40,5 +42,11 @@ public class JournalGUI {
     private JScrollPane JournalDataScrollPane;
     private JScrollPane DiseaseDataScrollPane;
 
+    public JournalGUI() {
+        init(MainPanel, "Create Journal");
+    }
 
+    public static void main(String[] args) {
+        new JournalGUI().setVisible(true);
+    }
 }
