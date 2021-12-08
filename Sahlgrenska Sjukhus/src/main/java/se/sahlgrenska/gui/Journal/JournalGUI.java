@@ -3,6 +3,10 @@ package se.sahlgrenska.gui.Journal;
 import se.sahlgrenska.gui.util.HelperGUI;
 
 import javax.swing.*;
+import javax.swing.plaf.FontUIResource;
+import javax.swing.text.StyleContext;
+import java.awt.*;
+import java.util.Locale;
 
 public class JournalGUI extends HelperGUI {
 
@@ -46,7 +50,4 @@ public class JournalGUI extends HelperGUI {
         init(MainPanel, "Create Journal");
     }
 
-    public static void main(String[] args) {
-        new JournalGUI().setVisible(true);
-    }
 }

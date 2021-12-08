@@ -1,6 +1,11 @@
 package se.sahlgrenska.gui.Order;
 
 import javax.swing.*;
+import javax.swing.border.TitledBorder;
+import javax.swing.plaf.FontUIResource;
+import javax.swing.text.StyleContext;
+import java.awt.*;
+import java.util.Locale;
 
 public class Order {
     private JPanel panel1;
@@ -44,4 +49,5 @@ public class Order {
         this.formattedTextField8 = formattedTextField8;
         this.formattedTextField9 = formattedTextField9;
     }
+
 }
