@@ -1,11 +1,14 @@
 package se.sahlgrenska.gui.Booking;
 
 import se.sahlgrenska.gui.util.HelperGUI;
+import se.sahlgrenska.main.Driver;
 import se.sahlgrenska.sjukhus.Booking;
 import se.sahlgrenska.sjukhus.person.employee.Accessibility;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -66,12 +69,19 @@ public class BookingGUI extends HelperGUI {
 
 
     public BookingGUI() {
-        init(mainPanel, "Create Booking", new Dimension(minWindowSize,maxWindowSize), Accessibility.RECEPTIONIST);
+        init(mainPanel, "Skapa bokning", new Dimension(minWindowSize,maxWindowSize), Accessibility.RECEPTIONIST);
       //  this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
       //this.setDefaultCloseOperation(EXIT_ON_CLOSE); //Använder denna sålänge för smidigare under testning men ska vara dispose egentligen
      //   setResizable(false);
         formatDate();
 
+        cancelBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setVisible(false);
+                Driver.getMainMenu().setVisible(true);
+            }
+        });
     }
 
 

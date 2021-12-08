@@ -49,7 +49,7 @@ public class LogInGUI extends HelperGUI {
                     setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 
                     try {
-                        Thread.sleep(1200);
+                        Thread.sleep(900);
                     } catch (Exception exception) {}
 
                     setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
