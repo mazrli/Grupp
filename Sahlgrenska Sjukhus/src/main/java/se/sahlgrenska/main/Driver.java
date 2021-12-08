@@ -1,5 +1,6 @@
 package se.sahlgrenska.main;
 
+import se.sahlgrenska.gui.Booking.BookingGUI;
 import se.sahlgrenska.gui.Journal.JournalGUI;
 import se.sahlgrenska.gui.LogIn.LogInGUI;
 import se.sahlgrenska.gui.Menu.MenuGUI;
@@ -30,10 +31,13 @@ public class Driver {
     public static void main(String[] args) {
         logInGUI = new LogInGUI();
 
+        LogInGUI logInGUI = new LogInGUI();
+        logInGUI.setVisible(true);
         //lägg till alla menyer i subMenus
-       subMenus.add(new JournalGUI());
+        subMenus.add(new JournalGUI());
+        subMenus.add(new BookingGUI());
 
-       logInGUI.setVisible(true);
+        logInGUI.setVisible(true);
     }
 
     public static MenuGUI getMainMenu() {
