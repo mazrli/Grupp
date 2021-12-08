@@ -3,7 +3,7 @@
   <grid id="27dc6" binding="mainPanel" layout-manager="GridLayoutManager" row-count="3" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="15" left="15" bottom="15" right="15"/>
     <constraints>
-      <xy x="27" y="20" width="562" height="571"/>
+      <xy x="27" y="20" width="562" height="621"/>
     </constraints>
     <properties>
       <font/>
@@ -96,12 +96,14 @@
                 <border type="none"/>
                 <children>
                   <grid id="d798d" binding="bookingLocationPanel" layout-manager="GridLayoutManager" row-count="3" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-                    <margin top="0" left="0" bottom="0" right="0"/>
+                    <margin top="5" left="5" bottom="5" right="5"/>
                     <constraints>
                       <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties/>
-                    <border type="none"/>
+                    <border type="line">
+                      <color color="-4473925"/>
+                    </border>
                     <children>
                       <grid id="3e9bd" binding="wardPanel" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                         <margin top="0" left="0" bottom="0" right="0"/>
@@ -156,18 +158,21 @@
                           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                         </constraints>
                         <properties>
-                          <text value="Ange plats"/>
+                          <font name="JetBrains Mono" size="18"/>
+                          <text value=""/>
                         </properties>
                       </component>
                     </children>
                   </grid>
                   <grid id="cd58c" binding="neededItemsPanel" layout-manager="GridLayoutManager" row-count="3" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-                    <margin top="0" left="0" bottom="0" right="0"/>
+                    <margin top="5" left="5" bottom="5" right="5"/>
                     <constraints>
                       <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties/>
-                    <border type="none"/>
+                    <border type="line">
+                      <color color="-4473925"/>
+                    </border>
                     <children>
                       <component id="623c4" class="javax.swing.JTable" binding="itemsTable" custom-create="true">
                         <constraints>
@@ -217,12 +222,14 @@
                 <border type="none"/>
                 <children>
                   <grid id="588ad" binding="persNrFieldPanel" layout-manager="GridLayoutManager" row-count="2" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-                    <margin top="0" left="0" bottom="0" right="0"/>
+                    <margin top="5" left="5" bottom="5" right="5"/>
                     <constraints>
                       <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties/>
-                    <border type="none"/>
+                    <border type="line">
+                      <color color="-4473925"/>
+                    </border>
                     <children>
                       <component id="f9865" class="javax.swing.JTextField" binding="patPersNrTxtField">
                         <constraints>
@@ -251,12 +258,14 @@
                     </children>
                   </grid>
                   <grid id="9f969" binding="bookingFieldPanel" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-                    <margin top="0" left="0" bottom="0" right="0"/>
+                    <margin top="5" left="5" bottom="5" right="5"/>
                     <constraints>
                       <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties/>
-                    <border type="none"/>
+                    <border type="line">
+                      <color color="-4473925"/>
+                    </border>
                     <children>
                       <component id="a6dea" class="javax.swing.JTextField" binding="bookingDateTxtField">
                         <constraints>
@@ -279,12 +288,14 @@
                     </children>
                   </grid>
                   <grid id="8e9e8" binding="bookingDurationFieldPanel" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-                    <margin top="0" left="0" bottom="0" right="0"/>
+                    <margin top="5" left="5" bottom="5" right="5"/>
                     <constraints>
                       <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties/>
-                    <border type="none"/>
+                    <border type="line">
+                      <color color="-4473925"/>
+                    </border>
                     <children>
                       <component id="8b42c" class="javax.swing.JComboBox" binding="bookingDurationComboBox">
                         <constraints>
@@ -297,18 +308,20 @@
                           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                         </constraints>
                         <properties>
-                          <text value="Ange boknigs tid"/>
+                          <text value="Ange tid"/>
                         </properties>
                       </component>
                     </children>
                   </grid>
                   <grid id="46ebb" binding="participationPanel" layout-manager="GridLayoutManager" row-count="3" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-                    <margin top="0" left="0" bottom="0" right="0"/>
+                    <margin top="5" left="5" bottom="5" right="5"/>
                     <constraints>
                       <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties/>
-                    <border type="none"/>
+                    <border type="line">
+                      <color color="-4473925"/>
+                    </border>
                     <children>
                       <component id="5dc0e" class="javax.swing.JList" binding="participationList">
                         <constraints>
@@ -357,12 +370,14 @@
                 <border type="none"/>
                 <children>
                   <grid id="81141" binding="noteTxtAreaPanel" layout-manager="GridLayoutManager" row-count="2" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-                    <margin top="0" left="0" bottom="0" right="0"/>
+                    <margin top="5" left="5" bottom="5" right="5"/>
                     <constraints>
                       <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties/>
-                    <border type="none"/>
+                    <border type="line">
+                      <color color="-4473925"/>
+                    </border>
                     <children>
                       <component id="378a6" class="javax.swing.JLabel" binding="noteLbl">
                         <constraints>
