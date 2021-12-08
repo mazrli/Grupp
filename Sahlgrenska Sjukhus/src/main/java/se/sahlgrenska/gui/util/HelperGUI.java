@@ -1,20 +1,16 @@
 package se.sahlgrenska.gui.util;
 
 import se.sahlgrenska.gui.Menu.MenuGUI;
+import se.sahlgrenska.main.Driver;
 import se.sahlgrenska.sjukhus.person.employee.Accessibility;
 
-import javax.accessibility.AccessibleAction;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 
 public abstract class HelperGUI extends JFrame {
 
     //menyn accessibility level;
     private Accessibility accessibility;
-
-    //statisk referens till main menyn
-    private static MenuGUI menu = null;
 
     //500 * 500 är default size
     private static final Dimension defaultSize = new Dimension(500, 500);
@@ -33,16 +29,13 @@ public abstract class HelperGUI extends JFrame {
     //denna är deprecated (använd den ej)
     @Deprecated
     protected void init(JPanel mainPanel, String title, Dimension dimension) {
-        init(mainPanel, title, dimension, Accessibility.NONE);
+        init(mainPanel, title, dimension, Accessibility.DOCTOR);
     }
 
     protected void init(JPanel mainPanel, String title, Dimension dimension, Accessibility accessibility) {
         //sätt accessibility för menyn;
         this.accessibility = accessibility;
 
-        //lägg till som knapp i main menyn
-        if(menu != null)
-            menu.addButton(this);
 
         //sätt mainPanel
         setContentPane(mainPanel);
@@ -53,8 +46,8 @@ public abstract class HelperGUI extends JFrame {
         //sätt preferred size
         setPreferredSize(dimension);
 
-        //asdf
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //stäng fönstret när man trycket X
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         //packa ihop allt
         pack();
@@ -64,23 +57,21 @@ public abstract class HelperGUI extends JFrame {
 
         //lägg den i center av skärmen.
         setLocationRelativeTo(null);
+
     }
 
     //toggla main menyn
+    @Deprecated
     public static void toggleMainMenu() {
-        menu.setVisible(!menu.isVisible());
+        Driver.getMainMenu().setVisible(!Driver.getMainMenu().isVisible());
     }
+
 
     //getter
-    public static JFrame getMainMenu() {
-        return menu;
+    @Deprecated
+    public static MenuGUI getMainMenu() {
+        return Driver.getMainMenu();
     }
-
-    //skapa main menyn med accessibility level
-    public static void setMainMenu(Accessibility accessibility) {
-        menu = new MenuGUI(accessibility);
-    }
-
 
     public Accessibility getAccessibility() {
         return accessibility;
