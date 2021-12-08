@@ -52,11 +52,11 @@ public class MenuGUI extends HelperGUI {
         GridLayout topPanelLayout = new GridLayout(2, 3, 10, 10);
         topPanel.setLayout(topPanelLayout);
         topPanel.setBackground(Color.ORANGE);
-        userLabel = new JLabel("User:");
+        userLabel = new JLabel("Användare:");
         userLabel.setFont(Util.biggerFont);
         dateLabel = new JLabel(LocalDateTime.now().format(Util.dateFormatter));
         dateLabel.setFont(Util.biggerFont);
-        employeeIDLabel = new JLabel("Employee id:");
+        employeeIDLabel = new JLabel("Arbetar-id:");
         employeeIDLabel.setFont(Util.biggerFont);
         userTextField = new JTextField(currentUser.getLoginDetails().getUsername());
         userTextField.setFont(Util.biggerFont);

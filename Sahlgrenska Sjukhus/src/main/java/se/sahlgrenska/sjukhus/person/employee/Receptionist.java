@@ -8,7 +8,7 @@ public class Receptionist extends Employee {
     private List<Order> orders;
     Accessibility accessibility;
 
-    public Receptionist(String id, float salary, float workingHours, Accessibility accessibility, LoginDetails loginDetails) {
-        super(id, salary, workingHours, accessibility, loginDetails);
+    public Receptionist(String id, float salary, float workingHours, LoginDetails loginDetails) {
+        super(id, salary, workingHours, Accessibility.RECEPTIONIST, loginDetails);
     }
 }
