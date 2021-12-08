@@ -68,7 +68,7 @@ public class BookingGUI extends HelperGUI {
     public BookingGUI() {
         init(mainPanel, "Create Booking", new Dimension(minWindowSize,maxWindowSize), Accessibility.RECEPTIONIST);
       //  this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        this.setDefaultCloseOperation(EXIT_ON_CLOSE); //Använder denna sålänge för smidigare under testning men ska vara dispose egentligen
+      //this.setDefaultCloseOperation(EXIT_ON_CLOSE); //Använder denna sålänge för smidigare under testning men ska vara dispose egentligen
      //   setResizable(false);
         formatDate();
 

@@ -40,7 +40,7 @@ public class LogInGUI extends HelperGUI {
             if (usernameField.getText().length() > 0 && passwordField.getPassword().length > 0) {
                 //skapar lite dummy objects för att testa (vi har ju ingen databas ännu)
                 LoginDetails loginDetails = new LoginDetails(usernameField.getText(), passwordField.getText());
-                Employee employee = new Doctor("44", 2000, 4.4f, loginDetails);
+                Employee employee = new Admin("44", 2000, 4.4f, loginDetails);
 
                 usernameField.setText("");
                 passwordField.setText("");
@@ -50,7 +50,7 @@ public class LogInGUI extends HelperGUI {
                     Driver.setMainMenu(employee);
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "You must provide field values.", "Invalid input.", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Alla fält är obligatoriska.", "Warning", JOptionPane.ERROR_MESSAGE);
             }
         }
     }

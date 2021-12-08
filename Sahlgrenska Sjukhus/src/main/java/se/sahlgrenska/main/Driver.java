@@ -32,7 +32,7 @@ public class Driver {
         logInGUI = new LogInGUI();
 
         LogInGUI logInGUI = new LogInGUI();
-        logInGUI.setVisible(true);
+
         //lägg till alla menyer i subMenus
         subMenus.add(new JournalGUI());
         subMenus.add(new BookingGUI());
