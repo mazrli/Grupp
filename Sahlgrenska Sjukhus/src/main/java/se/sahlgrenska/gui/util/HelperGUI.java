@@ -42,7 +42,7 @@ public abstract class HelperGUI extends JFrame {
 
     //getter
     public JFrame getMainMenu() {
-        return getMainMenu();
+        return menu;
     }
 
 }
