@@ -49,15 +49,14 @@ public class BookingGUI extends HelperGUI {
     private JPanel wardPanel;
     private JPanel roomPanel;
     private JComboBox wardComboBox;
-    private JLabel bookingLocationLbl;
     private JComboBox roomComboBox;
     private JLabel wardLbl;
     private JLabel roomLbl;
     private JPanel neededItemsPanel;
     private JTable itemsTable;
-    private JLabel neededItemsLbl;
     private JButton addItemsBtn;
     private JButton removeItemsBtn;
+    private JPanel titlePanel;
     private LocalDateTime date;
 
 
@@ -83,10 +82,12 @@ public class BookingGUI extends HelperGUI {
             }
         });
 
-
     }
 
 
+    public String getColumnName(String[] colNames,int index) {
+        return colNames[index];
+    }
 
 
     private void formatDate(){
