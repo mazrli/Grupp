@@ -69,6 +69,7 @@ public class BookingGUI extends HelperGUI {
 
 
 
+
     public BookingGUI() {
         init(mainPanel, "Skapa bokning", new Dimension(minWindowSize, maxWindowSize), Accessibility.RECEPTIONIST);
 
@@ -93,7 +94,7 @@ public class BookingGUI extends HelperGUI {
     }
 
 
-    private void changeTableHeaderText(JTable table, Color color){
+    private void changeJTableHeaderText(JTable table, Color color){
         JTableHeader tableHeader = table.getTableHeader();
         tableHeader.setReorderingAllowed(false);
         tableHeader.setOpaque(false);
@@ -103,11 +104,12 @@ public class BookingGUI extends HelperGUI {
 
     private void createUIComponents() {
         // TODO: place custom component creation code here
+        Color tableHeaderColour = new Color(199, 199, 199);
 
         String [] columns = {"Item name","Quantity"};
         String [][] data = {{"Defibrilator","5"},{"MRI","2"},{"Panodil", "10"},{"Defibrilator","5"},{"MRI","2"},{"Panodil", "10"},{"Defibrilator","5"},{"MRI","2"},{"Panodil", "10"},{"Defibrilator","5"},{"MRI","2"},{"Panodil", "10"}};
         itemsTable = new JTable(data,columns);
-        changeTableHeaderText(itemsTable, new Color(199,199,199));
+        changeJTableHeaderText(itemsTable, tableHeaderColour);
 
 
     }
