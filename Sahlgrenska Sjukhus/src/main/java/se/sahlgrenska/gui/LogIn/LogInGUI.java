@@ -24,6 +24,7 @@ public class LogInGUI extends HelperGUI {
     private JButton loginButton;
     private JButton quitButton;
     private JPasswordField passwordField;
+    private JPanel fieldPanel;
 
     public LogInGUI() { //constructor
         init(mainPanel, "Sahlgrenska sjukhus", new Dimension(350, 350), Accessibility.ALL);

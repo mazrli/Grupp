@@ -96,11 +96,19 @@ public class MenuGUI extends HelperGUI {
         bottomPanel.add(logoutButton);
         mainPanel.add(bottomPanel, BorderLayout.SOUTH);
 
+        /*
+            Logga ut knappen
 
+            stäng alla fönster och öppna logga in menyn.
+         */
         logoutButton.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                for(HelperGUI subMenu : Driver.subMenus)
+                    subMenu.setVisible(false);
+
                 Driver.getMainMenu().setVisible(false);
+
                 Driver.getLoginGUI().setVisible(true);
             }
         });
