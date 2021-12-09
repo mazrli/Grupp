@@ -58,6 +58,7 @@ public class BookingGUI extends HelperGUI {
     private JLabel neededItemsLbl;
     private JButton addItemsBtn;
     private JButton removeItemsBtn;
+    private JPanel titlePanel;
     private LocalDateTime date;
 
 
@@ -83,8 +84,8 @@ public class BookingGUI extends HelperGUI {
             }
         });
 
-
     }
+
 
 
 
