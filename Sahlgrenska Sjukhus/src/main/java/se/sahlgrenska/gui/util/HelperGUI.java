@@ -15,6 +15,9 @@ public abstract class HelperGUI extends JFrame {
     //menyn accessibility level;
     private Accessibility accessibility;
 
+    private String windowsLook = "com.sun.java.swing.plaf.windows.WindowsLookAndFeel";
+    private String appleLook = "com.sun.java.swing.plaf.windows.WindowsLookAndFeel";
+
     //500 * 500 är default size
     private static final Dimension defaultSize = new Dimension(500, 500);
 
@@ -66,6 +69,13 @@ public abstract class HelperGUI extends JFrame {
 
         //lägg den i center av skärmen.
         setLocationRelativeTo(null);
+
+        //look and feel
+        try {
+            UIManager.setLookAndFeel(windowsLook);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 
