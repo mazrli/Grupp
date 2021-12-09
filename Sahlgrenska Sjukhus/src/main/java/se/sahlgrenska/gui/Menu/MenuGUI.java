@@ -111,7 +111,7 @@ public class MenuGUI extends HelperGUI {
 
         }
 
-        GridLayout contentPanelLayout = new GridLayout(availableMenus.size(), 1, 10, 5);
+        GridLayout contentPanelLayout = new GridLayout(availableMenus.size(), 2, 10, 5);
         contentPanel.setLayout(contentPanelLayout);
 
         if(false) {

@@ -27,7 +27,7 @@ public class LogInGUI extends HelperGUI {
     private JPanel fieldPanel;
 
     public LogInGUI() { //constructor
-        init(mainPanel, "Sahlgrenska sjukhus", new Dimension(350, 350), Accessibility.ALL);
+        init(mainPanel, "Sahlgrenska sjukhus", new Dimension(380, 400), Accessibility.ALL);
 
         loginButton.addActionListener(new LoginButtonActionListener());
         quitButton.addActionListener(new QuitButtonActionListener());
