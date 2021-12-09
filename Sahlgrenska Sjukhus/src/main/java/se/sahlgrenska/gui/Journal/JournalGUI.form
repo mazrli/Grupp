@@ -176,7 +176,7 @@
                 <properties>
                   <font/>
                   <lineWrap value="true"/>
-                  <text value="Write a comment"/>
+                  <text value=""/>
                 </properties>
               </component>
               <component id="ae0a5" class="javax.swing.JLabel" binding="KommentarLabel">

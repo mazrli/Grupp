@@ -26,8 +26,6 @@ public class MenuGUI extends HelperGUI {
     private JPanel leftPanel;
 
 
-    private JScrollPane scrollPane;
-
     private JLabel userLabel;
     private JLabel employeeIDLabel;
     private JLabel dateLabel;
@@ -96,20 +94,10 @@ public class MenuGUI extends HelperGUI {
         bottomPanel.add(logoutButton);
         mainPanel.add(bottomPanel, BorderLayout.SOUTH);
 
-        /*
-            Logga ut knappen
-
-            stäng alla fönster och öppna logga in menyn.
-         */
         logoutButton.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                for(HelperGUI subMenu : Driver.subMenus)
-                    subMenu.setVisible(false);
-
-                Driver.getMainMenu().setVisible(false);
-
-                Driver.getLoginGUI().setVisible(true);
+                logout();
             }
         });
 
@@ -148,10 +136,23 @@ public class MenuGUI extends HelperGUI {
 
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
-                setVisible(false);
-                Driver.getLoginGUI().setVisible(true);
+                logout();
             }
         });
+    }
+
+    /*
+        Logga ut
+
+        stäng alla fönster och öppna logga in menyn.
+     */
+    private void logout() {
+        for(HelperGUI subMenu : Driver.subMenus)
+            subMenu.setVisible(false);
+
+        Driver.getMainMenu().setVisible(false);
+
+        Driver.getLoginGUI().setVisible(true);
     }
 
 
