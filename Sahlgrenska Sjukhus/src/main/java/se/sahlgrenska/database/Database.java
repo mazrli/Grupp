@@ -22,10 +22,11 @@ public class Database {
             connection = DriverManager.getConnection(url);
 
             //den throwade inga exceptions (mycket kan gå fel) och vi kan nu kommunicera med databasen
-            System.out.println("Connection successful!!!!");
+            System.out.println("Connection successful.");
 
         } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
+            System.out.println("unsuccessful connection.");
+            //e.printStackTrace();
         }
     }
 

@@ -1,13 +1,13 @@
 package se.sahlgrenska.database;
 
+import com.mysql.cj.log.Log;
 import se.sahlgrenska.sjukhus.person.employee.*;
 
 import javax.swing.*;
 import java.io.*;
 import java.net.URISyntaxException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.*;
 import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -66,7 +66,6 @@ public class IOManager {
                 query += "?,";
 
             query = query.substring(0, query.length() - 1) + ") } ";
-            System.out.println(query);
 
             CallableStatement callableStatement = database.getConnection().prepareCall(query);
 
@@ -83,22 +82,43 @@ public class IOManager {
     }
 
     public void remember(LoginDetails loginDetails) {
-
         try {
-            Path path = Paths.get(getClass().getResource("save.txt").toURI());
-            Files.writeString(path, "Gay", null);
+            File file = new File(getClass().getResource("/save.txt").toURI());
+            BufferedWriter writer = new BufferedWriter(new FileWriter(file));
 
-        } catch (IOException | URISyntaxException e) {
+            if(loginDetails != null)
+                writer.write(loginDetails.getUsername() + " " + loginDetails.getPassword());
+            else
+                writer.write("");
+
+            writer.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (URISyntaxException e) {
             e.printStackTrace();
         }
     }
 
     public LoginDetails getRemember() {
+        LoginDetails loginDetails = null;
+
         try {
-            List<String> lines = Files.readAllLines(Paths.get(getClass().getResource("save.txt").toURI()));
-        } catch (IOException | URISyntaxException e) {
+            File file = new File(getClass().getResource("/save.txt").toURI());
+            BufferedReader reader = new BufferedReader(new FileReader(file));
+
+            String line = reader.readLine();
+
+            if(line != null) {
+                String[] stuff = line.split(" ");
+
+                loginDetails = new LoginDetails(stuff[0], stuff[1]);
+            }
+
+        } catch (URISyntaxException | IOException e) {
             e.printStackTrace();
         }
-        return null;
+
+        return loginDetails;
     }
 }

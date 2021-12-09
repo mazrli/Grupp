@@ -8,6 +8,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class LogInGUI extends HelperGUI {
     private JPanel mainPanel;
@@ -30,6 +32,22 @@ public class LogInGUI extends HelperGUI {
         quitButton.addActionListener(new QuitButtonActionListener());
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+
+        LoginDetails loginDetails = Driver.getIOManager().getRemember();
+
+        if(loginDetails != null) {
+            usernameField.setText(loginDetails.getUsername());
+            passwordField.setText(loginDetails.getPassword());
+            rememberMeCheckBox.setSelected(true);
+        }
+
+        addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                quit();
+            }
+        });
+
+
     }
 
     private class LoginButtonActionListener implements ActionListener {
@@ -45,18 +63,22 @@ public class LogInGUI extends HelperGUI {
 
                     if(rememberMeCheckBox.isSelected()) {
                         Driver.getIOManager().remember(loginDetails);
+                    } else {
+                        clearFields();
                     }
+
 
                     setVisible(false);
                     Driver.setMainMenu(employee);
 
                 } else {
-                    JOptionPane.showMessageDialog(null, "Fel uppgifter.", "Warning", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Uppgifterna är ogiltiga.", "Warning", JOptionPane.ERROR_MESSAGE);
+                    clearFields();
                 }
             } else {
                 JOptionPane.showMessageDialog(null, "Alla fält är obligatoriska.", "Warning", JOptionPane.ERROR_MESSAGE);
             }
-            clearFields();
+
         }
     }
 
@@ -64,7 +86,7 @@ public class LogInGUI extends HelperGUI {
         setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 
         try {
-            Thread.sleep(900);
+            Thread.sleep((int) (Math.random() * 1200));
         } catch (Exception exception) {}
 
         setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
@@ -75,6 +97,7 @@ public class LogInGUI extends HelperGUI {
     }
 
     private void clearFields() {
+        rememberMeCheckBox.setSelected(false);
         usernameField.setText("");
         passwordField.setText("");
     }
@@ -82,9 +105,16 @@ public class LogInGUI extends HelperGUI {
     private class QuitButtonActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            System.exit(0);
+            quit();
         }
     }
 
+    private void quit() {
+        if(!rememberMeCheckBox.isSelected()) {
+            Driver.getIOManager().remember(null);
+        }
+
+        System.exit(0);
+    }
 
 }
