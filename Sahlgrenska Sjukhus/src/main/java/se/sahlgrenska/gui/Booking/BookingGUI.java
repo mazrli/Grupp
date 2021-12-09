@@ -2,15 +2,16 @@ package se.sahlgrenska.gui.Booking;
 
 import se.sahlgrenska.gui.util.HelperGUI;
 import se.sahlgrenska.main.Driver;
+import se.sahlgrenska.main.Util;
 import se.sahlgrenska.sjukhus.Booking;
 import se.sahlgrenska.sjukhus.person.employee.Accessibility;
 
 import javax.swing.*;
+import javax.swing.table.JTableHeader;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 public class BookingGUI extends HelperGUI {
 
@@ -57,6 +58,7 @@ public class BookingGUI extends HelperGUI {
     private JButton addItemsBtn;
     private JButton removeItemsBtn;
     private JPanel titlePanel;
+    private JScrollPane itemScrollPanel;
     private LocalDateTime date;
 
 
@@ -69,10 +71,8 @@ public class BookingGUI extends HelperGUI {
 
     public BookingGUI() {
         init(mainPanel, "Skapa bokning", new Dimension(minWindowSize, maxWindowSize), Accessibility.RECEPTIONIST);
-      //  this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-      //this.setDefaultCloseOperation(EXIT_ON_CLOSE); //Använder denna sålänge för smidigare under testning men ska vara dispose egentligen
-     //   setResizable(false);
-        formatDate();
+
+        setUpBookingData();
 
         cancelBtn.addActionListener(new ActionListener() {
             @Override
@@ -85,23 +85,30 @@ public class BookingGUI extends HelperGUI {
     }
 
 
-    public String getColumnName(String[] colNames,int index) {
-        return colNames[index];
+
+
+    private void setUpBookingData(){
+      dateOutLbl.setText(LocalDateTime.now().format(Util.dateFormatter));
+    itemsTable.setBackground(Color.WHITE);
     }
 
 
-    private void formatDate(){
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm");
-        dateOutLbl.setText(dtf.format(LocalDateTime.now()));
-      //  mainPanel.setBorder(new EmptyBorder(100, 100, 100, 100));
-
+    private void changeTableHeaderText(JTable table, Color color){
+        JTableHeader tableHeader = table.getTableHeader();
+        tableHeader.setReorderingAllowed(false);
+        tableHeader.setOpaque(false);
+        tableHeader.setBackground(color);
     }
+
 
     private void createUIComponents() {
         // TODO: place custom component creation code here
+
         String [] columns = {"Item name","Quantity"};
-        String [][] data = {{"Defibrilator","5"},{"MRI","2"},{"Panodil", "10"}};
+        String [][] data = {{"Defibrilator","5"},{"MRI","2"},{"Panodil", "10"},{"Defibrilator","5"},{"MRI","2"},{"Panodil", "10"},{"Defibrilator","5"},{"MRI","2"},{"Panodil", "10"},{"Defibrilator","5"},{"MRI","2"},{"Panodil", "10"}};
         itemsTable = new JTable(data,columns);
+        changeTableHeaderText(itemsTable, new Color(199,199,199));
+
 
     }
 }
