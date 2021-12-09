@@ -1,5 +1,5 @@
 
-## Projekt Sahlgrenska!!
+## Projekt Sahlgrenska
 
   * [Trello]
 
