@@ -5,13 +5,9 @@ import se.sahlgrenska.main.Driver;
 import se.sahlgrenska.sjukhus.person.employee.*;
 
 import javax.swing.*;
-import javax.swing.plaf.FontUIResource;
-import javax.swing.text.StyleContext;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.Locale;
 
 public class LogInGUI extends HelperGUI {
     private JPanel mainPanel;
@@ -25,6 +21,7 @@ public class LogInGUI extends HelperGUI {
     private JButton quitButton;
     private JPasswordField passwordField;
     private JPanel fieldPanel;
+    private JCheckBox rememberMeCheckBox;
 
     public LogInGUI() { //constructor
         init(mainPanel, "Sahlgrenska sjukhus", new Dimension(380, 400), Accessibility.ALL);
@@ -38,29 +35,48 @@ public class LogInGUI extends HelperGUI {
     private class LoginButtonActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            if (usernameField.getText().length() > 0 && passwordField.getPassword().length > 0) {
-                //skapar lite dummy objects för att testa (vi har ju ingen databas ännu)
+            if(isFilled()) {
+                delay();
+
                 LoginDetails loginDetails = new LoginDetails(usernameField.getText(), passwordField.getText());
-                Employee employee = new Admin("44", 2000, 4.4f, loginDetails);
+                Employee employee = Driver.getIOManager().getEmployee(loginDetails);
 
-                usernameField.setText("");
-                passwordField.setText("");
+                if (employee != null) {
 
-                if (true) {
-                    setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+                    if(rememberMeCheckBox.isSelected()) {
+                        Driver.getIOManager().remember(loginDetails);
+                    }
 
-                    try {
-                        Thread.sleep(900);
-                    } catch (Exception exception) {}
-
-                    setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
                     setVisible(false);
                     Driver.setMainMenu(employee);
+
+                } else {
+                    JOptionPane.showMessageDialog(null, "Fel uppgifter.", "Warning", JOptionPane.ERROR_MESSAGE);
                 }
             } else {
                 JOptionPane.showMessageDialog(null, "Alla fält är obligatoriska.", "Warning", JOptionPane.ERROR_MESSAGE);
             }
+            clearFields();
         }
+    }
+
+    private void delay() {
+        setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+
+        try {
+            Thread.sleep(900);
+        } catch (Exception exception) {}
+
+        setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+    }
+
+    private boolean isFilled() {
+        return usernameField.getText().length() > 0 && passwordField.getPassword().length > 0;
+    }
+
+    private void clearFields() {
+        usernameField.setText("");
+        passwordField.setText("");
     }
 
     private class QuitButtonActionListener implements ActionListener {

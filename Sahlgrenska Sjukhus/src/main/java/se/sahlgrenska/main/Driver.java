@@ -1,22 +1,16 @@
 package se.sahlgrenska.main;
 
+import se.sahlgrenska.database.IOManager;
 import se.sahlgrenska.gui.Booking.BookingGUI;
 import se.sahlgrenska.gui.Journal.JournalGUI;
 import se.sahlgrenska.gui.LogIn.LogInGUI;
 import se.sahlgrenska.gui.Menu.MenuGUI;
 import se.sahlgrenska.gui.util.HelperGUI;
 import se.sahlgrenska.sjukhus.Hospital;
-import se.sahlgrenska.sjukhus.Journal;
-import se.sahlgrenska.sjukhus.person.employee.Accessibility;
 import se.sahlgrenska.sjukhus.person.employee.Employee;
-import se.sahlgrenska.sjukhus.person.employee.LoginDetails;
 
-import javax.swing.*;
-import java.awt.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class Driver {
 
@@ -25,7 +19,9 @@ public class Driver {
 
     private static LogInGUI logInGUI;
     private static MenuGUI mainMenu;
-    public static List<HelperGUI> subMenus = new ArrayList<>();
+
+    private static final IOManager ioManger = new IOManager();
+    public static final List<HelperGUI> subMenus = new ArrayList<>();
 
 
     public static void main(String[] args) {
@@ -38,6 +34,8 @@ public class Driver {
         subMenus.add(new BookingGUI());
 
         logInGUI.setVisible(true);
+
+        ioManger.executeQuery("asdf");
     }
 
     public static MenuGUI getMainMenu() {
@@ -49,5 +47,9 @@ public class Driver {
 
     public static LogInGUI getLoginGUI() {
         return logInGUI;
+    }
+
+    public static IOManager getIOManager() {
+        return ioManger;
     }
 }
