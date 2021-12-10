@@ -15,8 +15,8 @@ import java.util.List;
 
 public class Driver {
 
-    private Employee currentUser;
-    private Hospital hospital;
+    private static Employee currentUser;
+    private static Hospital hospital;
 
     private static LogInGUI logInGUI;
     private static MenuGUI mainMenu;
@@ -50,7 +50,9 @@ public class Driver {
     public static MenuGUI getMainMenu() {
         return mainMenu;
     }
+
     public static void setMainMenu(Employee employee) {
+        currentUser = employee;
         mainMenu = new MenuGUI(employee);
     }
 
@@ -60,5 +62,13 @@ public class Driver {
 
     public static IOManager getIOManager() {
         return ioManger;
+    }
+
+    public static Employee getCurrentUser() {
+        return currentUser;
+    }
+
+    public static void setCurrentUser(Employee user) {
+        currentUser = user;
     }
 }
