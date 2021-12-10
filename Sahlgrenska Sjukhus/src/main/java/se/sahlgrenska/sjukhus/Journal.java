@@ -24,6 +24,7 @@ public class Journal {
                 '}';
     }
 
+    //Contructor for Journal.
     public Journal(Patient patient, LocalDateTime time, String note, Employee employee) {
         this.patient = patient;
         this.time = time;

@@ -9,6 +9,8 @@ import se.sahlgrenska.sjukhus.person.patient.Patient;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,6 +54,7 @@ public class JournalGUI extends HelperGUI {
     private JScrollPane DiseaseDataScrollPane;
 
     List<Patient> patients;
+    Journal currentJournal;
 
     public JournalGUI() {
 
@@ -59,15 +62,28 @@ public class JournalGUI extends HelperGUI {
         setSize(550, 600);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
+        //Gernerates a dummylist of patients to test remove button
+        DefaultListModel dataList = new DefaultListModel();
+        for (int i = 0; i < 5; i++) {
+            JLabel label = new JLabel("Hasse" + i);
+            dataList.add(i, label.getText());
+        }
+        JournalDataList.setModel(dataList);
+
         patients = Driver.getHospital().getArchive().getPatients().get(Driver.getCurrentUser());
 
+        //Delete a select patient in Journaldatalist.
         RaderaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                if (JournalDataList.getSelectedValue() != null) {
+                    //Removes select item from dummylist.
+                    dataList.removeElement(JournalDataList.getSelectedValue());
+                }
             }
         });
 
+        //Undo the latest save.
         ÅngraButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -75,6 +91,7 @@ public class JournalGUI extends HelperGUI {
             }
         });
 
+        //Saves different types of variable into object.
         SparaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -96,15 +113,26 @@ public class JournalGUI extends HelperGUI {
             }
         });
 
+        //Cancel the window and move back to the window menu.
         AvbrytButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                //Takes you back to main menu.
                 setVisible(false);
                 Driver.getMainMenu().setVisible(true);
             }
         });
+
+        //Add function mouseclick to Journaldatalist when select item in list.
+        JournalDataList.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                System.out.println(JournalDataList.getSelectedValue().toString());
+            }
+        });
     }
 
+    //Makes it possible to load the Journal-list into Journaldatalist, otherwise it was not possible.
     public void LoadJournal() {
         List<Journal> journals = new ArrayList<Journal>();
         for (Patient patient : patients) {
