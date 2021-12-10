@@ -4,19 +4,13 @@ import se.sahlgrenska.gui.Booking.BookingGUI;
 import se.sahlgrenska.gui.Journal.JournalGUI;
 import se.sahlgrenska.gui.LogIn.LogInGUI;
 import se.sahlgrenska.gui.Menu.MenuGUI;
+import se.sahlgrenska.gui.Order.Order;
 import se.sahlgrenska.gui.util.HelperGUI;
 import se.sahlgrenska.sjukhus.Hospital;
-import se.sahlgrenska.sjukhus.Journal;
-import se.sahlgrenska.sjukhus.person.employee.Accessibility;
 import se.sahlgrenska.sjukhus.person.employee.Employee;
-import se.sahlgrenska.sjukhus.person.employee.LoginDetails;
 
-import javax.swing.*;
-import java.awt.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class Driver {
 
@@ -36,6 +30,7 @@ public class Driver {
         //lägg till alla menyer i subMenus
         subMenus.add(new JournalGUI());
         subMenus.add(new BookingGUI());
+        subMenus.add(new Order());
 
         logInGUI.setVisible(true);
     }
@@ -50,4 +45,5 @@ public class Driver {
     public static LogInGUI getLoginGUI() {
         return logInGUI;
     }
+
 }
