@@ -6,6 +6,7 @@ import se.sahlgrenska.gui.Booking.BookingGUI;
 import se.sahlgrenska.gui.Journal.JournalGUI;
 import se.sahlgrenska.gui.LogIn.LogInGUI;
 import se.sahlgrenska.gui.Menu.MenuGUI;
+import se.sahlgrenska.gui.Order.Order;
 import se.sahlgrenska.gui.util.HelperGUI;
 import se.sahlgrenska.sjukhus.Address;
 import se.sahlgrenska.sjukhus.Archive;
@@ -45,7 +46,6 @@ public class Driver {
         subMenus.add(new BookingGUI());
 
         logInGUI.setVisible(true);
-
     }
 
     //här kan vi påverka vad som händer i programmet innan det avslutas (t.ex spara data)
