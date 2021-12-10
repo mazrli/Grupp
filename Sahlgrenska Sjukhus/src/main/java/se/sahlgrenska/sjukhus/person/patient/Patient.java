@@ -12,6 +12,5 @@ public class Patient extends Person {
     public List<Notification> notifications;
 
     public Patient() {
-        super(name, personNumber, phoneNumber, address);
     }
 }

@@ -67,7 +67,6 @@ public class LogInGUI extends HelperGUI {
                         clearFields();
                     }
 
-
                     setVisible(false);
                     Driver.setMainMenu(employee);
 

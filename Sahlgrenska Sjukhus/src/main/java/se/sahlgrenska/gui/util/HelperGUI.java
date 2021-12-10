@@ -17,7 +17,6 @@ public abstract class HelperGUI extends JFrame {
     //menyn accessibility level;
     private Accessibility accessibility;
 
-
     //500 * 500 är default size
     private static final Dimension defaultSize = new Dimension(500, 500);
 
@@ -58,13 +57,6 @@ public abstract class HelperGUI extends JFrame {
         setResizable(false);
 
 
-        //packa ihop allt
-        pack();
-
-        //lägg den i center av skärmen.
-        setLocationRelativeTo(null);
-
-
         //icon och look & feel
         if(Util.getOS().contains("windows")) { //inställningar för windows os
             setIconImage(UtilGUI.iconImage);
@@ -76,16 +68,24 @@ public abstract class HelperGUI extends JFrame {
         } else if (Util.getOS().contains("mac")) { //inställningar för mac os
             Taskbar.getTaskbar().setIconImage(UtilGUI.iconImage);
         }
+
+        //packa ihop allt
+        pack();
+
+        //lägg den i center av skärmen.
+        setLocationRelativeTo(null);
+
+
     }
 
-    //toggla main menyn
+    //toggle (deprecated, använd Driver.getMainMenu() istället)
     @Deprecated
     public static void toggleMainMenu() {
         Driver.getMainMenu().setVisible(!Driver.getMainMenu().isVisible());
     }
 
 
-    //getter
+    //getter (deprecated, använd Driver.getMainMenu() istället)
     @Deprecated
     public static MenuGUI getMainMenu() {
         return Driver.getMainMenu();

@@ -84,8 +84,8 @@ public class JournalGUI extends HelperGUI {
                 String doctor = LäkareTextField.getText();
 
                 Patient patient = new Patient();
-                Doctor doctor1 = new Doctor();
-                Journal journal = new Journal(patient, LocalDateTime.now(), KommentarTextArea.getText(), );
+
+                Journal journal = new Journal(patient, LocalDateTime.now(), KommentarTextArea.getText(), (Doctor) Driver.getCurrentUser());
 
             }
         });
