@@ -4,10 +4,13 @@ import se.sahlgrenska.gui.util.HelperGUI;
 import se.sahlgrenska.main.Driver;
 import se.sahlgrenska.sjukhus.Journal;
 import se.sahlgrenska.sjukhus.person.employee.Accessibility;
+import se.sahlgrenska.sjukhus.person.employee.Doctor;
+import se.sahlgrenska.sjukhus.person.patient.Patient;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class JournalGUI extends HelperGUI {
@@ -80,7 +83,9 @@ public class JournalGUI extends HelperGUI {
                 Integer room = Integer.parseInt(RumTextField.getText());
                 String doctor = LäkareTextField.getText();
 
-                ArrayList<Journal> journals = new ArrayList<Journal>();
+                Patient patient = new Patient();
+                Doctor doctor1 = new Doctor();
+                Journal journal = new Journal(patient, LocalDateTime.now(), KommentarTextArea.getText(), );
 
             }
         });

@@ -10,4 +10,11 @@ public class Journal {
     private LocalDateTime time;
     private String note;
     private Doctor doctor;
+
+    public Journal(Patient patient, LocalDateTime time, String note, Doctor doctor) {
+        this.patient = patient;
+        this.time = time;
+        this.note = note;
+        this.doctor = doctor;
+    }
 }
