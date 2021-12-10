@@ -11,4 +11,6 @@ public class Patient extends Person {
     public List<Disease> diseases;
     public List<Notification> notifications;
 
+    public Patient() {
+    }
 }
