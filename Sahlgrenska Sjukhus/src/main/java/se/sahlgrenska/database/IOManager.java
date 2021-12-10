@@ -16,7 +16,8 @@ import java.util.List;
 
 public class IOManager {
 
-    private final Database database = new Database("gamebacon.net", "baconwilliam", "tjena22", "sahlgrenska");
+
+    private final Database database = new Database("gamebacon.net", "guest4life", "Lp3jRWB4FQrjC4z", "sahlgrenska");
 
 
     public void executeQuery(String statement) {

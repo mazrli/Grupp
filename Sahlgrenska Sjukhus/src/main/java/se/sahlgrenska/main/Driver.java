@@ -48,7 +48,6 @@ public class Driver {
         subMenus.add(new Order());
 
         logInGUI.setVisible(true);
-
     }
 
     //här kan vi påverka vad som händer i programmet innan det avslutas (t.ex spara data)

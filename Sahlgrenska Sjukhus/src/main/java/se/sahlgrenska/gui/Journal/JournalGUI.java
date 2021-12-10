@@ -4,14 +4,9 @@ import se.sahlgrenska.gui.util.HelperGUI;
 import se.sahlgrenska.main.Driver;
 import se.sahlgrenska.sjukhus.Journal;
 import se.sahlgrenska.sjukhus.person.employee.Accessibility;
-import se.sahlgrenska.sjukhus.person.employee.Doctor;
-import se.sahlgrenska.sjukhus.person.employee.Employee;
 import se.sahlgrenska.sjukhus.person.patient.Patient;
 
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -142,7 +137,7 @@ public class JournalGUI extends HelperGUI {
         List<Journal> journals = new ArrayList<Journal>();
         for (Patient patient : patients) {
             journals.addAll(Driver.getHospital().getArchive().getJournals().get(patient));
-            JLabel label = new JLabel(patient.getName());
+            JLabel label = new JLabel(patient.getFirstName());
             JournalDataList.add(label);
         }
     }
