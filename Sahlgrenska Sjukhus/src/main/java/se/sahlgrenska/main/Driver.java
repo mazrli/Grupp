@@ -9,6 +9,7 @@ import se.sahlgrenska.gui.util.HelperGUI;
 import se.sahlgrenska.sjukhus.Hospital;
 import se.sahlgrenska.sjukhus.person.employee.Employee;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +26,10 @@ public class Driver {
 
 
     public static void main(String[] args) {
+        
+        setupOS();
+        
+
         logInGUI = new LogInGUI();
 
         LogInGUI logInGUI = new LogInGUI();
@@ -36,6 +41,10 @@ public class Driver {
         logInGUI.setVisible(true);
 
         ioManger.executeQuery("asdf");
+    }
+
+    private static void setupOS() {
+        //todo: set up stuff
     }
 
     public static MenuGUI getMainMenu() {
