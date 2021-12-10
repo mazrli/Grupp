@@ -149,17 +149,6 @@
                       <color color="-4473925"/>
                     </border>
                     <children>
-                      <component id="623c4" class="javax.swing.JTable" binding="itemsTable" custom-create="true">
-                        <constraints>
-                          <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                            <preferred-size width="150" height="50"/>
-                          </grid>
-                        </constraints>
-                        <properties>
-                          <editingColumn value="-1"/>
-                          <editingRow value="-1"/>
-                        </properties>
-                      </component>
                       <component id="31e22" class="javax.swing.JButton" binding="addItemsBtn">
                         <constraints>
                           <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
@@ -176,6 +165,30 @@
                           <text value="Ta bort"/>
                         </properties>
                       </component>
+                      <scrollpane id="d2435" binding="itemScrollPanel">
+                        <constraints>
+                          <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                            <preferred-size width="45" height="75"/>
+                          </grid>
+                        </constraints>
+                        <properties>
+                          <autoscrolls value="false"/>
+                          <horizontalScrollBarPolicy value="30"/>
+                          <verticalScrollBarPolicy value="22"/>
+                        </properties>
+                        <border type="line">
+                          <color color="-4473925"/>
+                        </border>
+                        <children>
+                          <component id="623c4" class="javax.swing.JTable" binding="itemsTable" custom-create="true">
+                            <constraints/>
+                            <properties>
+                              <editingColumn value="-1"/>
+                              <editingRow value="-1"/>
+                            </properties>
+                          </component>
+                        </children>
+                      </scrollpane>
                     </children>
                   </grid>
                 </children>
