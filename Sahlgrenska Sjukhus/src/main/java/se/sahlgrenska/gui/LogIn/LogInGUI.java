@@ -5,13 +5,11 @@ import se.sahlgrenska.main.Driver;
 import se.sahlgrenska.sjukhus.person.employee.*;
 
 import javax.swing.*;
-import javax.swing.plaf.FontUIResource;
-import javax.swing.text.StyleContext;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.Locale;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class LogInGUI extends HelperGUI {
     private JPanel mainPanel;
@@ -25,6 +23,7 @@ public class LogInGUI extends HelperGUI {
     private JButton quitButton;
     private JPasswordField passwordField;
     private JPanel fieldPanel;
+    private JCheckBox rememberMeCheckBox;
 
     public LogInGUI() { //constructor
         init(mainPanel, "Sahlgrenska sjukhus", new Dimension(380, 400), Accessibility.ALL);
@@ -33,42 +32,89 @@ public class LogInGUI extends HelperGUI {
         quitButton.addActionListener(new QuitButtonActionListener());
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+
+        LoginDetails loginDetails = Driver.getIOManager().getRemember();
+
+        if(loginDetails != null) {
+            usernameField.setText(loginDetails.getUsername());
+            passwordField.setText(loginDetails.getPassword());
+            rememberMeCheckBox.setSelected(true);
+        }
+
+        addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                quit();
+            }
+        });
+
+
     }
 
     private class LoginButtonActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            if (usernameField.getText().length() > 0 && passwordField.getPassword().length > 0) {
-                //skapar lite dummy objects för att testa (vi har ju ingen databas ännu)
+            if(isFilled()) {
+                delay();
+
                 LoginDetails loginDetails = new LoginDetails(usernameField.getText(), passwordField.getText());
-                Employee employee = new Admin("44", 2000, 4.4f, loginDetails);
+                Employee employee = Driver.getIOManager().getEmployee(loginDetails);
 
-                usernameField.setText("");
-                passwordField.setText("");
+                if (employee != null) {
 
-                if (true) {
-                    setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+                    if(rememberMeCheckBox.isSelected()) {
+                        Driver.getIOManager().remember(loginDetails);
+                    } else {
+                        clearFields();
+                    }
 
-                    try {
-                        Thread.sleep(900);
-                    } catch (Exception exception) {}
 
-                    setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
                     setVisible(false);
                     Driver.setMainMenu(employee);
+
+                } else {
+                    JOptionPane.showMessageDialog(null, "Uppgifterna är ogiltiga.", "Warning", JOptionPane.ERROR_MESSAGE);
+                    clearFields();
                 }
             } else {
                 JOptionPane.showMessageDialog(null, "Alla fält är obligatoriska.", "Warning", JOptionPane.ERROR_MESSAGE);
             }
+
         }
+    }
+
+    private void delay() {
+        setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+
+        try {
+            Thread.sleep((int) (Math.random() * 1200));
+        } catch (Exception exception) {}
+
+        setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+    }
+
+    private boolean isFilled() {
+        return usernameField.getText().length() > 0 && passwordField.getPassword().length > 0;
+    }
+
+    private void clearFields() {
+        rememberMeCheckBox.setSelected(false);
+        usernameField.setText("");
+        passwordField.setText("");
     }
 
     private class QuitButtonActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            System.exit(0);
+            quit();
         }
     }
 
+    private void quit() {
+        if(!rememberMeCheckBox.isSelected()) {
+            Driver.getIOManager().remember(null);
+        }
+
+        System.exit(0);
+    }
 
 }
