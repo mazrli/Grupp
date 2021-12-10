@@ -75,8 +75,6 @@ public abstract class HelperGUI extends JFrame {
             }
         } else if (Util.getOS().contains("mac")) { //inställningar för mac os
             Taskbar.getTaskbar().setIconImage(UtilGUI.iconImage);
-
-
         }
     }
 
