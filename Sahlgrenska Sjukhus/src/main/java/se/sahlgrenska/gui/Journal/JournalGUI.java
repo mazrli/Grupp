@@ -85,7 +85,7 @@ public class JournalGUI extends HelperGUI {
 
                 Patient patient = new Patient();
                 Doctor doctor1 = new Doctor();
-                Journal journal = new Journal(patient, LocalDateTime.now(), KommentarTextArea.getText(), );
+                Journal journal = new Journal(patient, LocalDateTime.now(), KommentarTextArea.getText(), doctor1);
 
             }
         });
