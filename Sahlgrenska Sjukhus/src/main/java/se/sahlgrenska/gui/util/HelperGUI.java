@@ -56,18 +56,8 @@ public abstract class HelperGUI extends JFrame {
         //ej resizable till default (ni kan ändra annars)
         setResizable(false);
 
-
-        //icon och look & feel
-        if(Util.getOS().contains("windows")) { //inställningar för windows os
-            setIconImage(UtilGUI.iconImage);
-            try {
-                UIManager.setLookAndFeel(UtilGUI.windowsLook);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        } else if (Util.getOS().contains("mac")) { //inställningar för mac os
-            Taskbar.getTaskbar().setIconImage(UtilGUI.iconImage);
-        }
+        //Tilldelar ikon åt fönstret, sitter uppe i vänstra hörnet.
+        setIconImage(UtilGUI.iconImage);
 
         //packa ihop allt
         pack();

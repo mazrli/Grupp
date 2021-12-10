@@ -9,9 +9,13 @@ import se.sahlgrenska.sjukhus.person.employee.Employee;
 import se.sahlgrenska.sjukhus.person.patient.Patient;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -55,6 +59,7 @@ public class JournalGUI extends HelperGUI {
     private JScrollPane DiseaseDataScrollPane;
 
     List<Patient> patients;
+    Journal currentJournal;
 
     public JournalGUI() {
 
@@ -62,12 +67,21 @@ public class JournalGUI extends HelperGUI {
         setSize(550, 600);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
+        DefaultListModel dataList = new DefaultListModel();
+        for (int i = 0; i < 5; i++) {
+            JLabel label = new JLabel("Hasse" + i);
+            dataList.add(i, label.getText());
+        }
+        JournalDataList.setModel(dataList);
+
         patients = Driver.getHospital().getArchive().getPatients().get(Driver.getCurrentUser());
 
         RaderaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                if (JournalDataList.getSelectedValue() != null) {
+                    dataList.removeElement(JournalDataList.getSelectedValue());
+                }
             }
         });
 
@@ -104,6 +118,13 @@ public class JournalGUI extends HelperGUI {
             public void actionPerformed(ActionEvent e) {
                 setVisible(false);
                 Driver.getMainMenu().setVisible(true);
+            }
+        });
+
+        JournalDataList.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                System.out.println(JournalDataList.getSelectedValue().toString());
             }
         });
     }

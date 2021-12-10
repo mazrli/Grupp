@@ -7,6 +7,7 @@ import se.sahlgrenska.gui.LogIn.LogInGUI;
 import se.sahlgrenska.gui.Menu.MenuGUI;
 import se.sahlgrenska.gui.Order.Order;
 import se.sahlgrenska.gui.util.HelperGUI;
+import se.sahlgrenska.gui.util.UtilGUI;
 import se.sahlgrenska.sjukhus.Address;
 import se.sahlgrenska.sjukhus.Archive;
 import se.sahlgrenska.sjukhus.Hospital;
@@ -14,6 +15,8 @@ import se.sahlgrenska.sjukhus.item.Item;
 import se.sahlgrenska.sjukhus.person.Person;
 import se.sahlgrenska.sjukhus.person.employee.Employee;
 
+import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -57,6 +60,16 @@ public class Driver {
 
     private static void setupOS() {
         //todo: set up stuff
+        //icon och look & feel
+        if(Util.getOS().contains("windows")) { //inställningar för windows os
+            try {
+                UIManager.setLookAndFeel(UtilGUI.windowsLook);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else if (Util.getOS().contains("mac")) { //inställningar för mac os
+            Taskbar.getTaskbar().setIconImage(UtilGUI.iconImage);
+        }
     }
 
     public static MenuGUI getMainMenu() {
