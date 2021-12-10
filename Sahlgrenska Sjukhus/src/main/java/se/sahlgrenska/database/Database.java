@@ -39,4 +39,12 @@ public class Database {
         return connection != null;
     }
 
+    public void close() {
+        try {
+            connection.close();
+            System.out.println("Connection closed.");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

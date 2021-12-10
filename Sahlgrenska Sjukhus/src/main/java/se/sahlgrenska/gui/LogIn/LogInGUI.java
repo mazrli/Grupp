@@ -1,6 +1,7 @@
 package se.sahlgrenska.gui.LogIn;
 
 import se.sahlgrenska.gui.util.HelperGUI;
+import se.sahlgrenska.gui.util.UtilGUI;
 import se.sahlgrenska.main.Driver;
 import se.sahlgrenska.sjukhus.person.employee.*;
 
@@ -43,7 +44,7 @@ public class LogInGUI extends HelperGUI {
 
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
-                quit();
+                Driver.quit();
             }
         });
 
@@ -71,11 +72,11 @@ public class LogInGUI extends HelperGUI {
                     Driver.setMainMenu(employee);
 
                 } else {
-                    JOptionPane.showMessageDialog(null, "Uppgifterna är ogiltiga.", "Warning", JOptionPane.ERROR_MESSAGE);
+                    UtilGUI.error("Uppgifterna är ogiltiga");
                     clearFields();
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "Alla fält är obligatoriska.", "Warning", JOptionPane.ERROR_MESSAGE);
+                UtilGUI.error("Alla fält är obligatoriska");
             }
 
         }
@@ -104,16 +105,15 @@ public class LogInGUI extends HelperGUI {
     private class QuitButtonActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            quit();
+            checkSave();
+            Driver.quit();
         }
     }
 
-    private void quit() {
+    private void checkSave() {
         if(!rememberMeCheckBox.isSelected()) {
             Driver.getIOManager().remember(null);
         }
-
-        System.exit(0);
     }
 
 }

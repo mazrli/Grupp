@@ -34,8 +34,6 @@ public class Driver {
     public static void main(String[] args) {
         
         setupOS();
-        
-
         logInGUI = new LogInGUI();
 
         LogInGUI logInGUI = new LogInGUI();
@@ -48,6 +46,13 @@ public class Driver {
 
         hospital = new Hospital("Sahlgrenska sjukhuset", 200, new HashMap<Item, Integer>(), new ArrayList<Person>(), new Archive(), 500000,
                 new Address("Blå stråket 5", "413 45", "Göteborg"));
+    }
+
+    //här kan vi påverka vad som händer i programmet innan det avslutas (t.ex spara data)
+    public static void quit() {
+        ioManger.closeDB();
+
+        System.exit(0);
     }
 
     private static void setupOS() {

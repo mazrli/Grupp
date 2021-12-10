@@ -25,7 +25,6 @@ public class IOManager {
         }
     }
 
-
     public Employee getEmployee(LoginDetails loginDetails) {
         Employee employee = null;
 
@@ -119,5 +118,9 @@ public class IOManager {
         }
 
         return loginDetails;
+    }
+
+    public void closeDB() {
+        database.close();
     }
 }
