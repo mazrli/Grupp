@@ -40,9 +40,7 @@
             <preferred-size width="170" height="547"/>
           </grid>
         </constraints>
-        <properties>
-          <background color="-12828863"/>
-        </properties>
+        <properties/>
         <border type="none"/>
         <children>
           <grid id="644a4" binding="DataListPanel" layout-manager="GridLayoutManager" row-count="4" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
