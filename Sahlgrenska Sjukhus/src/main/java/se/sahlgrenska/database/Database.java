@@ -28,7 +28,6 @@ public class Database {
             e.printStackTrace();
         }
     }
-
     //getter
     public Connection getConnection() {
         return connection;

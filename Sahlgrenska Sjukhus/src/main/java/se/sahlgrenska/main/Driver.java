@@ -32,7 +32,9 @@ public class Driver {
     public static final List<HelperGUI> subMenus = new ArrayList<>();
 
     public static void main(String[] args) {
-        
+
+        hospital = new Hospital("Sahlgrenska sjukhuset", 200, new HashMap<Item, Integer>(), new ArrayList<Person>(), new Archive(), 500000, new Address("Blå stråket 5", "413 45", "Göteborg"));
+
         setupOS();
         logInGUI = new LogInGUI();
 
@@ -44,8 +46,6 @@ public class Driver {
 
         logInGUI.setVisible(true);
 
-        hospital = new Hospital("Sahlgrenska sjukhuset", 200, new HashMap<Item, Integer>(), new ArrayList<Person>(), new Archive(), 500000,
-                new Address("Blå stråket 5", "413 45", "Göteborg"));
     }
 
     //här kan vi påverka vad som händer i programmet innan det avslutas (t.ex spara data)
