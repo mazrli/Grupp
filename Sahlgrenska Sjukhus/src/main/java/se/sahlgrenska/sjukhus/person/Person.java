@@ -3,13 +3,15 @@ package se.sahlgrenska.sjukhus.person;
 import se.sahlgrenska.sjukhus.Address;
 
 public class Person {
-    private String name;
+    private String firstName;
+    private String lastName;
     private String personNumber;
     private String phoneNumber;
     private Address address;
 
-    public Person(String name, String personNumber, String phoneNumber, Address address) {
-        this.name = name;
+    public Person(String firstName, String lastName, String personNumber, String phoneNumber, Address address) {
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.personNumber = personNumber;
         this.phoneNumber = phoneNumber;
         this.address = address;
@@ -31,7 +33,11 @@ public class Person {
         return personNumber;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
     }
 }

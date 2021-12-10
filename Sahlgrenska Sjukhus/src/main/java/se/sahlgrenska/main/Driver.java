@@ -1,7 +1,6 @@
 package se.sahlgrenska.main;
 
 import se.sahlgrenska.database.IOManager;
-
 import se.sahlgrenska.gui.Booking.BookingGUI;
 import se.sahlgrenska.gui.Journal.JournalGUI;
 import se.sahlgrenska.gui.LogIn.LogInGUI;
@@ -15,7 +14,6 @@ import se.sahlgrenska.sjukhus.item.Item;
 import se.sahlgrenska.sjukhus.person.Person;
 import se.sahlgrenska.sjukhus.person.employee.Employee;
 
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -44,6 +42,7 @@ public class Driver {
         //lägg till alla menyer i subMenus
         subMenus.add(new JournalGUI());
         subMenus.add(new BookingGUI());
+        subMenus.add(new Order());
 
         logInGUI.setVisible(true);
     }
@@ -72,6 +71,7 @@ public class Driver {
         return logInGUI;
     }
 
+
     public static IOManager getIOManager() {
         return ioManger;
     }
@@ -87,5 +87,6 @@ public class Driver {
     public static Hospital getHospital() {
         return hospital;
     }
+
 
 }
