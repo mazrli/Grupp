@@ -9,9 +9,6 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Collection;
-
-import static java.util.Collection.*;
 
 public class JournalGUI extends HelperGUI {
 
@@ -84,7 +81,7 @@ public class JournalGUI extends HelperGUI {
                 String doctor = LäkareTextField.getText();
 
                 ArrayList<Journal> journals = new ArrayList<Journal>();
-                journals.add( new Journal{name, personN, phoneN, disease, condition, room, doctor});
+                journals.add(new name);
             }
         });
 
