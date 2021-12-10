@@ -2,6 +2,7 @@ package se.sahlgrenska.gui.util;
 
 import se.sahlgrenska.gui.Menu.MenuGUI;
 import se.sahlgrenska.main.Driver;
+import se.sahlgrenska.main.Util;
 import se.sahlgrenska.sjukhus.person.employee.Accessibility;
 
 import javax.imageio.ImageIO;
@@ -56,12 +57,6 @@ public abstract class HelperGUI extends JFrame {
         //ej resizable till default (ni kan ändra annars)
         setResizable(false);
 
-        //icon
-        try {
-            setIconImage(ImageIO.read(Objects.requireNonNull(getClass().getResource("/icon.png"))));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
         //packa ihop allt
         pack();
@@ -69,16 +64,18 @@ public abstract class HelperGUI extends JFrame {
         //lägg den i center av skärmen.
         setLocationRelativeTo(null);
 
-        //look and feel
-        if(false) { //tog bort detta då programmet crashar på mac datorer.
+
+        //icon och look & feel
+        if(Util.getOS().contains("windows")) { //inställningar för windows os
+            setIconImage(UtilGUI.iconImage);
             try {
                 UIManager.setLookAndFeel(UtilGUI.windowsLook);
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        } else if (Util.getOS().contains("mac")) { //inställningar för mac os
+            Taskbar.getTaskbar().setIconImage(UtilGUI.iconImage);
         }
-
-
     }
 
     //toggla main menyn
