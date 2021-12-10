@@ -18,4 +18,20 @@ public class Person {
     public Person() {
 
     }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public String getPersonNumber() {
+        return personNumber;
+    }
+
+    public String getName() {
+        return name;
+    }
 }

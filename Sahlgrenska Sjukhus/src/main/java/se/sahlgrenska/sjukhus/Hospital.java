@@ -26,7 +26,11 @@ public class Hospital {
         this.address = address;
     }
 
+    public Archive getArchive() {
+        return archive;
+    }
 
-
-
+    public void setArchive(Archive archive) {
+        this.archive = archive;
+    }
 }

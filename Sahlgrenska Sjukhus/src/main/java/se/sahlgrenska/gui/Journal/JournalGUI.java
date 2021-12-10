@@ -5,13 +5,16 @@ import se.sahlgrenska.main.Driver;
 import se.sahlgrenska.sjukhus.Journal;
 import se.sahlgrenska.sjukhus.person.employee.Accessibility;
 import se.sahlgrenska.sjukhus.person.employee.Doctor;
+import se.sahlgrenska.sjukhus.person.employee.Employee;
 import se.sahlgrenska.sjukhus.person.patient.Patient;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
 public class JournalGUI extends HelperGUI {
 
@@ -51,12 +54,15 @@ public class JournalGUI extends HelperGUI {
     private JScrollPane JournalDataScrollPane;
     private JScrollPane DiseaseDataScrollPane;
 
+    List<Patient> patients;
+
     public JournalGUI() {
 
         init(MainPanel, "Hantera journaler", Accessibility.DOCTOR);
         setSize(550, 600);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
+        patients = Driver.getHospital().getArchive().getPatients().get(Driver.getCurrentUser());
 
         RaderaButton.addActionListener(new ActionListener() {
             @Override
@@ -85,9 +91,11 @@ public class JournalGUI extends HelperGUI {
 
                 Patient patient = new Patient();
 
-                Journal journal = new Journal(patient, LocalDateTime.now(), KommentarTextArea.getText(), (Doctor) Driver.getCurrentUser());
+                Journal journal = new Journal(patient, LocalDateTime.now(), KommentarTextArea.getText(), Driver.getCurrentUser());
 
+                Driver.getHospital().getArchive().getJournals().get(patient).add(journal);
 
+                System.out.println(journal.toString());
             }
         });
 
@@ -98,5 +106,14 @@ public class JournalGUI extends HelperGUI {
                 Driver.getMainMenu().setVisible(true);
             }
         });
+    }
+
+    public void LoadJournal() {
+        List<Journal> journals = new ArrayList<Journal>();
+        for (Patient patient : patients) {
+            journals.addAll(Driver.getHospital().getArchive().getJournals().get(patient));
+            JLabel label = new JLabel(patient.getName());
+            JournalDataList.add(label);
+        }
     }
 }
