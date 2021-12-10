@@ -72,10 +72,12 @@ public abstract class HelperGUI extends JFrame {
         setLocationRelativeTo(null);
 
         //look and feel
-        try {
-            UIManager.setLookAndFeel(windowsLook);
-        } catch (Exception e) {
-            e.printStackTrace();
+        if(false) { //tog bort detta då programmet crashar på mac datorer.
+            try {
+                UIManager.setLookAndFeel(windowsLook);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
     }
