@@ -81,7 +81,7 @@ public class JournalGUI extends HelperGUI {
                 String doctor = LäkareTextField.getText();
 
                 ArrayList<Journal> journals = new ArrayList<Journal>();
-                journals.add(new name);
+
             }
         });
 
