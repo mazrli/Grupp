@@ -26,7 +26,6 @@ public class IOManager {
     }
 
 
-
     public Employee getEmployee(LoginDetails loginDetails) {
         Employee employee = null;
 
@@ -54,7 +53,7 @@ public class IOManager {
 
     /*
         metod för att köra mysql procedures
-        oviktigt att veta hur den funkar
+        oviktigt att veta hur den fungerar
      */
     private ResultSet callProcedure(String name, Object... args) {
 
