@@ -1,6 +1,7 @@
 package se.sahlgrenska.gui.Booking;
 
 import se.sahlgrenska.gui.util.HelperGUI;
+import se.sahlgrenska.gui.util.UtilGUI;
 import se.sahlgrenska.main.Driver;
 import se.sahlgrenska.main.Util;
 import se.sahlgrenska.sjukhus.Booking;
@@ -94,13 +95,6 @@ public class BookingGUI extends HelperGUI {
     }
 
 
-    private void changeJTableHeaderText(JTable table, Color color){
-        JTableHeader tableHeader = table.getTableHeader();
-        tableHeader.setReorderingAllowed(false);
-        tableHeader.setOpaque(false);
-        tableHeader.setBackground(color);
-    }
-
 
     private void createUIComponents() {
         // TODO: place custom component creation code here
@@ -109,7 +103,7 @@ public class BookingGUI extends HelperGUI {
         String [] columns = {"Item name","Quantity"};
         String [][] data = {{"Defibrilator","5"},{"MRI","2"},{"Panodil", "10"},{"Defibrilator","5"},{"MRI","2"},{"Panodil", "10"},{"Defibrilator","5"},{"MRI","2"},{"Panodil", "10"},{"Defibrilator","5"},{"MRI","2"},{"Panodil", "10"}};
         itemsTable = new JTable(data,columns);
-        changeJTableHeaderText(itemsTable, tableHeaderColour);
+        UtilGUI.changeJTableHeaderColour(itemsTable, tableHeaderColour);
 
 
     }

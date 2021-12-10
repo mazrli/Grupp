@@ -2,21 +2,20 @@ package se.sahlgrenska.gui.util;
 
 import se.sahlgrenska.gui.Menu.MenuGUI;
 import se.sahlgrenska.main.Driver;
+import se.sahlgrenska.main.Util;
 import se.sahlgrenska.sjukhus.person.employee.Accessibility;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.Objects;
 
 public abstract class HelperGUI extends JFrame {
 
     //menyn accessibility level;
     private Accessibility accessibility;
-
-    private String windowsLook = "com.sun.java.swing.plaf.windows.WindowsLookAndFeel";
-    private String appleLook = "com.sun.java.swing.plaf.windows.WindowsLookAndFeel";
 
     //500 * 500 är default size
     private static final Dimension defaultSize = new Dimension(500, 500);
@@ -57,11 +56,17 @@ public abstract class HelperGUI extends JFrame {
         //ej resizable till default (ni kan ändra annars)
         setResizable(false);
 
-        //icon
-        try {
-            setIconImage(ImageIO.read(Objects.requireNonNull(getClass().getResource("/icon.png"))));
-        } catch (IOException e) {
-            e.printStackTrace();
+
+        //icon och look & feel
+        if(Util.getOS().contains("windows")) { //inställningar för windows os
+            setIconImage(UtilGUI.iconImage);
+            try {
+                UIManager.setLookAndFeel(UtilGUI.windowsLook);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else if (Util.getOS().contains("mac")) { //inställningar för mac os
+            Taskbar.getTaskbar().setIconImage(UtilGUI.iconImage);
         }
 
         //packa ihop allt
@@ -70,23 +75,17 @@ public abstract class HelperGUI extends JFrame {
         //lägg den i center av skärmen.
         setLocationRelativeTo(null);
 
-        //look and feel
-        try {
-            UIManager.setLookAndFeel(windowsLook);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
     }
 
-    //toggla main menyn
+    //toggle (deprecated, använd Driver.getMainMenu() istället)
     @Deprecated
     public static void toggleMainMenu() {
         Driver.getMainMenu().setVisible(!Driver.getMainMenu().isVisible());
     }
 
 
-    //getter
+    //getter (deprecated, använd Driver.getMainMenu() istället)
     @Deprecated
     public static MenuGUI getMainMenu() {
         return Driver.getMainMenu();
