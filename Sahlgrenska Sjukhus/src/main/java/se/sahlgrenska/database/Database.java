@@ -25,8 +25,7 @@ public class Database {
             System.out.println("Connection successful.");
 
         } catch (SQLException | ClassNotFoundException e) {
-            System.out.println("unsuccessful connection.");
-            //e.printStackTrace();
+            e.printStackTrace();
         }
     }
 
