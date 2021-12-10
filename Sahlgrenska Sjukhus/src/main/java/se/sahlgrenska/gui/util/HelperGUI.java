@@ -78,10 +78,6 @@ public abstract class HelperGUI extends JFrame {
             }
         }
 
-        Image image = Toolkit.getDefaultToolkit().getImage(getClass().getClassLoader().getResource("icon.png"));
-
-
-        Taskbar.getTaskbar().setIconImage(image);
 
     }
 
