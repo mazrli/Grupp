@@ -35,7 +35,7 @@ public class Driver {
 
     public static void main(String[] args) {
 
-        hospital = new Hospital("Sahlgrenska sjukhuset", 200, new HashMap<Item, Integer>(), new ArrayList<Person>(), new Archive(), 500000, new Address("Blå stråket 5", "413 45", "Göteborg"));
+        hospital = new Hospital("Sahlgrenska sjukhuset", 200, new HashMap<Item, Integer>(), new ArrayList<Person>(), new Archive(), 500000, new Address("Göteborg", "Blå stråket 5", "413 45", "Åmål"));
 
         setupOS();
         logInGUI = new LogInGUI();
