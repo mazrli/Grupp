@@ -10,6 +10,8 @@ public class UtilGUI {
     public static Font biggerFont = new Font("JetBrains Mono", Font.PLAIN, 18);
     public static Font normalFont = new Font("JetBrains Mono", Font.PLAIN, 12);
 
+    public static String windowsLook = "com.sun.java.swing.plaf.windows.WindowsLookAndFeel";
+    public static String appleLook = "com.sun.java.swing.plaf.windows.WindowsLookAndFeel";
 
 
 
