@@ -14,6 +14,7 @@ import se.sahlgrenska.sjukhus.item.Item;
 import se.sahlgrenska.sjukhus.person.Person;
 import se.sahlgrenska.sjukhus.person.employee.Employee;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -30,6 +31,10 @@ public class Driver {
     public static final List<HelperGUI> subMenus = new ArrayList<>();
 
     public static void main(String[] args) {
+        
+        setupOS();
+        
+
         logInGUI = new LogInGUI();
 
         LogInGUI logInGUI = new LogInGUI();
@@ -42,6 +47,10 @@ public class Driver {
 
         hospital = new Hospital("Sahlgrenska sjukhuset", 200, new HashMap<Item, Integer>(), new ArrayList<Person>(), new Archive(), 500000,
                 new Address("Blå stråket 5", "413 45", "Göteborg"));
+    }
+
+    private static void setupOS() {
+        //todo: set up stuff
     }
 
     public static MenuGUI getMainMenu() {
