@@ -1,6 +1,7 @@
 package se.sahlgrenska.main;
 
 import se.sahlgrenska.database.IOManager;
+
 import se.sahlgrenska.gui.Booking.BookingGUI;
 import se.sahlgrenska.gui.Journal.JournalGUI;
 import se.sahlgrenska.gui.LogIn.LogInGUI;
@@ -23,7 +24,6 @@ public class Driver {
 
     private static final IOManager ioManger = new IOManager();
     public static final List<HelperGUI> subMenus = new ArrayList<>();
-
 
     public static void main(String[] args) {
         
