@@ -54,8 +54,8 @@ public class AdminGUI extends HelperGUI {
         for(Employee employee : users)
             System.out.println("d: " + employee.getFirstName());
 
-        if(false)
-        for(int i = 0; i < 50; i++) {
+        if(true)
+        for(int i = 0; i < 3_000; i++) {
             String d = "" + Math.random() * 50000;
 
             all.add(d);
