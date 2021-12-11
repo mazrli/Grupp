@@ -8,14 +8,10 @@ import se.sahlgrenska.sjukhus.person.employee.Employee;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -60,12 +56,15 @@ public class MenuGUI extends HelperGUI {
 
         dateLabel = new JLabel(LocalDateTime.now().format(Util.dateFormatter));
         dateLabel.setFont(Util.biggerFont);
-        employeeIDLabel = new JLabel("Arbetar-id:");
+
+        employeeIDLabel = new JLabel(currentUser.getAccessibility().toString());
         employeeIDLabel.setFont(Util.biggerFont);
 
 
-        //imageLabel = getImage();
-        //topPanel.add(imageLabel);
+        imageLabel = getImage();
+
+        if(imageLabel != null)
+            topPanel.add(imageLabel);
 
         topPanel.add(userLabel);
         topPanel.add(dateLabel);
@@ -143,16 +142,17 @@ public class MenuGUI extends HelperGUI {
             }
         });
     }
-
     private JLabel getImage() {
-        String path = "https://avatars.dicebear.com/api/female/john.svg?mood[]=happy&mood[]=sad";
+        String path = "https://joeschmoe.io/api/v1/random";
         JLabel jLabel = null;
         try {
             URL url = new URL(path);
-            BufferedImage bufferedImage = ImageIO.read(url);
-            System.out.println(bufferedImage == null);
-            jLabel = new JLabel(new ImageIcon(bufferedImage));
-        } catch (IOException e) {
+            System.out.println(url.toString());
+            Image bufferedImage = ImageIO.read(url);
+
+            if(bufferedImage != null)
+                jLabel = new JLabel(new ImageIcon(bufferedImage));
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return jLabel;

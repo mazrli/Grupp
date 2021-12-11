@@ -4,5 +4,13 @@ public enum Accessibility {
     NONE,
     DOCTOR,
     RECEPTIONIST,
-    ALL,
+    ALL;
+
+
+    public String toString() {
+        if(this.equals(Accessibility.ALL))
+            return "ADMIN";
+        else
+            return this + "";
+    }
 }
