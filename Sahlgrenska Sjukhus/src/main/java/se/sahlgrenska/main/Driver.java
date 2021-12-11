@@ -1,5 +1,6 @@
 package se.sahlgrenska.main;
 
+import org.w3c.dom.html.HTMLBRElement;
 import se.sahlgrenska.database.IOManager;
 import se.sahlgrenska.gui.Booking.BookingGUI;
 import se.sahlgrenska.gui.Journal.JournalGUI;
@@ -34,17 +35,13 @@ public class Driver {
     private static final IOManager ioManger = new IOManager();
     public static final List<HelperGUI> subMenus = new ArrayList<>();
 
+    private static boolean hasBeenSetup = false;
+
     public static void main(String[] args) {
         setupOS();
         logInGUI = new LogInGUI();
     }
 
-    //här kan vi påverka vad som händer i programmet innan det avslutas (t.ex spara data)
-    public static void quit() {
-        ioManger.closeDB();
-
-        System.exit(0);
-    }
 
     public static void setup(Employee employee) {
         currentUser = employee;
@@ -58,6 +55,13 @@ public class Driver {
         subMenus.add(new AdminGUI());
 
         mainMenu = new MenuGUI(employee);
+    }
+
+    //här kan vi påverka vad som händer i programmet innan det avslutas (t.ex spara data)
+    public static void quit() {
+        ioManger.closeDB();
+
+        System.exit(0);
     }
 
     private static void setupOS() {
@@ -78,7 +82,9 @@ public class Driver {
         return mainMenu;
     }
 
-
+    public static List<HelperGUI> getSubMenus() {
+        return subMenus;
+    }
 
     public static LogInGUI getLoginGUI() {
         return logInGUI;
