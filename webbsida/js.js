@@ -41,7 +41,8 @@ function validate(){
     var password = document.getElementById("password").value;
     if (user == "Admin" && password== "user"){
         
-        window.location.href="./menu.html";
+        window.Location.href="./menu.html";
+        
         return false;
         
 
