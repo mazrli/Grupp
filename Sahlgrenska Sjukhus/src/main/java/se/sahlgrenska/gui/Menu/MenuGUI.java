@@ -147,13 +147,20 @@ public class MenuGUI extends HelperGUI {
         stäng alla fönster och öppna logga in menyn.
      */
     private void logout() {
+        //remove current user
         Driver.setCurrentUser(null);
 
-        for(HelperGUI subMenu : Driver.subMenus)
+        //hide all submenus
+        for(HelperGUI subMenu : Driver.getSubMenus())
             subMenu.setVisible(false);
 
+        //remove submenus form the list
+        Driver.getSubMenus().clear();
+
+        //hide main menu
         Driver.getMainMenu().setVisible(false);
 
+        //show login menu
         Driver.getLoginGUI().setVisible(true);
     }
 
