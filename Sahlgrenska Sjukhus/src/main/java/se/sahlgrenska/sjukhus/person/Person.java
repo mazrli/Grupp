@@ -8,11 +8,13 @@ public class Person {
     private final String personNumber;
     private final String phoneNumber;
     private final Address address;
+    private final Gender gender;
 
-    public Person(String firstName, String lastName, String personNumber, String phoneNumber, Address address) {
+    public Person(String firstName, String lastName, String personNumber, Gender gender, String phoneNumber, Address address) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.personNumber = personNumber;
+        this.gender = gender;
         this.phoneNumber = phoneNumber;
         this.address = address;
     }
@@ -36,5 +38,9 @@ public class Person {
 
     public String getLastName() {
         return lastName;
+    }
+
+    public Gender getGender() {
+        return gender;
     }
 }

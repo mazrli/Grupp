@@ -6,12 +6,17 @@ import se.sahlgrenska.main.Util;
 import se.sahlgrenska.sjukhus.person.employee.Accessibility;
 import se.sahlgrenska.sjukhus.person.employee.Employee;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,10 +35,9 @@ public class MenuGUI extends HelperGUI {
     private JLabel employeeIDLabel;
     private JLabel dateLabel;
 
-    private JTextField userTextField;
-    private JTextField employeeIDTextField;
-
     private JButton logoutButton;
+
+    private JLabel imageLabel;
 
 
     private final Employee currentUser;
@@ -50,23 +54,22 @@ public class MenuGUI extends HelperGUI {
         GridLayout topPanelLayout = new GridLayout(2, 3, 10, 10);
         topPanel.setLayout(topPanelLayout);
         topPanel.setBackground(Color.ORANGE);
-        userLabel = new JLabel("Användare:");
+
+        userLabel = new JLabel(Driver.getCurrentUser().getFirstName() + " " + Driver.getCurrentUser().getLastName());
         userLabel.setFont(Util.biggerFont);
+
         dateLabel = new JLabel(LocalDateTime.now().format(Util.dateFormatter));
         dateLabel.setFont(Util.biggerFont);
         employeeIDLabel = new JLabel("Arbetar-id:");
         employeeIDLabel.setFont(Util.biggerFont);
-        userTextField = new JTextField(currentUser.getLoginDetails().getUsername());
-        userTextField.setFont(Util.biggerFont);
-        userTextField.setEditable(false);
-        employeeIDTextField = new JTextField(currentUser.getId());
-        employeeIDTextField.setFont(Util.biggerFont);
-        employeeIDTextField.setEditable(false);
+
+
+        //imageLabel = getImage();
+        //topPanel.add(imageLabel);
+
         topPanel.add(userLabel);
-        topPanel.add(userTextField);
         topPanel.add(dateLabel);
         topPanel.add(employeeIDLabel);
-        topPanel.add(employeeIDTextField);
         topPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         mainPanel.add(topPanel, BorderLayout.NORTH);
 
@@ -139,6 +142,20 @@ public class MenuGUI extends HelperGUI {
                 logout();
             }
         });
+    }
+
+    private JLabel getImage() {
+        String path = "https://avatars.dicebear.com/api/female/john.svg?mood[]=happy&mood[]=sad";
+        JLabel jLabel = null;
+        try {
+            URL url = new URL(path);
+            BufferedImage bufferedImage = ImageIO.read(url);
+            System.out.println(bufferedImage == null);
+            jLabel = new JLabel(new ImageIcon(bufferedImage));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return jLabel;
     }
 
     /*
