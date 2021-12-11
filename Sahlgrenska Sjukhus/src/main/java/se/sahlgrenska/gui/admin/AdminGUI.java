@@ -8,6 +8,8 @@ import se.sahlgrenska.sjukhus.person.employee.Employee;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -55,7 +57,7 @@ public class AdminGUI extends HelperGUI {
             System.out.println("d: " + employee.getFirstName());
 
         if(true)
-        for(int i = 0; i < 3_000; i++) {
+        for(int i = 0; i < 15_000; i++) {
             String d = "" + Math.random() * 50000;
 
             all.add(d);
@@ -74,6 +76,13 @@ public class AdminGUI extends HelperGUI {
                 List<String> results = Util.getSearchResults(all, searchField.getText());
 
                 populateList(results);
+            }
+        });
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setVisible(false);
+                Driver.getMainMenu().setVisible(true);
             }
         });
     }

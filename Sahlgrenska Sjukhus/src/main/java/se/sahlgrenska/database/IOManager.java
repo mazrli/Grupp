@@ -1,23 +1,16 @@
 package se.sahlgrenska.database;
 
-import com.mysql.cj.log.Log;
 import se.sahlgrenska.sjukhus.Address;
-import se.sahlgrenska.sjukhus.Archive;
+import se.sahlgrenska.sjukhus.person.Gender;
 import se.sahlgrenska.sjukhus.person.Person;
 import se.sahlgrenska.sjukhus.person.employee.*;
 
-import javax.swing.*;
 import java.io.*;
 import java.net.URISyntaxException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.*;
 import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public class IOManager {
@@ -44,7 +37,7 @@ public class IOManager {
                     String fistName = resultSet.getString(7);
                     String lastName = resultSet.getString(8);
                     String phone = resultSet.getString(9);
-                    String gender = resultSet.getString(10);
+                    Gender gender = Gender.valueOf(resultSet.getString(10));
 
 
                     String country = resultSet.getString(13);
@@ -54,7 +47,7 @@ public class IOManager {
 
                     Address address = new Address(country, city, street, zip);
 
-                    Person p = new Person(fistName, lastName, personNum, phone, address);
+                    Person p = new Person(fistName, lastName, personNum, gender, phone, address);
 
 
                     Employee employee = new Employee(id, salary, workingHours, accessibility, loginDetails);
@@ -88,8 +81,16 @@ public class IOManager {
                     Accessibility accessibility = Accessibility.valueOf(resultSet.getString(5));
 
                     //todo get person
+                    String personNumm = resultSet.getString(6);
+                    String firstName = resultSet.getString(7);
+                    String lastName = resultSet.getString(8);
+                    String phoneNum= resultSet.getString(9);
+                    Gender gender = Gender.valueOf(resultSet.getString(10));
+                    int addressID = resultSet.getInt(11);
 
-                    employee = new Employee(id, salary, workingHours, accessibility, loginDetails);
+                    Person person = new Person(firstName, lastName, personNumm, gender, phoneNum, null);
+
+                    employee = new Employee(person, id, salary, workingHours, accessibility, loginDetails);
 
                 }
 
