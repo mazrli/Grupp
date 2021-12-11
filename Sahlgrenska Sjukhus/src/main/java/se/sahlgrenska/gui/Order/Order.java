@@ -5,6 +5,8 @@ import se.sahlgrenska.gui.util.HelperGUI;
 import se.sahlgrenska.sjukhus.person.employee.Accessibility;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class Order extends HelperGUI {
 
@@ -17,7 +19,6 @@ public class Order extends HelperGUI {
     private JButton Add;
     private JButton Cancel;
     private JButton SendOrder;
-    private JTextField OrderNotes;
     private JTextField textField1;
     private JFormattedTextField ItemName1;
     private JFormattedTextField Quantity2;
@@ -30,7 +31,7 @@ public class Order extends HelperGUI {
     private JLabel Totalsum;
     private JLabel ItemName;
     private JPanel table;
-
+    private JTextArea textArea;
 
 
     public Order() {
@@ -39,7 +40,53 @@ public class Order extends HelperGUI {
 
         init(panel1, "Order", Accessibility.RECEPTIONIST );
 
+        Cancel.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        });
+
+
+
+
+
+
+
+
     }
+
+  /*  public  class SendOrder extends JFrame implements ActionListener {
+        private JLabel usernamePanel;
+
+        public SendOrder(){
+            setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        }
+
+
+
+
+
+
+        public static void main(String[ ] args){
+            JFrame f = new JFrame("SendOrder");
+            JButton b = new JButton("Skicka");
+            b.setBackground(Color.black);
+            f.add(b);
+            f.setVisible(true);
+            f.setLayout(null);
+
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+
+        }
+    }*/
+
+
+
+
 
 
 
