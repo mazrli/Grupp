@@ -6,6 +6,7 @@ import se.sahlgrenska.gui.Journal.JournalGUI;
 import se.sahlgrenska.gui.LogIn.LogInGUI;
 import se.sahlgrenska.gui.Menu.MenuGUI;
 import se.sahlgrenska.gui.Order.Order;
+import se.sahlgrenska.gui.admin.AdminGUI;
 import se.sahlgrenska.gui.util.HelperGUI;
 import se.sahlgrenska.gui.util.UtilGUI;
 import se.sahlgrenska.sjukhus.Address;
@@ -34,20 +35,8 @@ public class Driver {
     public static final List<HelperGUI> subMenus = new ArrayList<>();
 
     public static void main(String[] args) {
-
-        hospital = new Hospital("Sahlgrenska sjukhuset", 200, new HashMap<Item, Integer>(), new ArrayList<Person>(), new Archive(), 500000, new Address("Göteborg", "Blå stråket 5", "413 45", "Åmål"));
-
         setupOS();
         logInGUI = new LogInGUI();
-
-        LogInGUI logInGUI = new LogInGUI();
-
-        //lägg till alla menyer i subMenus
-        subMenus.add(new JournalGUI());
-        subMenus.add(new BookingGUI());
-        subMenus.add(new Order());
-
-        logInGUI.setVisible(true);
     }
 
     //här kan vi påverka vad som händer i programmet innan det avslutas (t.ex spara data)
@@ -55,6 +44,20 @@ public class Driver {
         ioManger.closeDB();
 
         System.exit(0);
+    }
+
+    public static void setup(Employee employee) {
+        currentUser = employee;
+
+        hospital = new Hospital("Sahlgrenska sjukhuset", 200, new HashMap<Item, Integer>(), new ArrayList<Person>(), new Archive(), 500000, new Address("Göteborg", "Blå stråket 5", "413 45", "Åmål"));
+
+        //lägg till alla menyer i subMenus
+        subMenus.add(new JournalGUI());
+        subMenus.add(new BookingGUI());
+        subMenus.add(new Order());
+        subMenus.add(new AdminGUI());
+
+        mainMenu = new MenuGUI(employee);
     }
 
     private static void setupOS() {
@@ -75,10 +78,7 @@ public class Driver {
         return mainMenu;
     }
 
-    public static void setMainMenu(Employee employee) {
-        currentUser = employee;
-        mainMenu = new MenuGUI(employee);
-    }
+
 
     public static LogInGUI getLoginGUI() {
         return logInGUI;

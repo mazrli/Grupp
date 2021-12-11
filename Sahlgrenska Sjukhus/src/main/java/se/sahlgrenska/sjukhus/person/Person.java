@@ -3,11 +3,11 @@ package se.sahlgrenska.sjukhus.person;
 import se.sahlgrenska.sjukhus.Address;
 
 public class Person {
-    private String firstName;
-    private String lastName;
-    private String personNumber;
-    private String phoneNumber;
-    private Address address;
+    private final String firstName;
+    private final String lastName;
+    private final String personNumber;
+    private final String phoneNumber;
+    private final Address address;
 
     public Person(String firstName, String lastName, String personNumber, String phoneNumber, Address address) {
         this.firstName = firstName;
@@ -17,9 +17,6 @@ public class Person {
         this.address = address;
     }
 
-    public Person() {
-
-    }
 
     public Address getAddress() {
         return address;

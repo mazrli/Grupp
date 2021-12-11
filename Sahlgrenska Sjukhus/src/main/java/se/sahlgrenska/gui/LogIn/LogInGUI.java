@@ -48,7 +48,7 @@ public class LogInGUI extends HelperGUI {
             }
         });
 
-
+        setVisible(true);
     }
 
     private class LoginButtonActionListener implements ActionListener {
@@ -69,7 +69,7 @@ public class LogInGUI extends HelperGUI {
                     }
 
                     setVisible(false);
-                    Driver.setMainMenu(employee);
+                    Driver.setup(employee);
 
                 } else {
                     UtilGUI.error("Uppgifterna är ogiltiga");
