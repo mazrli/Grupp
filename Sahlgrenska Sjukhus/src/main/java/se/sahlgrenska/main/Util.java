@@ -2,7 +2,8 @@ package se.sahlgrenska.main;
 
 import java.awt.*;
 import java.time.format.DateTimeFormatter;
-import java.util.Locale;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Util {
 
@@ -16,5 +17,16 @@ public class Util {
 
     public static String getOS() {
         return System.getProperty("os.name").toLowerCase();
+    }
+
+    public static List<String> getSearchResults(List<String> list, String str) {
+        List<String> results = new ArrayList<>();
+
+        for(String item : list) {
+            if(item.startsWith(str))
+                results.add(item);
+        }
+
+        return results;
     }
 }

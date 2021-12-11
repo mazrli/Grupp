@@ -1,6 +1,9 @@
 package se.sahlgrenska.database;
 
 import com.mysql.cj.log.Log;
+import se.sahlgrenska.sjukhus.Address;
+import se.sahlgrenska.sjukhus.Archive;
+import se.sahlgrenska.sjukhus.person.Person;
 import se.sahlgrenska.sjukhus.person.employee.*;
 
 import javax.swing.*;
@@ -12,19 +15,62 @@ import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class IOManager {
 
 
     private final Database database = new Database("gamebacon.net", "guest4life", "Lp3jRWB4FQrjC4z", "sahlgrenska");
 
+    public Set<Employee> getAllEmployees(LoginDetails loginDetails) {
 
-    public void executeQuery(String statement) {
+        //List<Employee> employees = new ArrayList<>();
+        Set<Employee> employees = new HashSet<>();
+
         if(database.isConnected()) {
+            try {
+                ResultSet resultSet = callProcedure("getAllEmployees", loginDetails.getUsername(), loginDetails.getPassword());
+
+                while (resultSet.next()) {
+                    String id = String.valueOf(resultSet.getInt(1));
+                    float salary = resultSet.getInt(3);
+                    float workingHours = resultSet.getFloat(4);
+                    Accessibility accessibility = Accessibility.valueOf(resultSet.getString(5));
+
+                    String personNum = resultSet.getString(6);
+                    String fistName = resultSet.getString(7);
+                    String lastName = resultSet.getString(8);
+                    String phone = resultSet.getString(9);
+                    String gender = resultSet.getString(10);
+
+
+                    String country = resultSet.getString(13);
+                    String city = resultSet.getString(14);
+                    String street = resultSet.getString(15);
+                    String zip = resultSet.getString(16);
+
+                    Address address = new Address(country, city, street, zip);
+
+                    Person p = new Person(fistName, lastName, personNum, phone, address);
+
+
+                    Employee employee = new Employee(id, salary, workingHours, accessibility, loginDetails);
+                    employees.add(employee);
+                    System.out.println(employee.toString());
+                }
+
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
 
         }
+
+        return employees;
     }
+
 
     public Employee getEmployee(LoginDetails loginDetails) {
         Employee employee = null;
@@ -36,9 +82,13 @@ public class IOManager {
                 while (resultSet.next()) {
 
                     String id = String.valueOf(resultSet.getInt(1));
+                    String personNum = resultSet.getString(2);
                     float salary = resultSet.getInt(3);
                     float workingHours = resultSet.getFloat(4);
                     Accessibility accessibility = Accessibility.valueOf(resultSet.getString(5));
+
+                    //todo get person
+
                     employee = new Employee(id, salary, workingHours, accessibility, loginDetails);
 
                 }
