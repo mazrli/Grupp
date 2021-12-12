@@ -49,14 +49,6 @@ public class OrderGUI<upstream> extends HelperGUI {
         init(panel1, "Order", new Dimension(700, 700),Accessibility.RECEPTIONIST);
 
 
-
-
-
-
-
-
-
-
         Cancel.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
