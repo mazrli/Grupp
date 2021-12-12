@@ -36,6 +36,8 @@ public class MenuGUI extends HelperGUI {
 
     private JLabel imageLabel;
 
+    private Timer timer = new Timer("Sahlgrenska Timer");
+
 
     private final Employee currentUser;
 
@@ -145,7 +147,7 @@ public class MenuGUI extends HelperGUI {
         });
 
 
-        Driver.getTimer().schedule(new TimerTask() {
+        timer.schedule(new TimerTask() {
             @Override
             public void run() {
                 dateLabel.setText(LocalDateTime.now().format(Util.dateFormatter));
@@ -179,7 +181,8 @@ public class MenuGUI extends HelperGUI {
         stäng alla fönster och öppna logga in menyn.
      */
     private void logout() {
-        Driver.getTimer().cancel();
+        timer.cancel();
+
         Driver.getIOManager().query(String.format("DELETE FROM online WHERE employee_id = %s;", currentUser.getId()));
 
         //remove current user
