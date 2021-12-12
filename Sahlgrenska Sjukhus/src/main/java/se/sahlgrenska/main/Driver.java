@@ -38,8 +38,6 @@ public class Driver {
 
     private static boolean hasBeenSetup = false;
 
-    private static final Timer timer = new Timer("Sjukhus timer");
-
     public static void main(String[] args) {
         setupOS();
         logInGUI = new LogInGUI();
@@ -112,9 +110,6 @@ public class Driver {
         return hospital;
     }
 
-    public static Timer getTimer() {
-        return timer;
-    }
 
 
 }

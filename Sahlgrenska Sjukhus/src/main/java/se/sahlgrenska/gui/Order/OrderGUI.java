@@ -47,10 +47,14 @@ public class OrderGUI<upstream> extends HelperGUI {
         this.scrollPane1 = scrollPane1;
 
 
+
         init(panel1, "Order", new Dimension(700, 1000),Accessibility.RECEPTIONIST);
 
 
 
+
+
+        init(panel1, "Order", new Dimension(700, 700),Accessibility.RECEPTIONIST);
 
 
 
@@ -109,7 +113,6 @@ public class OrderGUI<upstream> extends HelperGUI {
             @Override
             public void ancestorAdded(AncestorEvent event) {
                 setDefaultCloseOperation(HelperGUI.EXIT_ON_CLOSE);
-
                 setLayout(new FlowLayout());
 
                 JMenuBar menuBar = new JMenuBar();
