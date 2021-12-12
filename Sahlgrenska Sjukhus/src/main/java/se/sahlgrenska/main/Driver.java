@@ -1,11 +1,11 @@
 package se.sahlgrenska.main;
 
-import org.w3c.dom.html.HTMLBRElement;
 import se.sahlgrenska.database.IOManager;
 import se.sahlgrenska.gui.Booking.BookingGUI;
 import se.sahlgrenska.gui.Journal.JournalGUI;
 import se.sahlgrenska.gui.LogIn.LogInGUI;
 import se.sahlgrenska.gui.Menu.MenuGUI;
+import se.sahlgrenska.gui.Order.ItemStatus;
 import se.sahlgrenska.gui.Order.Order;
 import se.sahlgrenska.gui.admin.AdminGUI;
 import se.sahlgrenska.gui.util.HelperGUI;
@@ -53,6 +53,7 @@ public class Driver {
         subMenus.add(new BookingGUI());
         subMenus.add(new Order());
         subMenus.add(new AdminGUI());
+        subMenus.add(new ItemStatus());
 
         mainMenu = new MenuGUI(employee);
     }

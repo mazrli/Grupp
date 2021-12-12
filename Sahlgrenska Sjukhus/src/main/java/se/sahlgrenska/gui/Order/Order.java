@@ -7,6 +7,8 @@ import se.sahlgrenska.sjukhus.person.employee.Accessibility;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class Order extends HelperGUI {
 
@@ -15,7 +17,6 @@ public class Order extends HelperGUI {
     private JLabel CreateOrder;
     private JButton Remove;
     private JButton Edit;
-    private JFormattedTextField formattedTextField1;
     private JButton Add;
     private JButton Cancel;
     private JButton SendOrder;
@@ -32,13 +33,16 @@ public class Order extends HelperGUI {
     private JLabel ItemName;
     private JPanel table;
     private JTextArea textArea;
+    private JFormattedTextField formattedTextField1;
 
 
     public Order() {
         this.panel1 = panel1;
         this.scrollPane1 = scrollPane1;
+        setSize(500, 600);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        init(panel1, "Order", Accessibility.RECEPTIONIST );
+        init(panel1, "Order", Accessibility.RECEPTIONIST);
 
         Cancel.addActionListener(new ActionListener() {
             @Override
@@ -47,7 +51,29 @@ public class Order extends HelperGUI {
             }
         });
 
+        SendOrder.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
 
+            }
+        });
+
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowOpened(WindowEvent e) {
+                super.windowOpened(e);
+            }
+
+        });
+
+        setVisible(true);
+
+        SendOrder.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
 
 
 
