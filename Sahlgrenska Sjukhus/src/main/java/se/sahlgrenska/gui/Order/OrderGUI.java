@@ -34,6 +34,7 @@ public class OrderGUI<upstream> extends HelperGUI {
     private JTextArea textArea1;
     private JTable table1;
     private JPanel Menu;
+    private JScrollPane tabel;
 
 
     ItemStatus ItemStatus = new ItemStatus();
@@ -46,11 +47,7 @@ public class OrderGUI<upstream> extends HelperGUI {
         this.scrollPane1 = scrollPane1;
 
 
-        init(panel1, "Order", new Dimension(700, 700),Accessibility.RECEPTIONIST);
-
-
-
-
+        init(panel1, "Order", new Dimension(700, 1000),Accessibility.RECEPTIONIST);
 
 
 
@@ -106,23 +103,48 @@ public class OrderGUI<upstream> extends HelperGUI {
         });
 
 
+        //MenuBar called it, and I got for Exit and for should look like a real program, user can user it now.
+        //  aziz
         Menu.addAncestorListener(new AncestorListener() {
             @Override
             public void ancestorAdded(AncestorEvent event) {
                 setDefaultCloseOperation(HelperGUI.EXIT_ON_CLOSE);
-                setSize(600, 600);
+
                 setLayout(new FlowLayout());
 
                 JMenuBar menuBar = new JMenuBar();
+
 
                 JMenu fileMenu = new JMenu("File");
 
                 JMenu editMenu = new JMenu("Edit");
                 JMenu helpMenu = new JMenu("Help");
+
+                JMenuItem loadItem = new JMenuItem("Load");
+                JMenuItem SaveItem = new JMenuItem("Save");
+                JMenuItem ExitItem = new JMenuItem("Exit");
+
+
+
+
+
+                ExitItem.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        setVisible(false);
+                        Driver.getMainMenu().setVisible(true);
+                    }
+                });
+
+                fileMenu.add(loadItem);
+                fileMenu.add(ExitItem);
+
                 menuBar.add(fileMenu);
                 menuBar.add(editMenu);
                 menuBar.add(helpMenu);
                 setJMenuBar(menuBar);
+
+
                 setVisible(true);
             }
 
