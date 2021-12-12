@@ -1,6 +1,5 @@
 package se.sahlgrenska.gui.Order;
 
-
 import se.sahlgrenska.gui.util.HelperGUI;
 import se.sahlgrenska.main.Driver;
 import se.sahlgrenska.sjukhus.person.employee.Accessibility;
@@ -11,8 +10,6 @@ import javax.swing.event.AncestorListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-
 /*
     Du bör byta namn till "OrderGUI" istället (shift + f6)
     annars får vi problem med den andra order data klassen.
@@ -165,6 +162,22 @@ public class OrderGUI extends HelperGUI {
 
 
 
+        table.addAncestorListener(new AncestorListener() {
+            @Override
+            public void ancestorAdded(AncestorEvent event) {
+                new Table();
+            }
+
+            @Override
+            public void ancestorRemoved(AncestorEvent event) {
+
+            }
+
+            @Override
+            public void ancestorMoved(AncestorEvent event) {
+
+            }
+        });
 
 
 
