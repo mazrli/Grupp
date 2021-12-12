@@ -44,7 +44,11 @@ public class OrderGUI extends HelperGUI {
 
         init(panel1, "Order", new Dimension(700, 700),Accessibility.RECEPTIONIST);
 
+<<<<<<< Updated upstream
 
+=======
+        panel1
+>>>>>>> Stashed changes
 
         Cancel.addActionListener(new ActionListener() {
             @Override
