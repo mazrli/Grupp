@@ -23,6 +23,8 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Driver {
 
@@ -38,6 +40,8 @@ public class Driver {
 
     private static boolean hasBeenSetup = false;
 
+    private static final Timer timer = new Timer("Sjukhus timer");
+
     public static void main(String[] args) {
         setupOS();
         logInGUI = new LogInGUI();
@@ -46,7 +50,7 @@ public class Driver {
 
     public static void setup(Employee employee) {
         currentUser = employee;
-        ioManger.query(String.format("INSERT INTO online VALUES(%s) ON DUPLICATE KEY UPDATE employee_id = employee_id;", employee.getId()));
+        Driver.getIOManager().query(String.format("INSERT INTO online VALUES(%s) ON DUPLICATE KEY UPDATE employee_id = employee_id;", currentUser.getId()));
 
         hospital = new Hospital("Sahlgrenska sjukhuset", 200, new HashMap<Item, Integer>(), new ArrayList<Person>(), new Archive(), 500000, new Address("Göteborg", "Blå stråket 5", "413 45", "Åmål"));
 
@@ -60,19 +64,6 @@ public class Driver {
         mainMenu = new MenuGUI(employee);
     }
 
-    /*
-    private static void d() {
-        Timer timer = new Timer();
-
-        timer.schedule( new TimerTask()
-        {
-            public void run() {
-                // do your work
-            }
-        }, 0, 60*(1000*1));
-    }
-    
-     */
 
     //här kan vi påverka vad som händer i programmet innan det avslutas (t.ex spara data)
     public static void quit() {
@@ -122,6 +113,10 @@ public class Driver {
 
     public static Hospital getHospital() {
         return hospital;
+    }
+
+    public static Timer getTimer() {
+        return timer;
     }
 
 
