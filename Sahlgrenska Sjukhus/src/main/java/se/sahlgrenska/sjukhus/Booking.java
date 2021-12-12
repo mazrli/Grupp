@@ -2,8 +2,10 @@ package se.sahlgrenska.sjukhus;
 
 import se.sahlgrenska.sjukhus.person.employee.Employee;
 import se.sahlgrenska.sjukhus.person.patient.Patient;
-
+import se.sahlgrenska.sjukhus.item.Item;
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.List;
 
 public class Booking {
@@ -22,10 +24,13 @@ public class Booking {
 
 
     public Room getRoom() {
-
         return room;
 
     }
+
+
+
+
 
 
 }

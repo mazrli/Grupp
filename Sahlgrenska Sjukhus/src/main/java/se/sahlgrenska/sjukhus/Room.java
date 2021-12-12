@@ -8,6 +8,7 @@ import se.sahlgrenska.sjukhus.item.Item;
 import se.sahlgrenska.sjukhus.item.Medicine;
 import java.time.LocalDate;
 import java.util.HashMap;
+import java.util.Map;
 
 public class Room {
     private String name;
@@ -33,10 +34,18 @@ public class Room {
 
 
 
+    public void printRoomItems(){
+        for (Map.Entry<Item, Integer> roomItems :
+                itemsInRoom.entrySet()) {
 
+            // Printing all elements of a Map
+            System.out.println(roomItems.getKey() + " = "
+                    + roomItems.getValue());
+        }
 
-    public HashMap<Item, Integer> GetItems() {
+    }
 
+    public HashMap<Item, Integer> getItems() {
         return itemsInRoom;
     }
 

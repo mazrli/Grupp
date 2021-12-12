@@ -15,6 +15,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 
 public class BookingGUI extends HelperGUI {
 
@@ -70,15 +71,12 @@ public class BookingGUI extends HelperGUI {
     private int maxWindowSize = 700;
 
 
-    public static void main(String[] args) {
-        new BookingGUI().setVisible(true);
-    }
 
     public BookingGUI() {
         init(mainPanel, "Skapa bokning", new Dimension(minWindowSize, maxWindowSize), Accessibility.RECEPTIONIST);
-
-        setUpBookingData();
         booking = new Booking();
+        setUpBookingData();
+
         cancelBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -107,8 +105,7 @@ public class BookingGUI extends HelperGUI {
 
 
     private void fillItemTableFromRoom(){
-
-
+        booking.getRoom().printRoomItems();
 
     }
 

@@ -45,5 +45,9 @@ public abstract class Item {
         return Objects.hash(getName(), getDescription(), getPrice());
     }
 
+    @Override
+    public String toString(){
+        return getName()+" "+getDescription()+" "+getPrice();
+    }
 
 }

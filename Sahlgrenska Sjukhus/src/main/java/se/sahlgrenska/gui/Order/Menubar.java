@@ -20,7 +20,7 @@ public class Menubar extends HelperGUI implements ActionListener {
 
         JMenu FileMenu = new JMenu("File");
 
-        JMenu editMenu = new JMenu("F")
+        JMenu editMenu = new JMenu("F");
 
 
         this.setMenuBar(menuBar);
