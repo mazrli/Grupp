@@ -1,5 +1,7 @@
 package se.sahlgrenska.database;
 
+import se.sahlgrenska.gui.util.UtilGUI;
+import se.sahlgrenska.main.Util;
 import se.sahlgrenska.sjukhus.Address;
 import se.sahlgrenska.sjukhus.person.Gender;
 import se.sahlgrenska.sjukhus.person.Person;
@@ -10,6 +12,7 @@ import java.net.URISyntaxException;
 import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLNonTransientConnectionException;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -124,6 +127,9 @@ public class IOManager {
 
             return callableStatement.executeQuery();
 
+        } catch (SQLNonTransientConnectionException e) {
+            UtilGUI.error("Something went wrong.");
+            e.printStackTrace();
         } catch (SQLException e) {
             e.printStackTrace();
         }

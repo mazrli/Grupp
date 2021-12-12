@@ -2,7 +2,7 @@ package se.sahlgrenska.main;
 
 import java.awt.*;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
 
 public class Util {
@@ -19,11 +19,20 @@ public class Util {
         return System.getProperty("os.name").toLowerCase();
     }
 
-    public static List<String> getSearchResults(List<String> list, String str) {
-        List<String> results = new ArrayList<>();
 
-        for(String item : list) {
-            if(item.startsWith(str))
+    /*
+        liten sök motor som tar en Set<Object> och ett sök ord.
+
+        returnar allt i listan som börjar på sökordet
+     */
+    public static Set<Object> getSearchResults(Set<? extends  Object> list, String keyWord) {
+        Set<Object> results = new HashSet<>();
+
+        keyWord = keyWord.toUpperCase();
+
+        for(Object item : list) {
+            //lägg till den i results om den börjar på samma ord som sökordet
+            if(item.toString().toUpperCase(Locale.ROOT).startsWith(keyWord))
                 results.add(item);
         }
 
