@@ -12,6 +12,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+
 /*
     Du bör byta namn till "OrderGUI" istället (shift + f6)
     annars får vi problem med den andra order data klassen.
@@ -46,6 +47,8 @@ public class OrderGUI extends HelperGUI {
 
 
         init(panel1, "Order", new Dimension(700, 700),Accessibility.RECEPTIONIST);
+
+
 
 
 
