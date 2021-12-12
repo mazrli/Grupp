@@ -10,6 +10,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+/*
+    Du bör byta namn till "OrderGUI" istället (shift + f6)
+    annars får vi problem med den andra order data klassen.
+ */
+
 public class Order extends HelperGUI {
 
     private JPanel panel1;
