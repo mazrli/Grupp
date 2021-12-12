@@ -29,4 +29,7 @@ public class Equipment extends Item {
     public int hashCode() {
         return Objects.hash(super.hashCode(), isReusable);
     }
+
+
+
 }
