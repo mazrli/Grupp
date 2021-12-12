@@ -26,30 +26,33 @@ public class OrderGUI extends HelperGUI {
     private JButton Cancel;
     private JButton SendOrder;
     private JTextField textField1;
-    private JFormattedTextField ItemName1;
-    private JFormattedTextField Quantity2;
-    private JFormattedTextField Price1;
-    private JFormattedTextField OrderDate2;
-    private JFormattedTextField OrderDate1;
-    private JFormattedTextField Price2;
-    private JFormattedTextField Quantity1;
-    private JFormattedTextField ItemName2;
     private JLabel Totalsum;
-    private JLabel ItemName;
-    private JPanel table;
     private JFormattedTextField formattedTextField1;
     private JTextArea textArea1;
-
+    private JTable table1;
 
 
     ItemStatus ItemStatus = new ItemStatus();
 
+
     public OrderGUI() {
+        new Menubar();
+
         this.panel1 = panel1;
         this.scrollPane1 = scrollPane1;
 
 
         init(panel1, "Order", new Dimension(700, 700),Accessibility.RECEPTIONIST);
+
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+
+=======
+        panel1
+>>>>>>> Stashed changes
+=======
+        panel1
+>>>>>>> Stashed changes
 
         Cancel.addActionListener(new ActionListener() {
             @Override
