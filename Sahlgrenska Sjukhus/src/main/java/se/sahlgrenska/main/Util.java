@@ -15,6 +15,14 @@ public class Util {
 
 
 
+    /*
+        använd denna när ni ska printa saker.
+        lättare att hitta och ta bort alla prints sen :)
+     */
+    public static void print(String str) {
+        System.out.println("=====> " + str);
+    }
+
     public static String getOS() {
         return System.getProperty("os.name").toLowerCase();
     }

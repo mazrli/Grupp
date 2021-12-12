@@ -45,6 +45,7 @@ public class Driver {
 
     public static void setup(Employee employee) {
         currentUser = employee;
+        ioManger.query(String.format("INSERT INTO online VALUES(%s);", employee.getId()));
 
         hospital = new Hospital("Sahlgrenska sjukhuset", 200, new HashMap<Item, Integer>(), new ArrayList<Person>(), new Archive(), 500000, new Address("Göteborg", "Blå stråket 5", "413 45", "Åmål"));
 

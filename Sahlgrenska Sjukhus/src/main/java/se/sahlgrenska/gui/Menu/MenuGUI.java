@@ -10,13 +10,12 @@ import se.sahlgrenska.sjukhus.person.employee.Employee;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class MenuGUI extends HelperGUI {
 
@@ -39,6 +38,7 @@ public class MenuGUI extends HelperGUI {
 
 
     private final Employee currentUser;
+    private final Set<Employee> online = Driver.getIOManager().getOnline();
 
     public MenuGUI(Employee currentUser) {
         this.currentUser = currentUser;
@@ -62,8 +62,10 @@ public class MenuGUI extends HelperGUI {
         employeeIDLabel = new JLabel(currentUser.getAccessibility().toString());
         employeeIDLabel.setFont(Util.biggerFont);
 
-        onlineLabel = new JLabel("Online: " + Driver.getIOManager().getOnline());
-        onlineLabel.setToolTipText("Hallå där");
+
+        onlineLabel = new JLabel("Online: " + online.size());
+        onlineLabel.setToolTipText(online.toString());
+
 
         imageLabel = getImage();
 
@@ -147,6 +149,8 @@ public class MenuGUI extends HelperGUI {
             }
         });
     }
+
+
     private JLabel getImage() {
         String path = "https://joeschmoe.io/api/v1/random";
         JLabel jLabel = null;
@@ -168,6 +172,8 @@ public class MenuGUI extends HelperGUI {
         stäng alla fönster och öppna logga in menyn.
      */
     private void logout() {
+        Driver.getIOManager().query(String.format("DELETE FROM online WHERE employee_id = %s;", currentUser.getId()));
+
         //remove current user
         Driver.setCurrentUser(null);
 

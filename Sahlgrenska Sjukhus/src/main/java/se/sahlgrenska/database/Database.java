@@ -1,8 +1,6 @@
 package se.sahlgrenska.database;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class Database {
     //våran connection för att kommunicera med databasen
@@ -23,7 +21,6 @@ public class Database {
 
             //den throwade inga exceptions (mycket kan gå fel) och vi kan nu kommunicera med databasen
             System.out.println("Connection successful.");
-
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
