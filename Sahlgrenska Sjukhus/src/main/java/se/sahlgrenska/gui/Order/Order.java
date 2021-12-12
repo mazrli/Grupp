@@ -10,6 +10,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+/*
+    Du bör byta namn till "OrderGUI" istället (shift + f6)
+    annars får vi problem med den andra order data klassen.
+ */
+
 public class Order extends HelperGUI {
 
     private JPanel panel1;
@@ -35,11 +40,22 @@ public class Order extends HelperGUI {
     private JTextArea textArea;
     private JFormattedTextField formattedTextField1;
 
+    /*
+
+        Jag ser att det är lite buggar i koden.
+        kolla hur HelperGUI klassen ser ut :)
+        /wille
+
+     */
 
     public Order() {
         this.panel1 = panel1;
         this.scrollPane1 = scrollPane1;
+
+        //lägg detta som en dimension parameter i "init" istället
         setSize(500, 600);
+
+        //den ska ej avsluta programmet, utan tillbaka till menyn (kolla hur dom andra är gjorda)
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         init(panel1, "Order", Accessibility.RECEPTIONIST);
@@ -66,6 +82,7 @@ public class Order extends HelperGUI {
 
         });
 
+        //den ska ej vara visible i början
         setVisible(true);
 
         SendOrder.addActionListener(new ActionListener() {

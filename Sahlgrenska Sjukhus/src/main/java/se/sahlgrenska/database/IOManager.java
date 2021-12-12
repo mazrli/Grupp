@@ -47,10 +47,10 @@ public class IOManager {
 
                     Address address = new Address(country, city, street, zip);
 
-                    Person p = new Person(fistName, lastName, personNum, gender, phone, address);
+                    Person person = new Person(fistName, lastName, personNum, gender, phone, address);
 
 
-                    Employee employee = new Employee(id, salary, workingHours, accessibility, loginDetails);
+                    Employee employee = new Employee(person, id, salary, workingHours, accessibility, loginDetails);
                     employees.add(employee);
                     System.out.println(employee.toString());
                 }
