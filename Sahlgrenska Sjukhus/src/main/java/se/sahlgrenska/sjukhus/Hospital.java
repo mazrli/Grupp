@@ -3,8 +3,7 @@ package se.sahlgrenska.sjukhus;
 import se.sahlgrenska.sjukhus.item.Item;
 import se.sahlgrenska.sjukhus.person.Person;
 
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Hospital {
 
@@ -15,6 +14,7 @@ public class Hospital {
     private Archive archive;
     private float balance;
     private Address address;
+    private ArrayList<Ward> wards;
 
     public Hospital(String name, int maxCapacity, Map<Item, Integer> items, List<Person> persons, Archive archive, float balance, Address address) {
         this.name = name;
@@ -24,7 +24,32 @@ public class Hospital {
         this.archive = archive;
         this.balance = balance;
         this.address = address;
+        this.wards = new ArrayList<Ward>();
+        fillArrayListTempUntilDatabaseConnection();
     }
+
+    private void fillArrayListTempUntilDatabaseConnection() {
+        Room roomArr[] = {new Room("Room 1", 20), new Room("Room2", 30)};
+        HashSet<Room> rooms = new HashSet<>(Arrays.asList(roomArr));
+        addWard(new Ward("Ward1", rooms));
+    }
+
+
+    public void addWard(Ward ward) {
+        if (ward == null) {
+            System.out.println("cant add null-value to hospital ward-list");
+            return;
+        }
+
+        if (!wards.contains(ward)) {
+            wards.add(ward);
+        }
+    }
+
+    public ArrayList<Ward> getWards() {
+        return wards;
+    }
+
 
     public Archive getArchive() {
         return archive;
@@ -33,11 +58,6 @@ public class Hospital {
     public void setArchive(Archive archive) {
         this.archive = archive;
     }
-
-
-
-
-
 
 
 }

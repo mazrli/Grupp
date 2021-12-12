@@ -5,6 +5,8 @@ import se.sahlgrenska.gui.util.UtilGUI;
 import se.sahlgrenska.main.Driver;
 import se.sahlgrenska.main.Util;
 import se.sahlgrenska.sjukhus.Booking;
+import se.sahlgrenska.sjukhus.Hospital;
+import se.sahlgrenska.sjukhus.Ward;
 import se.sahlgrenska.sjukhus.person.employee.Accessibility;
 
 import javax.swing.*;
@@ -15,10 +17,11 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class BookingGUI extends HelperGUI {
-
+    private Hospital hospital = Driver.getHospital();
     private JPanel mainPanel;
     private JPanel bannerPanel;
     private JPanel bookingPanel;
@@ -72,9 +75,10 @@ public class BookingGUI extends HelperGUI {
 
 
 
+
+
     public BookingGUI() {
         init(mainPanel, "Skapa bokning", new Dimension(minWindowSize, maxWindowSize), Accessibility.RECEPTIONIST);
-        booking = new Booking();
         setUpBookingData();
 
         cancelBtn.addActionListener(new ActionListener() {
@@ -101,11 +105,19 @@ public class BookingGUI extends HelperGUI {
         roomComboBox.setEnabled(false);
         removeItemsBtn.setEnabled(false);
         removePartBtn.setEnabled(false);
+        fillItemTableFromRoom();
+        wardComboBox.addItem(hospital.getWards());
+
     }
 
 
+
     private void fillItemTableFromRoom(){
-        booking.getRoom().printRoomItems();
+        ArrayList<Ward> tempWards= hospital.getWards();
+
+        for(Ward w: tempWards){
+            System.out.println(w);
+        }
       //  Driver.getHospital();
     }
 
@@ -119,6 +131,7 @@ public class BookingGUI extends HelperGUI {
         String[][] data = {{"Defibrilator", "5"}, {"MRI", "2"}, {"Panodil", "10"},{"Defibrilator", "5"}, {"MRI", "2"}, {"Panodil", "10"}, {"Defibrilator", "5"}, {"MRI", "2"}, {"Panodil", "10"}, {"Defibrilator", "5"}, {"MRI", "2"}, {"Panodil", "10"}};
         itemsTable = new JTable(data, columns);
         UtilGUI.changeJTableHeaderColour(itemsTable, tableHeaderColour);
+
 
     }
 }

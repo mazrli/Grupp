@@ -16,8 +16,13 @@ public class Booking {
     private Room room;
 
 
-    public Booking() {
 
+    public Booking(LocalDateTime time, List<Patient> patients, List<Employee> employees, Ward ward, Room room) {
+        this.time = time;
+        this.patients = patients;
+        this.employees = employees;
+        this.ward = ward;
+        this.room = room;
     }
 
 
