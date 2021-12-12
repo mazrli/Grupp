@@ -6,16 +6,19 @@ import se.sahlgrenska.main.Driver;
 import se.sahlgrenska.sjukhus.person.employee.Accessibility;
 
 import javax.swing.*;
+import javax.swing.event.AncestorEvent;
+import javax.swing.event.AncestorListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 
 /*
     Du bör byta namn till "OrderGUI" istället (shift + f6)
     annars får vi problem med den andra order data klassen.
  */
 
-public class OrderGUI extends HelperGUI {
+public class OrderGUI<upstream> extends HelperGUI {
 
     private JPanel panel1;
     private JScrollPane scrollPane1;
@@ -30,13 +33,14 @@ public class OrderGUI extends HelperGUI {
     private JFormattedTextField formattedTextField1;
     private JTextArea textArea1;
     private JTable table1;
+    private JPanel Menu;
 
 
     ItemStatus ItemStatus = new ItemStatus();
 
 
     public OrderGUI() {
-        new Menubar();
+
 
         this.panel1 = panel1;
         this.scrollPane1 = scrollPane1;
@@ -90,6 +94,38 @@ public class OrderGUI extends HelperGUI {
                 setVisible(false);
                 Driver.getMainMenu().setVisible(true);
                 new ItemStatus();
+            }
+        });
+
+
+        Menu.addAncestorListener(new AncestorListener() {
+            @Override
+            public void ancestorAdded(AncestorEvent event) {
+                setDefaultCloseOperation(HelperGUI.EXIT_ON_CLOSE);
+                setSize(600, 600);
+                setLayout(new FlowLayout());
+
+                JMenuBar menuBar = new JMenuBar();
+
+                JMenu fileMenu = new JMenu("File");
+
+                JMenu editMenu = new JMenu("Edit");
+                JMenu helpMenu = new JMenu("Help");
+                menuBar.add(fileMenu);
+                menuBar.add(editMenu);
+                menuBar.add(helpMenu);
+                setJMenuBar(menuBar);
+                setVisible(true);
+            }
+
+            @Override
+            public void ancestorRemoved(AncestorEvent event) {
+
+            }
+
+            @Override
+            public void ancestorMoved(AncestorEvent event) {
+
             }
         });
 

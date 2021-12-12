@@ -13,9 +13,9 @@ import java.awt.*;
 import java.awt.event.*;
 import java.net.URL;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
-import java.util.Set;
+import java.util.Timer;
 
 public class MenuGUI extends HelperGUI {
 
@@ -30,7 +30,7 @@ public class MenuGUI extends HelperGUI {
     private JLabel userLabel;
     private JLabel employeeIDLabel;
     private JLabel dateLabel;
-    private JLabel onlineLabel;
+    private JLabel onlineLabel = new JLabel("Online: -");
 
     private JButton logoutButton;
 
@@ -38,7 +38,6 @@ public class MenuGUI extends HelperGUI {
 
 
     private final Employee currentUser;
-    private final Set<Employee> online = Driver.getIOManager().getOnline();
 
     public MenuGUI(Employee currentUser) {
         this.currentUser = currentUser;
@@ -61,10 +60,6 @@ public class MenuGUI extends HelperGUI {
 
         employeeIDLabel = new JLabel(currentUser.getAccessibility().toString());
         employeeIDLabel.setFont(Util.biggerFont);
-
-
-        onlineLabel = new JLabel("Online: " + online.size());
-        onlineLabel.setToolTipText(online.toString());
 
 
         imageLabel = getImage();
@@ -148,6 +143,18 @@ public class MenuGUI extends HelperGUI {
                 logout();
             }
         });
+
+
+        Driver.getTimer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                dateLabel.setText(LocalDateTime.now().format(Util.dateFormatter));
+                Set<Employee> online = Driver.getIOManager().getOnline();
+                onlineLabel.setText("Online: " + online.size());
+                onlineLabel.setToolTipText(online.toString());
+            }
+        }, 0, 1000 * 15); // execute every 15 sec
+
     }
 
 
@@ -172,6 +179,7 @@ public class MenuGUI extends HelperGUI {
         stäng alla fönster och öppna logga in menyn.
      */
     private void logout() {
+        Driver.getTimer().cancel();
         Driver.getIOManager().query(String.format("DELETE FROM online WHERE employee_id = %s;", currentUser.getId()));
 
         //remove current user
