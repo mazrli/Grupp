@@ -78,7 +78,7 @@ public class BookingGUI extends HelperGUI {
         init(mainPanel, "Skapa bokning", new Dimension(minWindowSize, maxWindowSize), Accessibility.RECEPTIONIST);
 
         setUpBookingData();
-
+        booking = new Booking();
         cancelBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -99,10 +99,19 @@ public class BookingGUI extends HelperGUI {
     private void setUpBookingData() {
         dateOutLbl.setText(LocalDateTime.now().format(Util.dateFormatter));
         itemsTable.setBackground(Color.WHITE);
+        fillItemTableFromRoom();
         roomComboBox.setEnabled(false);
         removeItemsBtn.setEnabled(false);
         removePartBtn.setEnabled(false);
     }
+
+
+    private void fillItemTableFromRoom(){
+
+
+
+    }
+
 
 
     private void createUIComponents() {

@@ -12,4 +12,20 @@ public class Booking {
     private List<Employee> employees;
     private Ward ward;
     private Room room;
+
+
+    public Booking() { //Fyller ut denna sen, har detta tillfälligt bara
+        room = new Room();
+
+        
+    }
+
+
+    public Room getRoom() {
+
+        return room;
+
+    }
+
+
 }
