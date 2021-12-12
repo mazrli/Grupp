@@ -1,5 +1,6 @@
 package se.sahlgrenska.main;
 
+import com.sun.java.accessibility.util.GUIInitializedListener;
 import se.sahlgrenska.database.IOManager;
 import se.sahlgrenska.gui.Booking.BookingGUI;
 import se.sahlgrenska.gui.Journal.JournalGUI;

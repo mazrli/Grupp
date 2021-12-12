@@ -17,6 +17,10 @@ public abstract class HelperGUI extends JFrame {
     //menyn accessibility level;
     private Accessibility accessibility;
 
+
+    //kollar om init har använts.
+    private boolean init = false;
+
     //500 * 500 är default size
     private static final Dimension defaultSize = new Dimension(500, 500);
 
@@ -65,7 +69,7 @@ public abstract class HelperGUI extends JFrame {
         //lägg den i center av skärmen.
         setLocationRelativeTo(null);
 
-
+        init = true;
     }
 
     //toggle (deprecated, använd Driver.getMainMenu() istället)
@@ -83,5 +87,9 @@ public abstract class HelperGUI extends JFrame {
 
     public Accessibility getAccessibility() {
         return accessibility;
+    }
+
+    public boolean isInit() {
+        return init;
     }
 }
