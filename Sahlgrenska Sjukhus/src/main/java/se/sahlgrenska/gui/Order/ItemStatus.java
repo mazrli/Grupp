@@ -27,6 +27,7 @@ public class ItemStatus<panel1> extends HelperGUI {
     JPanel ItemStatus;
 
 
+
     public ItemStatus() {
         this.panel1 = panel1;
 
@@ -53,7 +54,7 @@ public class ItemStatus<panel1> extends HelperGUI {
             public void actionPerformed(ActionEvent e) {
                 setVisible(false);
                 Driver.getMainMenu().setVisible(true);
-                new OrderGUI();
+
             }
         });
 
