@@ -1,6 +1,7 @@
 package se.sahlgrenska.database;
 
 import se.sahlgrenska.gui.util.UtilGUI;
+import se.sahlgrenska.main.Driver;
 import se.sahlgrenska.sjukhus.Address;
 import se.sahlgrenska.sjukhus.person.Gender;
 import se.sahlgrenska.sjukhus.person.Person;
@@ -160,7 +161,7 @@ public class IOManager {
 
         } catch (SQLNonTransientConnectionException e) {
             //tillfällig lösning för connection timeout problem
-            UtilGUI.error("Something went wrong. (try restarting the program)");
+            UtilGUI.error("Något gick fel. (Starta om programmet)");
             e.printStackTrace();
         } catch (SQLException e) {
             e.printStackTrace();

@@ -1,5 +1,6 @@
 package se.sahlgrenska.main;
 
+import com.sun.java.accessibility.util.GUIInitializedListener;
 import se.sahlgrenska.database.IOManager;
 import se.sahlgrenska.gui.Booking.BookingGUI;
 import se.sahlgrenska.gui.Journal.JournalGUI;
@@ -45,7 +46,7 @@ public class Driver {
 
     public static void setup(Employee employee) {
         currentUser = employee;
-        ioManger.query(String.format("INSERT INTO online VALUES(%s);", employee.getId()));
+        ioManger.query(String.format("INSERT INTO online VALUES(%s) ON DUPLICATE KEY UPDATE employee_id = employee_id;", employee.getId()));
 
         hospital = new Hospital("Sahlgrenska sjukhuset", 200, new HashMap<Item, Integer>(), new ArrayList<Person>(), new Archive(), 500000, new Address("Göteborg", "Blå stråket 5", "413 45", "Åmål"));
 

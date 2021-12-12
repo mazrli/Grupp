@@ -18,7 +18,7 @@ public class button extends HelperGUI implements ActionListener {
 
         JButton button = new JButton();
         button.setBounds(200, 100, 100, 50 );
-        button.setHorizontalTextPosition();
+        button.setHorizontalTextPosition(0);
         button.setVerticalTextPosition(JButton.BOTTOM);
 
 

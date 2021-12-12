@@ -48,11 +48,6 @@ public class OrderGUI extends HelperGUI {
         this.panel1 = panel1;
         this.scrollPane1 = scrollPane1;
 
-        //lägg detta som en dimension parameter i "init" istället
-       // setSize(500, 600);
-
-        //den ska ej avsluta programmet, utan tillbaka till menyn (kolla hur dom andra är gjorda)
-       // setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         init(panel1, "Order", new Dimension(700, 700),Accessibility.RECEPTIONIST);
 
@@ -89,7 +84,6 @@ public class OrderGUI extends HelperGUI {
         Edit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
                 setVisible(false);
                 Driver.getMainMenu().setVisible(true);
                 new ItemStatus();

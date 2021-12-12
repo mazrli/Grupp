@@ -127,7 +127,7 @@
                 </constraints>
                 <properties>
                   <focusable value="false"/>
-                  <text value="Kom igåg mig"/>
+                  <text value="Kom ihåg mig"/>
                 </properties>
               </component>
               <component id="cb7f2" class="javax.swing.JLabel" binding="forgotPasswordJLabel">
