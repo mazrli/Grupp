@@ -33,8 +33,6 @@ public class OrderGUI extends HelperGUI {
     private JTextArea textArea1;
     private JTable table1;
 
-    private JPanel Menu;
-
 
 
     ItemStatus ItemStatus = new ItemStatus();
@@ -48,6 +46,8 @@ public class OrderGUI extends HelperGUI {
 
 
         init(panel1, "Order", new Dimension(700, 700),Accessibility.RECEPTIONIST);
+
+
 
 
 
