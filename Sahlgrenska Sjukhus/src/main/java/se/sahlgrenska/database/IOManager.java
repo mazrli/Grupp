@@ -128,7 +128,8 @@ public class IOManager {
             return callableStatement.executeQuery();
 
         } catch (SQLNonTransientConnectionException e) {
-            UtilGUI.error("Something went wrong.");
+            //tillfällig lösning för connection timeout problem
+            UtilGUI.error("Something went wrong. (try restarting the program)");
             e.printStackTrace();
         } catch (SQLException e) {
             e.printStackTrace();
