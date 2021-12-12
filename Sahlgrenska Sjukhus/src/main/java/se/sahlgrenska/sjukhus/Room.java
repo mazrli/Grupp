@@ -39,7 +39,7 @@ public class Room {
                 itemsInRoom.entrySet()) {
 
             // Printing all elements of a Map
-            System.out.println(roomItems.getKey() + " = "
+            Util.print(roomItems.getKey() + " = "
                     + roomItems.getValue());
         }
 

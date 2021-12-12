@@ -33,4 +33,11 @@ public class Hospital {
     public void setArchive(Archive archive) {
         this.archive = archive;
     }
+
+
+
+
+
+
+
 }

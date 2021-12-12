@@ -16,10 +16,8 @@ public class Booking {
     private Room room;
 
 
-    public Booking() { //Fyller ut denna sen, har detta tillfälligt bara
-        room = new Room();
+    public Booking() {
 
-        
     }
 
 

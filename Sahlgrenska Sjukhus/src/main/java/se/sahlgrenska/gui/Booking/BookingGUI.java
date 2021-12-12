@@ -106,7 +106,7 @@ public class BookingGUI extends HelperGUI {
 
     private void fillItemTableFromRoom(){
         booking.getRoom().printRoomItems();
-
+      //  Driver.getHospital();
     }
 
 
