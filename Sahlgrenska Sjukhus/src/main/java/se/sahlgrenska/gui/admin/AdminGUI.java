@@ -78,7 +78,6 @@ public class AdminGUI extends HelperGUI {
                 usernameField.setText(selectedUser.getLoginDetails().getUsername());
                 passwordField.setText(selectedUser.getLoginDetails().getPassword());
 
-                System.out.println(Driver.getIOManager().getOnline().size());
             }
         });
     }

@@ -162,7 +162,6 @@ public class IOManager {
         } catch (SQLNonTransientConnectionException e) {
             //tillfällig lösning för connection timeout problem
             UtilGUI.error("Något gick fel. (Starta om programmet)");
-            Driver.quit();
             e.printStackTrace();
         } catch (SQLException e) {
             e.printStackTrace();
