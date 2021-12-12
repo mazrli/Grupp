@@ -23,7 +23,6 @@ public class IOManager {
 
     public Set<Employee> getAllEmployees(LoginDetails loginDetails) {
 
-        //List<Employee> employees = new ArrayList<>();
         Set<Employee> employees = new HashSet<>();
 
         if(database.isConnected()) {
@@ -55,7 +54,6 @@ public class IOManager {
 
                     Employee employee = new Employee(person, id, salary, workingHours, accessibility, loginDetails);
                     employees.add(employee);
-                    System.out.println(employee.toString());
                 }
 
             } catch (SQLException throwables) {
@@ -128,7 +126,8 @@ public class IOManager {
             return callableStatement.executeQuery();
 
         } catch (SQLNonTransientConnectionException e) {
-            UtilGUI.error("Something went wrong.");
+            //tillfällig lösning för connection timeout problem
+            UtilGUI.error("Something went wrong. (try restarting the program)");
             e.printStackTrace();
         } catch (SQLException e) {
             e.printStackTrace();

@@ -23,10 +23,18 @@ public class UtilGUI {
         tableHeader.setBackground(color);
     }
 
-    //Visa varningsruta och spela error ljud
+
     public static void error(String message) {
+        error(message, "Warning");
+    }
+
+    public static void error(String message, String title) {
+        error(message, title, JOptionPane.ERROR_MESSAGE);
+    }
+
+    public static void error(String message, String title, int type) {
         java.awt.Toolkit.getDefaultToolkit().beep();
-        JOptionPane.showMessageDialog(null, message, "Warning", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, message, title, type);
     }
 
 

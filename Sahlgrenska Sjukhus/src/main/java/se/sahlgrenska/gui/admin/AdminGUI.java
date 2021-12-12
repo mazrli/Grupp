@@ -73,7 +73,6 @@ public class AdminGUI extends HelperGUI {
         userList.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                System.out.println(userList.getSelectedValue());
                 selectedUser = (Employee) userList.getSelectedValue();
 
                 usernameField.setText(selectedUser.getLoginDetails().getUsername());

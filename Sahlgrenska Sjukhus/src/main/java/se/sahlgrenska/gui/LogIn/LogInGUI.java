@@ -7,10 +7,7 @@ import se.sahlgrenska.sjukhus.person.employee.*;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 
 public class LogInGUI extends HelperGUI {
     private JPanel mainPanel;
@@ -25,12 +22,18 @@ public class LogInGUI extends HelperGUI {
     private JPasswordField passwordField;
     private JPanel fieldPanel;
     private JCheckBox rememberMeCheckBox;
+    private JCheckBox visaLösenordCheckBox;
+    private JLabel forgotPasswordJLabel;
+    private final char echoPWchar = '●';
 
     public LogInGUI() { //constructor
         init(mainPanel, "Sahlgrenska sjukhus", new Dimension(380, 400), Accessibility.ALL);
 
         loginButton.addActionListener(new LoginButtonActionListener());
         quitButton.addActionListener(new QuitButtonActionListener());
+
+        forgotPasswordJLabel.setText("<HTML><U>Glömt lösenord?</U></HTML>");
+        forgotPasswordJLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
@@ -49,6 +52,29 @@ public class LogInGUI extends HelperGUI {
         });
 
         setVisible(true);
+
+
+        visaLösenordCheckBox.addItemListener(new ItemListener() {
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    passwordField.setEchoChar('\0');
+                } else {
+                    passwordField.setEchoChar(echoPWchar);
+                }
+            }
+        });
+
+        forgotPasswordJLabel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                UtilGUI.error("Det var ju synd.", "");
+            }
+        });
+
+    }
+
+    private void createUIComponents() {
+
     }
 
     private class LoginButtonActionListener implements ActionListener {
