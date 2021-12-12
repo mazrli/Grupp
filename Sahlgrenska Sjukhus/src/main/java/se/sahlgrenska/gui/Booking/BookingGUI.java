@@ -8,6 +8,8 @@ import se.sahlgrenska.sjukhus.Booking;
 import se.sahlgrenska.sjukhus.person.employee.Accessibility;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.JTableHeader;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -68,8 +70,9 @@ public class BookingGUI extends HelperGUI {
     private int maxWindowSize = 700;
 
 
-
-
+    public static void main(String[] args) {
+        new BookingGUI().setVisible(true);
+    }
 
     public BookingGUI() {
         init(mainPanel, "Skapa bokning", new Dimension(minWindowSize, maxWindowSize), Accessibility.RECEPTIONIST);
@@ -84,27 +87,32 @@ public class BookingGUI extends HelperGUI {
             }
         });
 
+        participationList.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                //  System.out.println("You're in listselection eventet");
+            }
+        });
     }
 
 
-
-
-    private void setUpBookingData(){
-      dateOutLbl.setText(LocalDateTime.now().format(Util.dateFormatter));
-    itemsTable.setBackground(Color.WHITE);
+    private void setUpBookingData() {
+        dateOutLbl.setText(LocalDateTime.now().format(Util.dateFormatter));
+        itemsTable.setBackground(Color.WHITE);
+        roomComboBox.setEnabled(false);
+        removeItemsBtn.setEnabled(false);
+        removePartBtn.setEnabled(false);
     }
-
 
 
     private void createUIComponents() {
         // TODO: place custom component creation code here
         Color tableHeaderColour = new Color(199, 199, 199);
 
-        String [] columns = {"Item name","Quantity"};
-        String [][] data = {{"Defibrilator","5"},{"MRI","2"},{"Panodil", "10"},{"Defibrilator","5"},{"MRI","2"},{"Panodil", "10"},{"Defibrilator","5"},{"MRI","2"},{"Panodil", "10"},{"Defibrilator","5"},{"MRI","2"},{"Panodil", "10"}};
-        itemsTable = new JTable(data,columns);
+        String[] columns = {"Item name", "Quantity"};
+        String[][] data = {{"Defibrilator", "5"}, {"MRI", "2"}, {"Panodil", "10"},{"Defibrilator", "5"}, {"MRI", "2"}, {"Panodil", "10"}, {"Defibrilator", "5"}, {"MRI", "2"}, {"Panodil", "10"}, {"Defibrilator", "5"}, {"MRI", "2"}, {"Panodil", "10"}};
+        itemsTable = new JTable(data, columns);
         UtilGUI.changeJTableHeaderColour(itemsTable, tableHeaderColour);
-
 
     }
 }
