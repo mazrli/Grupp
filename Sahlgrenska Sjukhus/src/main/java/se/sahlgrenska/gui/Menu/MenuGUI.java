@@ -152,7 +152,6 @@ public class MenuGUI extends HelperGUI {
                 Set<Employee> online = Driver.getIOManager().getOnline();
                 onlineLabel.setText("Online: " + online.size());
                 onlineLabel.setToolTipText(online.toString());
-                System.out.println("yo");
             }
         }, 0, 1000 * 15); // execute every 15 sec
 
