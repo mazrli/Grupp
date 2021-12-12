@@ -31,24 +31,26 @@ public class OrderGUI extends HelperGUI {
     private JTextField textField1;
     private JLabel Totalsum;
     private JFormattedTextField formattedTextField1;
-    private JTextArea textArea1;
-    private JTable table1;
+    private JTextArea Notes;
     private JPanel Menu;
-    private JScrollPane tabel;
-
+    private JTable table1;
+    private JScrollPane table;
 
 
     ItemStatus ItemStatus = new ItemStatus();
 
 
     public OrderGUI() {
-
+        this.Notes = Notes;
+        this.panel1 = panel1;
 
         this.scrollPane1 = scrollPane1;
 
 
 
-        init(panel1, "OrderGUI", new Dimension(700, 1000),Accessibility.RECEPTIONIST);
+        init(panel1, "Order", new Dimension(700, 1000),Accessibility.RECEPTIONIST);
+
+
 
 
 
@@ -166,6 +168,9 @@ public class OrderGUI extends HelperGUI {
 
 
 
+
+
+
         //den ska ej vara visible i början
         //setVisible(true);
 
@@ -173,6 +178,12 @@ public class OrderGUI extends HelperGUI {
 
 
     }
+
+
+
+
+    // TODO: place custom component creation code here
+
 
 
 
