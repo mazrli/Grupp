@@ -60,6 +60,20 @@ public class Driver {
         mainMenu = new MenuGUI(employee);
     }
 
+    /*
+    private static void d() {
+        Timer timer = new Timer();
+
+        timer.schedule( new TimerTask()
+        {
+            public void run() {
+                // do your work
+            }
+        }, 0, 60*(1000*1));
+    }
+    
+     */
+
     //här kan vi påverka vad som händer i programmet innan det avslutas (t.ex spara data)
     public static void quit() {
         ioManger.closeDB();
