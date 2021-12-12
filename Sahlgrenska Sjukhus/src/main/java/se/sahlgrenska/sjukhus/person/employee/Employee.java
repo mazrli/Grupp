@@ -43,12 +43,11 @@ public class Employee extends Person {
 
     @Override
     public String toString() {
-        return "Employee{" +
-                "id='" + id + '\'' +
-                ", salary=" + salary +
-                ", workingHours=" + workingHours +
-                ", accessibility=" + accessibility +
-                ", loginDetails=" + loginDetails +
-                '}';
+        return
+            String.format(
+                    "%s %s",
+                    getFirstName(),
+                    getLastName()
+            );
     }
 }

@@ -8,12 +8,7 @@ import se.sahlgrenska.sjukhus.person.employee.Employee;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.util.ArrayList;
-import java.util.List;
+import java.awt.event.*;
 import java.util.Set;
 
 public class AdminGUI extends HelperGUI {
@@ -25,9 +20,9 @@ public class AdminGUI extends HelperGUI {
     private JLabel titleLabel;
     private JPanel mainPanel;
     private JPanel usernamePanel;
-    private JTextField textField1;
+    private JTextField usernameField;
     private JPanel panel1;
-    private JTextField textField2;
+    private JTextField passwordField;
     private JPanel panel2;
     private JTextField textField3;
     private JPanel panel3;
@@ -36,48 +31,37 @@ public class AdminGUI extends HelperGUI {
     private JButton raderaButton;
     private JButton redigeraButton;
     private JPanel userButtonPanel;
-    private JList list1;
+    private JList userList;
     private JPanel searchPanel;
     private JPanel listPanel;
     private JButton createUserButton;
     private JButton backButton;
     private JTextField searchField;
+    private JLabel usernameLabel;
+    private JLabel passwordLabel;
     DefaultListModel dlm = new DefaultListModel();
 
-    List<String> all = new ArrayList<>();
-
-    Set<Employee> users;
+    private Set<Employee> users;
+    private Employee selectedUser;
 
     public AdminGUI() {
-        init(mainPanel, "Hantera Användare", new Dimension(550, 650),Accessibility.ALL);
+        init(mainPanel, "Hantera Användare", new Dimension(550, 650), Accessibility.ALL);
 
         users = Driver.getIOManager().getAllEmployees(Driver.getCurrentUser().getLoginDetails());
-
-        for(Employee employee : users)
-            System.out.println("d: " + employee.getFirstName());
-
-        if(true)
-        for(int i = 0; i < 15_000; i++) {
-            String d = "" + Math.random() * 50000;
-
-            all.add(d);
-            dlm.add(i, d);
+        for(Employee employee : users) {
+            dlm.addElement(employee);
         }
-
-        list1.setModel(dlm);
+        userList.setModel(dlm);
 
         searchField.addKeyListener(new KeyAdapter() {
 
             @Override
             public void keyReleased(KeyEvent e) {
-
-                System.out.println(searchField.getText());
-
-                List<String> results = Util.getSearchResults(all, searchField.getText());
-
+                Set<Object> results = Util.getSearchResults(users, searchField.getText());
                 populateList(results);
             }
         });
+
         backButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -85,15 +69,26 @@ public class AdminGUI extends HelperGUI {
                 Driver.getMainMenu().setVisible(true);
             }
         });
+
+        userList.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                System.out.println(userList.getSelectedValue());
+                selectedUser = (Employee) userList.getSelectedValue();
+
+                usernameField.setText(selectedUser.getLoginDetails().getUsername());
+                passwordField.setText(selectedUser.getLoginDetails().getPassword());
+            }
+        });
     }
 
-    private void populateList(List<String> items) {
+    private void populateList(Set<Object> items) {
         dlm.clear();
 
-        for(int i = 0; i < items.size(); i++) {
-            dlm.add(i, items.get(i));
+        for(Object employee : items) {
+            dlm.addElement(employee);
         }
 
-
     }
+
 }
