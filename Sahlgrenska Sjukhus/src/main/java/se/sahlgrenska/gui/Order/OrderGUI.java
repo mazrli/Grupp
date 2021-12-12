@@ -18,7 +18,7 @@ import java.awt.event.ActionListener;
     annars får vi problem med den andra order data klassen.
  */
 
-public class OrderGUI<upstream> extends HelperGUI {
+public class OrderGUI extends HelperGUI {
 
     private JPanel panel1;
     private JScrollPane scrollPane1;
@@ -37,24 +37,20 @@ public class OrderGUI<upstream> extends HelperGUI {
     private JScrollPane tabel;
 
 
+
     ItemStatus ItemStatus = new ItemStatus();
 
 
     public OrderGUI() {
 
 
-        this.panel1 = panel1;
         this.scrollPane1 = scrollPane1;
 
 
 
-        init(panel1, "Order", new Dimension(700, 1000),Accessibility.RECEPTIONIST);
+        init(panel1, "OrderGUI", new Dimension(700, 1000),Accessibility.RECEPTIONIST);
 
 
-
-
-
-        init(panel1, "Order", new Dimension(700, 700),Accessibility.RECEPTIONIST);
 
 
 
