@@ -23,13 +23,17 @@ public class LogInGUI extends HelperGUI {
     private JPanel fieldPanel;
     private JCheckBox rememberMeCheckBox;
     private JCheckBox visaLösenordCheckBox;
-    private final char echoCar = passwordField.getEchoChar();
+    private JLabel forgotPasswordJLabel;
+    private final char echoPWchar = '●';
 
     public LogInGUI() { //constructor
         init(mainPanel, "Sahlgrenska sjukhus", new Dimension(380, 400), Accessibility.ALL);
 
         loginButton.addActionListener(new LoginButtonActionListener());
         quitButton.addActionListener(new QuitButtonActionListener());
+
+        forgotPasswordJLabel.setText("<HTML><U>Glömt lösenord?</U></HTML>");
+        forgotPasswordJLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
@@ -55,11 +59,21 @@ public class LogInGUI extends HelperGUI {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
                     passwordField.setEchoChar('\0');
                 } else {
-                    passwordField.setEchoChar(echoCar);
+                    passwordField.setEchoChar(echoPWchar);
                 }
             }
         });
 
+        forgotPasswordJLabel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                UtilGUI.error("Det var ju synd.", "");
+            }
+        });
+
+    }
+
+    private void createUIComponents() {
 
     }
 

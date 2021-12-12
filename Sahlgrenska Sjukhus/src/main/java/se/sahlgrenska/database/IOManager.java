@@ -23,7 +23,6 @@ public class IOManager {
 
     public Set<Employee> getAllEmployees(LoginDetails loginDetails) {
 
-        //List<Employee> employees = new ArrayList<>();
         Set<Employee> employees = new HashSet<>();
 
         if(database.isConnected()) {
@@ -55,7 +54,6 @@ public class IOManager {
 
                     Employee employee = new Employee(person, id, salary, workingHours, accessibility, loginDetails);
                     employees.add(employee);
-                    System.out.println(employee.toString());
                 }
 
             } catch (SQLException throwables) {

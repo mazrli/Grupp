@@ -147,7 +147,6 @@ public class MenuGUI extends HelperGUI {
         JLabel jLabel = null;
         try {
             URL url = new URL(path);
-            System.out.println(url.toString());
             Image bufferedImage = ImageIO.read(url);
 
             if(bufferedImage != null)
