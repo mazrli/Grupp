@@ -32,6 +32,7 @@ public class OrderGUI extends HelperGUI {
     private JPanel Menu;
     private JTable table1;
     private JScrollPane table;
+    private JPanel Orderfortable;
 
 
     ItemStatus ItemStatus = new ItemStatus();
@@ -162,22 +163,7 @@ public class OrderGUI extends HelperGUI {
 
 
 
-        table.addAncestorListener(new AncestorListener() {
-            @Override
-            public void ancestorAdded(AncestorEvent event) {
-                new Table();
-            }
-
-            @Override
-            public void ancestorRemoved(AncestorEvent event) {
-
-            }
-
-            @Override
-            public void ancestorMoved(AncestorEvent event) {
-
-            }
-        });
+        Orderfortable.add(new Table());
 
 
 
@@ -195,7 +181,6 @@ public class OrderGUI extends HelperGUI {
 
 
 
-    // TODO: place custom component creation code here
 
 
 
