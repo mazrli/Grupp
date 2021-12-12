@@ -7,10 +7,7 @@ import se.sahlgrenska.sjukhus.person.employee.*;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 
 public class LogInGUI extends HelperGUI {
     private JPanel mainPanel;
@@ -25,6 +22,8 @@ public class LogInGUI extends HelperGUI {
     private JPasswordField passwordField;
     private JPanel fieldPanel;
     private JCheckBox rememberMeCheckBox;
+    private JCheckBox visaLösenordCheckBox;
+    private final char echoCar = passwordField.getEchoChar();
 
     public LogInGUI() { //constructor
         init(mainPanel, "Sahlgrenska sjukhus", new Dimension(380, 400), Accessibility.ALL);
@@ -49,6 +48,19 @@ public class LogInGUI extends HelperGUI {
         });
 
         setVisible(true);
+
+
+        visaLösenordCheckBox.addItemListener(new ItemListener() {
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    passwordField.setEchoChar('\0');
+                } else {
+                    passwordField.setEchoChar(echoCar);
+                }
+            }
+        });
+
+
     }
 
     private class LoginButtonActionListener implements ActionListener {
