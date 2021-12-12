@@ -1,5 +1,6 @@
 package se.sahlgrenska.gui.Menu;
 
+import se.sahlgrenska.database.IOManager;
 import se.sahlgrenska.gui.util.HelperGUI;
 import se.sahlgrenska.main.Driver;
 import se.sahlgrenska.main.Util;
@@ -30,6 +31,7 @@ public class MenuGUI extends HelperGUI {
     private JLabel userLabel;
     private JLabel employeeIDLabel;
     private JLabel dateLabel;
+    private JLabel onlineLabel;
 
     private JButton logoutButton;
 
@@ -60,6 +62,8 @@ public class MenuGUI extends HelperGUI {
         employeeIDLabel = new JLabel(currentUser.getAccessibility().toString());
         employeeIDLabel.setFont(Util.biggerFont);
 
+        onlineLabel = new JLabel("Online: " + Driver.getIOManager().getOnline());
+        onlineLabel.setToolTipText("Hallå där");
 
         imageLabel = getImage();
 
@@ -69,6 +73,7 @@ public class MenuGUI extends HelperGUI {
         topPanel.add(userLabel);
         topPanel.add(dateLabel);
         topPanel.add(employeeIDLabel);
+        topPanel.add(onlineLabel);
         topPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         mainPanel.add(topPanel, BorderLayout.NORTH);
 

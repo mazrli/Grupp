@@ -21,6 +21,15 @@ public class IOManager {
 
     private final Database database = new Database("gamebacon.net", "guest4life", "Lp3jRWB4FQrjC4z", "sahlgrenska");
 
+    public int getOnline() {
+        int online = 0;
+
+        if(database.isConnected()) {
+            
+        }
+        return online;
+    }
+
     public Set<Employee> getAllEmployees(LoginDetails loginDetails) {
 
         Set<Employee> employees = new HashSet<>();
