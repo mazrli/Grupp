@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="se.sahlgrenska.gui.Order.Order">
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="se.sahlgrenska.gui.Order.OrderGUI">
   <grid id="27dc6" binding="panel1" default-binding="true" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="15" left="15" bottom="15" right="15"/>
     <constraints>
@@ -155,16 +155,19 @@
                           <text value="Order notes"/>
                         </properties>
                       </component>
-                      <component id="2f60c" class="javax.swing.JTextArea" binding="textArea">
+                      <scrollpane id="24f98">
                         <constraints>
-                          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                            <preferred-size width="150" height="50"/>
-                          </grid>
+                          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                         </constraints>
-                        <properties>
-                          <text value=""/>
-                        </properties>
-                      </component>
+                        <properties/>
+                        <border type="none"/>
+                        <children>
+                          <component id="34d73" class="javax.swing.JTextArea" binding="textArea1" default-binding="true">
+                            <constraints/>
+                            <properties/>
+                          </component>
+                        </children>
+                      </scrollpane>
                     </children>
                   </grid>
                   <vspacer id="46e6c">

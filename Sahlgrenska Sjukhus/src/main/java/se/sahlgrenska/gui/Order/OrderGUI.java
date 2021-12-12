@@ -2,20 +2,20 @@ package se.sahlgrenska.gui.Order;
 
 
 import se.sahlgrenska.gui.util.HelperGUI;
+import se.sahlgrenska.main.Driver;
 import se.sahlgrenska.sjukhus.person.employee.Accessibility;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
 /*
     Du bör byta namn till "OrderGUI" istället (shift + f6)
     annars får vi problem med den andra order data klassen.
  */
 
-public class Order extends HelperGUI {
+public class OrderGUI extends HelperGUI {
 
     private JPanel panel1;
     private JScrollPane scrollPane1;
@@ -37,63 +37,85 @@ public class Order extends HelperGUI {
     private JLabel Totalsum;
     private JLabel ItemName;
     private JPanel table;
-    private JTextArea textArea;
     private JFormattedTextField formattedTextField1;
+    private JTextArea textArea1;
 
-    /*
 
-        Jag ser att det är lite buggar i koden.
-        kolla hur HelperGUI klassen ser ut :)
-        /wille
 
-     */
+    ItemStatus ItemStatus = new ItemStatus();
 
-    public Order() {
+    public OrderGUI() {
         this.panel1 = panel1;
         this.scrollPane1 = scrollPane1;
 
-        //lägg detta som en dimension parameter i "init" istället
-        setSize(500, 600);
 
-
-        init(panel1, "Order", Accessibility.RECEPTIONIST);
+        init(panel1, "Order", new Dimension(700, 700),Accessibility.RECEPTIONIST);
 
         Cancel.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.exit(0);
-            }
-        });
+                setVisible(false);
+                Driver.getMainMenu().setVisible(true);
 
-        SendOrder.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
 
             }
         });
 
-        addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowOpened(WindowEvent e) {
-                super.windowOpened(e);
-            }
-
-        });
 
 
         SendOrder.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                setVisible(false);
+                Driver.getMainMenu().setVisible(true);
+                new button();
+            }
+        });
 
+        Add.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                setVisible(false);
+                Driver.getMainMenu().setVisible(true);
+                new ItemStatus();
+            }
+        });
+        Edit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setVisible(false);
+                Driver.getMainMenu().setVisible(true);
+                new ItemStatus();
+            }
+        });
+
+        Remove.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setVisible(false);
+                Driver.getMainMenu().setVisible(true);
+                new ItemStatus();
             }
         });
 
 
+
+
+
+
+
+
+
+        //den ska ej vara visible i början
+        //setVisible(true);
 
 
 
 
     }
+
+
 
   /*  public  class SendOrder extends JFrame implements ActionListener {
         private JLabel usernamePanel;

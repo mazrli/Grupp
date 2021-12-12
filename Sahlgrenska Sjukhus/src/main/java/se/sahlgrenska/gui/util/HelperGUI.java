@@ -2,15 +2,10 @@ package se.sahlgrenska.gui.util;
 
 import se.sahlgrenska.gui.Menu.MenuGUI;
 import se.sahlgrenska.main.Driver;
-import se.sahlgrenska.main.Util;
 import se.sahlgrenska.sjukhus.person.employee.Accessibility;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.util.Objects;
 
 public abstract class HelperGUI extends JFrame {
 

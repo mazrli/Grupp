@@ -7,7 +7,7 @@ import se.sahlgrenska.gui.Journal.JournalGUI;
 import se.sahlgrenska.gui.LogIn.LogInGUI;
 import se.sahlgrenska.gui.Menu.MenuGUI;
 import se.sahlgrenska.gui.Order.ItemStatus;
-import se.sahlgrenska.gui.Order.Order;
+import se.sahlgrenska.gui.Order.OrderGUI;
 import se.sahlgrenska.gui.admin.AdminGUI;
 import se.sahlgrenska.gui.util.HelperGUI;
 import se.sahlgrenska.gui.util.UtilGUI;
@@ -53,7 +53,7 @@ public class Driver {
         //lägg till alla menyer i subMenus
         subMenus.add(new JournalGUI());
         subMenus.add(new BookingGUI());
-        subMenus.add(new Order());
+        subMenus.add(new OrderGUI());
         subMenus.add(new AdminGUI());
         subMenus.add(new ItemStatus());
 
