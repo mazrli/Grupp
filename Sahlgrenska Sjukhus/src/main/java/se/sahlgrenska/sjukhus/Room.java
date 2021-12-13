@@ -30,7 +30,13 @@ public class Room {
         addItemsToRoomTest();
     }
 
+    public String getName() {
+        return name;
+    }
 
+    public int getSize() {
+        return size;
+    }
 
     private void addItemsToRoomTest() {
         Item item1 = new Equipment("Defibrilator", "Starts hearts", 2500.5f, true);
@@ -44,16 +50,7 @@ public class Room {
     }
 
 
-    public void printRoomItems() {
-        for (Map.Entry<Item, Integer> roomItems :
-                itemsInRoom.entrySet()) {
 
-            // Printing all elements of a Map
-            System.out.print(roomItems.getKey() + " Amount: "
-                    + roomItems.getValue());
-        }
-
-    }
 
     public HashMap<Item, Integer> getItems() {
         return itemsInRoom;
@@ -76,4 +73,11 @@ public class Room {
     public int hashCode() {
         return Objects.hash(name, size, itemsInRoom);
     }
+
+    @Override
+    public String toString() {
+        return getName()+" ("+getSize() +"kvm)";
+    }
+
+
 }
