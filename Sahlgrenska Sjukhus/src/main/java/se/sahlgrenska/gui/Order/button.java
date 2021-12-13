@@ -24,10 +24,13 @@ public class button extends HelperGUI implements ActionListener {
 
 
         button.addActionListener(e -> System.out.println("poo") );
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+
+        //this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); <--- Använd inte setDefaultOperation!
+
         this.setLayout(null);
         this.setSize(500 ,500);
-        this.setVisible(true);
+        //this.setVisible(true); <--- Använd inte setVisible i början!
         this.add(button);
         this.setFocusable(false);
         this.add(button);
