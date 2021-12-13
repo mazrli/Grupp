@@ -27,7 +27,7 @@ public class LogInGUI extends HelperGUI {
     private final char echoPWchar = '●';
 
     public LogInGUI() { //constructor
-        init(mainPanel, "Sahlgrenska sjukhus", new Dimension(380, 400), Accessibility.ALL);
+        init(mainPanel, "Sahlgrenska sjukhus", new Dimension(380, 400), Accessibility.ADMIN);
 
         loginButton.addActionListener(new LoginButtonActionListener());
         quitButton.addActionListener(new QuitButtonActionListener());
