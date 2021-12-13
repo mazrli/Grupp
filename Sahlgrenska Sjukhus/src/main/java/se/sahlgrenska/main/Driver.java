@@ -7,6 +7,7 @@ import se.sahlgrenska.gui.LogIn.LogInGUI;
 import se.sahlgrenska.gui.Menu.MenuGUI;
 import se.sahlgrenska.gui.Order.OrderGUI;
 import se.sahlgrenska.gui.admin.AdminGUI;
+import se.sahlgrenska.gui.ordertest.Ordertest;
 import se.sahlgrenska.gui.util.HelperGUI;
 import se.sahlgrenska.gui.util.UtilGUI;
 import se.sahlgrenska.sjukhus.Address;
@@ -53,6 +54,7 @@ public class Driver {
         subMenus.add(new BookingGUI());
         subMenus.add(new OrderGUI());
         subMenus.add(new AdminGUI());
+        subMenus.add(new Ordertest());
 
         mainMenu = new MenuGUI(employee);
     }
