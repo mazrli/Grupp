@@ -32,6 +32,9 @@ public class Hospital {
         Room roomArr[] = {new Room("Room 1", 20), new Room("Room2", 30)};
         HashSet<Room> rooms = new HashSet<>(Arrays.asList(roomArr));
         addWard(new Ward("Ward1", rooms));
+        Room roomArr1[] = {new Room("Room 3", 15), new Room("Room6", 40)};
+        HashSet<Room> room1 = new HashSet<>(Arrays.asList(roomArr1));
+        addWard(new Ward("Ward2", room1));
     }
 
 
