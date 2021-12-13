@@ -11,6 +11,11 @@ public class Medicine extends Item {
         this.expirationDate = expirationDate;
     }
 
+    public LocalDate getExpirationDate(){
+        return expirationDate;
+    }
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -30,6 +35,12 @@ public class Medicine extends Item {
     public int hashCode() {
         return Objects.hash(super.hashCode(), expirationDate);
     }
+
+    @Override
+    public String toString(){
+        return getName()+" "+getDescription()+" "+getPrice()+" "+getExpirationDate();
+    }
+
 
 
 }
