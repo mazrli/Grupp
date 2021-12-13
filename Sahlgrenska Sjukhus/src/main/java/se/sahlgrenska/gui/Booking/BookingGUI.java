@@ -109,7 +109,7 @@ public class BookingGUI extends HelperGUI {
     }
 
 
-    private void resetRoomMenu(){
+    private void resetRoomMenu() {
         roomComboBox.removeAllItems();
         roomComboBox.insertItemAt("Select room", 0);
         roomComboBox.setSelectedIndex(0);
@@ -129,7 +129,6 @@ public class BookingGUI extends HelperGUI {
         wardComboBox.setSelectedIndex(0);
         resetRoomMenu();
     }
-
 
 
     private void fillComboBoxWards(ArrayList<Ward> wards) {
