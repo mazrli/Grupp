@@ -26,6 +26,7 @@ public class OrderGUI extends HelperGUI {
     private JFormattedTextField formattedTextField1;
     private JTextArea Notes;
     private JPanel Menu;
+<<<<<<< Updated upstream
     private JPanel huvud;
     private JPanel huvudpenal;
     private JPanel menu;
@@ -39,6 +40,15 @@ public class OrderGUI extends HelperGUI {
     private JPanel extrapanel;
     private JPanel notespanel;
 
+=======
+    private JTable OrderTable;
+    private JScrollPane tableScrollPane;
+    private JPanel OrderPane;
+
+
+    ItemStatus ItemStatus = new ItemStatus();
+
+>>>>>>> Stashed changes
 
 
     public OrderGUI() {
@@ -48,8 +58,12 @@ public class OrderGUI extends HelperGUI {
         this.scrollPane1 = scrollPane1;
 
 
+<<<<<<< Updated upstream
         init(panel, "Order", new Dimension(700, 1000), Accessibility.RECEPTIONIST);
 
+=======
+        init(panel1, "Order", new Dimension(700, 1000), Accessibility.RECEPTIONIST);
+>>>>>>> Stashed changes
 
 
         Cancel.addActionListener(new ActionListener() {
@@ -63,7 +77,11 @@ public class OrderGUI extends HelperGUI {
         });
 
 
+<<<<<<< Updated upstream
        /* SendOrder.addActionListener(new ActionListener() {
+=======
+        SendOrder.addActionListener(new ActionListener() {
+>>>>>>> Stashed changes
             @Override
             public void actionPerformed(ActionEvent e) {
                 setVisible(false);
@@ -139,7 +157,11 @@ public class OrderGUI extends HelperGUI {
                 setJMenuBar(menuBar);
 
 
+<<<<<<< Updated upstream
             }*/
+=======
+            }
+>>>>>>> Stashed changes
 
 /*            @Override
             public void ancestorRemoved(AncestorEvent event) {
@@ -153,16 +175,44 @@ public class OrderGUI extends HelperGUI {
         });*/
 
 
+<<<<<<< Updated upstream
 
 
 
 
 
+=======
+        //den ska ej vara visible i början
+        //setVisible(true);
+>>>>>>> Stashed changes
 
 
+    }
 
 
+<<<<<<< Updated upstream
+=======
 
+    private void createUIComponents () {
+        // TODO: place custom component creation code here
+        Color tableHeaderColour = new Color(199, 199, 199);
+
+
+        String[][] data = {
+                {"Defibrilator", "yes", "4031", "CSE"},
+                {"Mr", "yes", "4031", "CSE"},
+                {"Tony", "yes", "4031", "CSE"},
+                {"Phepe", "yes", "4031", "CSE"},
+        };
+
+        // Column Names
+        String[] columnNames = {"Item name", "Quantity", "Price", "OrderDate"};
+        OrderTable = new JTable(data, columnNames);
+        UtilGUI.changeJTableHeaderColour(OrderTable, tableHeaderColour);
+
+>>>>>>> Stashed changes
+
+    }
 
 
   /*  }*/
@@ -193,9 +243,12 @@ public class OrderGUI extends HelperGUI {
 
 
 }
+<<<<<<< Updated upstream
 
 
 
 
 
 
+=======
+>>>>>>> Stashed changes
