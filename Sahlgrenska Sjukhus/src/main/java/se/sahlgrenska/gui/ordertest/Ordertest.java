@@ -22,9 +22,20 @@ public class Ordertest extends HelperGUI {
     private JPanel HuvudPanel;
     private JScrollPane TabelScrololPanel;
     private JTable table;
-
-
-
+    private JButton buttonAdd;
+    private JButton buttonEdit;
+    private JButton buttonRemove;
+    private JFormattedTextField formattedTextField1;
+    private JTextArea textArea;
+    private JButton buttonCancel;
+    private JButton buttonSendOrder;
+    private JPanel datom;
+    private JLabel testDatom;
+    private JLabel testordernotes;
+    private JPanel sumPanel;
+    private JPanel AddPanel;
+    private JLabel testUserName;
+    private JLabel userName;
 
 
     public Ordertest(){
@@ -37,7 +48,7 @@ public class Ordertest extends HelperGUI {
         this.table =table;
 
 
-        init(panel, "Order", new Dimension(700, 1000), Accessibility.RECEPTIONIST);
+        init(panel, "Order", new Dimension(700, 700), Accessibility.RECEPTIONIST);
 
 
 
@@ -94,6 +105,14 @@ public class Ordertest extends HelperGUI {
             }
         });
 
+        buttonCancel.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setVisible(false);
+                Driver.getMainMenu().setVisible(true);
+            }
+        });
+
 
 
 
@@ -112,7 +131,17 @@ public class Ordertest extends HelperGUI {
                 {"Defibrilator", "yes", "4031", "CSE"},
                 {"Mr", "yes", "4031", "CSE"},
                 {"Tony", "yes", "4031", "CSE"},
-                {"Phepe", "yes", "4031", "CSE"},};
+                {"Phepe", "yes", "4031", "CSE"},
+                {"Williamxpxs", "no", "4325", "cdsaZcfe"},
+                {"Phepe", "yes", "4031", "CSE"},
+                {"Phepe", "yes", "4031", "CSE"},
+                {"Phepe", "yes", "4031", "CSE"},
+                {"Phepe", "yes", "4031", "CSE"},
+                {"Phepe", "yes", "4031", "CSE"},
+                {"Phepe", "yes", "4031", "CSE"},
+                {"Phepe", "yes", "4031", "CSE"},
+
+        };
         table = new JTable(data, columns);
         UtilGUI.changeJTableHeaderColour(table, tableHeaderColour);
 
