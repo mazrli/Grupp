@@ -1,11 +1,13 @@
 package se.sahlgrenska.gui.Order;
-import javax.swing.JFrame;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
+
+import se.sahlgrenska.gui.util.HelperGUI;
+
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 
-
-public class Table {
+public class Table extends HelperGUI implements ActionListener {
 
 
     // frame
@@ -43,6 +45,12 @@ public class Table {
 
         //f.setVisible(true); <-- Använd inte setVisible i början!
     }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        
+    }
+
 
     // Driver  method
 
