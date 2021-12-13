@@ -12,7 +12,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Ordertest extends HelperGUI {
+public class Ordertest extends HelperGUI  implements ActionListener{
     private JPanel panel;
     private JScrollPane HuvudScrollPane;
     private JPanel MenuBar;
@@ -36,9 +36,7 @@ public class Ordertest extends HelperGUI {
     private JPanel AddPanel;
     private JLabel testUserName;
     private JLabel userName;
-
-
-
+    private JPanel searchPanel;
 
 
     public Ordertest(){
@@ -48,7 +46,10 @@ public class Ordertest extends HelperGUI {
         this.HuvudScrollPane =HuvudScrollPane;
         this.TabelScrololPanel = TabelScrololPanel;
         this.TablePanel = TablePanel;
-        this.table =table;
+        this.table = table;
+        this.textArea = textArea;
+        this.searchPanel = searchPanel;
+
 
 
 
@@ -56,9 +57,13 @@ public class Ordertest extends HelperGUI {
         init(panel, "Order", new Dimension(700, 700), Accessibility.RECEPTIONIST);
 
 
+        getContentPane().setBackground(Color.lightGray);
 
 
+/*        ImageIcon image = new ImageIcon("https://avatars.dicebear.com/api/male/sddddf.svg");
+        setIconImage(image.getImage());*/
 
+        setResizable(true);
 
 
 
@@ -67,7 +72,10 @@ public class Ordertest extends HelperGUI {
             public void ancestorAdded(AncestorEvent event) {
                 setLayout(new FlowLayout());
 
-                JMenuBar menuBar = new JMenuBar();
+                //använder för att kunna ändra storlek
+                setResizable(true);
+
+                JMenuBar menuBar = new JMenuBar(); // change color of backgrund
 
 
                 JMenu fileMenu = new JMenu("File");
@@ -113,6 +121,7 @@ public class Ordertest extends HelperGUI {
         buttonCancel.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                setResizable(true);
                 setVisible(false);
                 Driver.getMainMenu().setVisible(true);
             }
@@ -124,6 +133,14 @@ public class Ordertest extends HelperGUI {
 
             }
         });
+
+
+/*        searchPanel = new JPanel((LayoutManager) Serach.f);
+        searchPanel.setVisible(true);*/
+
+
+
+
 
 
 
@@ -145,7 +162,7 @@ public class Ordertest extends HelperGUI {
                 {"Tony", "yes", "4031", "CSE"},
                 {"Phepe", "yes", "4031", "CSE"},
                 {"Williamxpxs", "no", "4325", "cdsaZcfe"},
-                {"Phepe", "yes", "4031", "CSE"},
+                {"Williamfps", "yes", "4031", "CSE"},
                 {"Phepe", "yes", "4031", "CSE"},
                 {"Phepe", "yes", "4031", "CSE"},
                 {"Phepe", "yes", "4031", "CSE"},
@@ -156,15 +173,20 @@ public class Ordertest extends HelperGUI {
         };
         table = new JTable(data, columns);
         UtilGUI.changeJTableHeaderColour(table, tableHeaderColour);
+        getContentPane().setBackground(Color.lightGray);
 
 
 
     }
 
 
+    @Override
+    public void actionPerformed(ActionEvent e) {
 
 
+    }
 }
+
 
 
 
