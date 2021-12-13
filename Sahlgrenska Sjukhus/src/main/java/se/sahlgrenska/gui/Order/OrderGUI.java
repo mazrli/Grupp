@@ -35,7 +35,9 @@ public class OrderGUI extends HelperGUI {
     private JPanel Orderfortable;
 
 
+
     ItemStatus ItemStatus = new ItemStatus();
+    Table orderTable = new Table();
 
 
     public OrderGUI() {
@@ -163,8 +165,26 @@ public class OrderGUI extends HelperGUI {
 
 
 
-        Orderfortable.add(new Table());
 
+        Orderfortable.addAncestorListener(new AncestorListener() {
+            @Override
+            public void ancestorAdded(AncestorEvent event) {
+                // frame
+                JFrame f;
+                // Table
+                JTable j;
+            }
+
+            @Override
+            public void ancestorRemoved(AncestorEvent event) {
+
+            }
+
+            @Override
+            public void ancestorMoved(AncestorEvent event) {
+
+            }
+        });
 
 
 
@@ -177,6 +197,7 @@ public class OrderGUI extends HelperGUI {
 
 
     }
+
 
 
 
