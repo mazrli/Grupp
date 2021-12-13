@@ -187,9 +187,8 @@ public class IOManager {
 
             writer.close();
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (URISyntaxException e) {
+        } catch (IOException | URISyntaxException e) {
+            UtilGUI.error("Fel med save.txt, kolla den är kvar eller lägg till den.");
             e.printStackTrace();
         }
     }
@@ -210,6 +209,7 @@ public class IOManager {
             }
 
         } catch (URISyntaxException | IOException e) {
+            UtilGUI.error("Fel med save.txt, kolla den är kvar eller lägg till den.");
             e.printStackTrace();
         }
 
