@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class BookingGUI extends HelperGUI {
-    private Hospital hospital = Driver.getHospital();
+    private Hospital hospital;
     private JPanel mainPanel;
     private JPanel bannerPanel;
     private JPanel bookingPanel;
@@ -76,9 +76,9 @@ public class BookingGUI extends HelperGUI {
 
 
 
-
     public BookingGUI() {
         init(mainPanel, "Skapa bokning", new Dimension(minWindowSize, maxWindowSize), Accessibility.RECEPTIONIST);
+
         setUpBookingData();
 
         cancelBtn.addActionListener(new ActionListener() {
@@ -92,7 +92,6 @@ public class BookingGUI extends HelperGUI {
         participationList.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
-                //  System.out.println("You're in listselection eventet");
             }
         });
     }
@@ -101,24 +100,23 @@ public class BookingGUI extends HelperGUI {
     private void setUpBookingData() {
         dateOutLbl.setText(LocalDateTime.now().format(Util.dateFormatter));
         itemsTable.setBackground(Color.WHITE);
-        fillItemTableFromRoom();
         roomComboBox.setEnabled(false);
         removeItemsBtn.setEnabled(false);
         removePartBtn.setEnabled(false);
-        fillItemTableFromRoom();
-        wardComboBox.addItem(hospital.getWards());
+  //      fillItemTableFromRoom();
+ //       wardComboBox.addItem(hospital.getWards());
 
     }
 
 
 
-    private void fillItemTableFromRoom(){
-        ArrayList<Ward> tempWards= hospital.getWards();
+    private String [] fillItemTableFromRoom(ArrayList<Ward> wards){
 
-        for(Ward w: tempWards){
-            System.out.println(w);
+        String [] wardNames = new String[wards.size()];
+        for(int i = 0; i < wards.size() ;i++){
+            wardNames[i] = wards.get(i).getName();
         }
-      //  Driver.getHospital();
+     return wardNames;
     }
 
 
@@ -126,6 +124,10 @@ public class BookingGUI extends HelperGUI {
     private void createUIComponents() {
         // TODO: place custom component creation code here
         Color tableHeaderColour = new Color(199, 199, 199);
+        hospital = Driver.getHospital();
+        String [] wardNames = fillItemTableFromRoom(hospital.getWards());
+        wardComboBox = new JComboBox(wardNames);
+
 
         String[] columns = {"Item name", "Quantity"};
         String[][] data = {{"Defibrilator", "5"}, {"MRI", "2"}, {"Panodil", "10"},{"Defibrilator", "5"}, {"MRI", "2"}, {"Panodil", "10"}, {"Defibrilator", "5"}, {"MRI", "2"}, {"Panodil", "10"}, {"Defibrilator", "5"}, {"MRI", "2"}, {"Panodil", "10"}};
