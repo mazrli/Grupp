@@ -41,7 +41,7 @@ public class Table {
 
         f.setSize(500, 200);
 
-        f.setVisible(true);
+        //f.setVisible(true); <-- Använd inte setVisible i början!
     }
 
     // Driver  method
