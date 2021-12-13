@@ -24,7 +24,6 @@ public class AdminGUI extends HelperGUI {
     private JPanel panel1;
     private JTextField passwordField;
     private JPanel panel2;
-    private JTextField textField3;
     private JPanel panel3;
     private JTextField textField4;
     private JPanel userPanel;
@@ -39,19 +38,23 @@ public class AdminGUI extends HelperGUI {
     private JTextField searchField;
     private JLabel usernameLabel;
     private JLabel passwordLabel;
-    DefaultListModel dlm = new DefaultListModel();
+    private JComboBox accessibilityBox;
+
+    DefaultListModel userDefaultModel = new DefaultListModel();
+    ComboBoxModel comboBoxModel = new DefaultComboBoxModel(Accessibility.values());
 
     private Set<Employee> users;
     private Employee selectedUser;
 
     public AdminGUI() {
-        init(mainPanel, "Hantera Användare", new Dimension(550, 650), Accessibility.ADMIN);
+
+        accessibilityBox.setModel(comboBoxModel);
 
         users = Driver.getIOManager().getAllEmployees(Driver.getCurrentUser().getLoginDetails());
         for(Employee employee : users) {
-            dlm.addElement(employee);
+            userDefaultModel.addElement(employee);
         }
-        userList.setModel(dlm);
+        userList.setModel(userDefaultModel);
 
         searchField.addKeyListener(new KeyAdapter() {
 
@@ -77,16 +80,19 @@ public class AdminGUI extends HelperGUI {
 
                 usernameField.setText(selectedUser.getLoginDetails().getUsername());
                 passwordField.setText(selectedUser.getLoginDetails().getPassword());
+                comboBoxModel.setSelectedItem(selectedUser.getAccessibility());
 
             }
         });
+
+        init(mainPanel, "Hantera Användare", new Dimension(550, 650), Accessibility.ADMIN);
     }
 
     private void populateList(Set<Object> items) {
-        dlm.clear();
+        userDefaultModel.clear();
 
         for(Object employee : items) {
-            dlm.addElement(employee);
+            userDefaultModel.addElement(employee);
         }
 
     }
