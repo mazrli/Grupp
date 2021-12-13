@@ -23,7 +23,6 @@ public class AdminGUI extends HelperGUI {
     private JPanel usernamePanel;
     private JTextField usernameField;
     private JPanel panel1;
-    private JPanel panel2;
     private JPanel userPanel;
     private JButton raderaButton;
     private JButton nyAnvändareButton;
@@ -31,7 +30,7 @@ public class AdminGUI extends HelperGUI {
     private JList userList;
     private JPanel searchPanel;
     private JPanel listPanel;
-    private JButton createUserButton;
+    private JButton editUserButton;
     private JButton backButton;
     private JTextField searchField;
     private JLabel usernameLabel;
@@ -39,8 +38,14 @@ public class AdminGUI extends HelperGUI {
     private JComboBox accessibilityBox;
     private JPasswordField passwordField;
     private JCheckBox hidePasswordBox;
+    private JPanel personNumPanel;
+    private JTextField personNumTextField;
+    private JLabel personNumLabel;
+    private JLabel accessibilityLabel;
+    private JPanel panel2;
+    private JTextField accessibilityTextField;
 
-    ComboBoxModel comboBoxModel = new DefaultComboBoxModel(Accessibility.values());
+    //ComboBoxModel comboBoxModel = new DefaultComboBoxModel(Accessibility.values());
     DefaultListModel userDefaultModel = new DefaultListModel();
 
     private Set<Employee> users;
@@ -48,7 +53,7 @@ public class AdminGUI extends HelperGUI {
 
     public AdminGUI() {
 
-        accessibilityBox.setModel(comboBoxModel);
+        //accessibilityBox.setModel(comboBoxModel);
 
         users = Driver.getIOManager().getAllEmployees(Driver.getCurrentUser().getLoginDetails());
 
@@ -69,6 +74,8 @@ public class AdminGUI extends HelperGUI {
         backButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                searchField.setText("");
+                populateList(users);
                 resetForm();
                 setVisible(false);
                 Driver.getMainMenu().setVisible(true);
@@ -83,7 +90,9 @@ public class AdminGUI extends HelperGUI {
 
                 usernameField.setText(selectedUser.getLoginDetails().getUsername());
                 passwordField.setText(selectedUser.getLoginDetails().getPassword());
-                comboBoxModel.setSelectedItem(selectedUser.getAccessibility());
+                personNumTextField.setText(selectedUser.getPersonNumber());
+                accessibilityTextField.setText(selectedUser.getAccessibility().toString());
+                //comboBoxModel.setSelectedItem(selectedUser.getAccessibility());
 
             }
         });
@@ -93,8 +102,7 @@ public class AdminGUI extends HelperGUI {
         nyAnvändareButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                resetForm();
-                usernameField.grabFocus();
+                ManageUserGUI manageUserGUI = new ManageUserGUI("Ny användare");
             }
         });
 
@@ -108,17 +116,14 @@ public class AdminGUI extends HelperGUI {
             }
         });
 
-        createUserButton.addActionListener(new ActionListener() {
+        editUserButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String username = usernameField.getText();
-                char[] password = passwordField.getPassword();
-                Accessibility accessibility = Accessibility.valueOf(comboBoxModel.getSelectedItem().toString());
-
-                if (username.length() == 0 || password.length == 0 || accessibility == Accessibility.NONE) {
-                    UtilGUI.error("Alla fält är obligatoriska.");
+                if(selectedUser != null) {
+                    ManageUserGUI manageUserGUI = new ManageUserGUI(selectedUser);
+                } else {
+                    UtilGUI.error("Du har inte valt en användare!");
                 }
-
             }
         });
     }
@@ -127,10 +132,11 @@ public class AdminGUI extends HelperGUI {
         selectedUser = null;
         usernameField.setText("");
         passwordField.setText("");
-        comboBoxModel.setSelectedItem(Accessibility.NONE);
+        personNumTextField.setText("");
+        //comboBoxModel.setSelectedItem(Accessibility.NONE);
     }
 
-    private void populateList(Set<Object> items) {
+    private void populateList(Set<? extends Object> items) {
         userDefaultModel.clear();
 
         for(Object employee : items) {
