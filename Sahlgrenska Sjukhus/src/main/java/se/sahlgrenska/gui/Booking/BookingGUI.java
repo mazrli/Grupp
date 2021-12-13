@@ -7,18 +7,21 @@ import se.sahlgrenska.main.Util;
 import se.sahlgrenska.sjukhus.Booking;
 import se.sahlgrenska.sjukhus.Hospital;
 import se.sahlgrenska.sjukhus.Ward;
+import se.sahlgrenska.sjukhus.item.Item;
 import se.sahlgrenska.sjukhus.person.employee.Accessibility;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.table.JTableHeader;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+
+import se.sahlgrenska.sjukhus.Room;
 
 public class BookingGUI extends HelperGUI {
     private Hospital hospital;
@@ -74,12 +77,10 @@ public class BookingGUI extends HelperGUI {
     private int maxWindowSize = 700;
 
 
-
-
     public BookingGUI() {
         init(mainPanel, "Skapa bokning", new Dimension(minWindowSize, maxWindowSize), Accessibility.RECEPTIONIST);
 
-        setUpBookingData();
+        defaultBookingSetUp();
 
         cancelBtn.addActionListener(new ActionListener() {
             @Override
@@ -89,51 +90,88 @@ public class BookingGUI extends HelperGUI {
             }
         });
 
-        participationList.addListSelectionListener(new ListSelectionListener() {
+        wardComboBox.addActionListener(new ActionListener() {
             @Override
-            public void valueChanged(ListSelectionEvent e) {
+            public void actionPerformed(ActionEvent e) {
+
+                if (wardComboBox.getSelectedIndex() == 0) {
+                    System.out.println("You've not selected a ward!");
+                    resetRoomMenu();
+                    return;
+                }
+
+                Ward selectedWard = (Ward) wardComboBox.getSelectedItem();
+                roomComboBox.setEnabled(true);
+                fillComboBoxRooms(selectedWard);
+
             }
         });
     }
 
 
-    private void setUpBookingData() {
+    private void resetRoomMenu(){
+        roomComboBox.removeAllItems();
+        roomComboBox.insertItemAt("Select room", 0);
+        roomComboBox.setSelectedIndex(0);
+        roomComboBox.setEnabled(false);
+    }
+
+
+    private void defaultBookingSetUp() {
         dateOutLbl.setText(LocalDateTime.now().format(Util.dateFormatter));
         itemsTable.setBackground(Color.WHITE);
-        roomComboBox.setEnabled(false);
+
         removeItemsBtn.setEnabled(false);
         removePartBtn.setEnabled(false);
-  //      fillItemTableFromRoom();
- //       wardComboBox.addItem(hospital.getWards());
 
+        wardComboBox.insertItemAt("Select ward", 0);
+        fillComboBoxWards(hospital.getWards());
+        wardComboBox.setSelectedIndex(0);
+        resetRoomMenu();
     }
 
 
 
-    private String [] fillItemTableFromRoom(ArrayList<Ward> wards){
-
-        String [] wardNames = new String[wards.size()];
-        for(int i = 0; i < wards.size() ;i++){
-            wardNames[i] = wards.get(i).getName();
+    private void fillComboBoxWards(ArrayList<Ward> wards) {
+        for (int i = 0; i < wards.size(); i++) {
+            wardComboBox.addItem(wards.get(i));
         }
-     return wardNames;
     }
 
+/*
+    public void printRoomItems() {
+        for (Map.Entry<Item, Integer> roomItems :
+                itemsInRoom.entrySet()) {
+
+            // Printing all elements of a Map
+            System.out.print(roomItems.getKey() + " Amount: "
+                    + roomItems.getValue());
+        }
+    }*/
+
+
+    private void fillComboBoxRooms(Ward ward) {
+        roomComboBox.removeAllItems();
+        System.out.println(ward + " was selected");
+        HashSet<Room> wardRooms = ward.getRooms();
+        if (wardRooms != null) {
+            for (Room r : wardRooms) {
+                roomComboBox.addItem(r);
+            }
+        }
+    }
 
 
     private void createUIComponents() {
         // TODO: place custom component creation code here
-        Color tableHeaderColour = new Color(199, 199, 199);
         hospital = Driver.getHospital();
-        String [] wardNames = fillItemTableFromRoom(hospital.getWards());
-        wardComboBox = new JComboBox(wardNames);
-
+        Color tableHeaderColour = new Color(199, 199, 199);
 
         String[] columns = {"Item name", "Quantity"};
-        String[][] data = {{"Defibrilator", "5"}, {"MRI", "2"}, {"Panodil", "10"},{"Defibrilator", "5"}, {"MRI", "2"}, {"Panodil", "10"}, {"Defibrilator", "5"}, {"MRI", "2"}, {"Panodil", "10"}, {"Defibrilator", "5"}, {"MRI", "2"}, {"Panodil", "10"}};
+        String[][] data = {{"Defibrilator", "5"}, {"MRI", "2"}, {"Panodil", "10"}, {"Defibrilator", "5"}, {"MRI", "2"}, {"Panodil", "10"}, {"Defibrilator", "5"}, {"MRI", "2"}, {"Panodil", "10"}, {"Defibrilator", "5"}, {"MRI", "2"}, {"Panodil", "10"}};
         itemsTable = new JTable(data, columns);
         UtilGUI.changeJTableHeaderColour(itemsTable, tableHeaderColour);
-
-
     }
 }
+
+
