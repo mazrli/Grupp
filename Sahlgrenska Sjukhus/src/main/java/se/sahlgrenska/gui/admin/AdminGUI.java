@@ -45,7 +45,7 @@ public class AdminGUI extends HelperGUI {
     private Employee selectedUser;
 
     public AdminGUI() {
-        init(mainPanel, "Hantera Användare", new Dimension(550, 650), Accessibility.ALL);
+        init(mainPanel, "Hantera Användare", new Dimension(550, 650), Accessibility.ADMIN);
 
         users = Driver.getIOManager().getAllEmployees(Driver.getCurrentUser().getLoginDetails());
         for(Employee employee : users) {
