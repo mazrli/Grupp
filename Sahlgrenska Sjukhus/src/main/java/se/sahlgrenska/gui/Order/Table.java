@@ -1,3 +1,4 @@
+/*
 package se.sahlgrenska.gui.Order;
 
 import se.sahlgrenska.gui.util.HelperGUI;
@@ -42,16 +43,20 @@ public class Table extends HelperGUI implements ActionListener {
         f.add(sp);
 
         f.setSize(500, 200);
+        f.setVisible(true);
 
-        //f.setVisible(true); <-- Använd inte setVisible i början!
+
+
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        
+        new Table();
+
     }
 
 
     // Driver  method
 
 }
+*/
