@@ -110,7 +110,9 @@ public class OrderGUI extends HelperGUI {
         Menu.addAncestorListener(new AncestorListener() {
             @Override
             public void ancestorAdded(AncestorEvent event) {
-                setDefaultCloseOperation(HelperGUI.EXIT_ON_CLOSE);
+
+                //setDefaultCloseOperation(HelperGUI.EXIT_ON_CLOSE); <--- Använd inte setDefaultOperation!
+
                 setLayout(new FlowLayout());
 
                 JMenuBar menuBar = new JMenuBar();
@@ -146,7 +148,7 @@ public class OrderGUI extends HelperGUI {
                 setJMenuBar(menuBar);
 
 
-                setVisible(true);
+                //setVisible(true); <-- Använd inte setVisible i början!
             }
 
             @Override

@@ -60,7 +60,8 @@ public class JournalGUI extends HelperGUI {
 
         init(MainPanel, "Hantera journaler", Accessibility.DOCTOR);
         setSize(550, 600);
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+        //setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE); <--- Använd inte setDefaultCloseOperation!
 
         //Gernerates a dummylist of patients to test remove button
         DefaultListModel dataList = new DefaultListModel();
