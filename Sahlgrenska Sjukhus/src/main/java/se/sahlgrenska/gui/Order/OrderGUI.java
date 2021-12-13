@@ -168,27 +168,7 @@ public class OrderGUI extends HelperGUI {
 
 
 
-        Orderfortable.addAncestorListener(new AncestorListener() {
-            @Override
-            public void ancestorAdded(AncestorEvent event) {
-                // frame
-                JFrame f;
-                // Table
-                JTable j;
-            }
-
-            @Override
-            public void ancestorRemoved(AncestorEvent event) {
-
-            }
-
-            @Override
-            public void ancestorMoved(AncestorEvent event) {
-
-            }
-        });
-
-
+        Orderfortable.add(new Table() );
 
 
 
