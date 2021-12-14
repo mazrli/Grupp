@@ -11,7 +11,7 @@ public class Medicine extends Item {
         this.expirationDate = expirationDate;
     }
 
-    public LocalDate getExpirationDate(){
+    public LocalDate getExpirationDate() {
         return expirationDate;
     }
 
@@ -37,10 +37,9 @@ public class Medicine extends Item {
     }
 
     @Override
-    public String toString(){
-        return getName()+" "+getDescription()+" "+getPrice()+" "+getExpirationDate();
+    public String toString() {
+        return getName(); //+" "+getDescription()+" "+getPrice()+" "+getExpirationDate();
     }
-
 
 
 }
