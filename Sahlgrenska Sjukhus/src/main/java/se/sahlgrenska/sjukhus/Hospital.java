@@ -63,6 +63,10 @@ public class Hospital {
         }
     }
 
+    public Map<Item,Integer> getHospitalsStoredItems(){
+        return items;
+    }
+
     public ArrayList<Ward> getWards() {
         return wards;
     }

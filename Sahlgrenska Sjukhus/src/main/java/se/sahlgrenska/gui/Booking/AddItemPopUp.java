@@ -1,8 +1,14 @@
 package se.sahlgrenska.gui.Booking;
 
+import se.sahlgrenska.gui.util.HelperGUI;
+import se.sahlgrenska.main.Driver;
+import se.sahlgrenska.sjukhus.Hospital;
+import se.sahlgrenska.sjukhus.person.employee.Accessibility;
+import se.sahlgrenska.sjukhus.item.Item;
 import javax.swing.*;
+import java.awt.*;
 
-public class AddItemPopUp {
+public class AddItemPopUp extends HelperGUI {
     private JPanel mainPanel;
     private JPanel topPanel;
     private JLabel titleLbl;
@@ -23,4 +29,18 @@ public class AddItemPopUp {
     private JPanel quantitySearchPanel;
     private JLabel enterQuantityLbl;
     private JPanel inputPanel;
+    private Hospital hospital;
+
+
+    private Item selectedItem;
+    private int quantity = 0;
+
+
+    public AddItemPopUp() {
+        init(mainPanel, "Add new item", new Dimension(350, 400), Accessibility.NONE);
+        hospital = Driver.getHospital();
+
+    }
+
+
 }
