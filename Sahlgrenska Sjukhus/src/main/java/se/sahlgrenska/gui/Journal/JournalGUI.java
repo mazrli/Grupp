@@ -15,8 +15,11 @@ import javax.swing.text.Document;
 import javax.swing.undo.CannotUndoException;
 import javax.swing.undo.UndoManager;
 import javax.swing.undo.UndoableEdit;
+import javax.swing.JComboBox;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.List;
@@ -59,7 +62,7 @@ public class JournalGUI extends HelperGUI {
     private JList DiseaseDataList;
     private JScrollPane JournalDataScrollPane;
     private JScrollPane DiseaseDataScrollPane;
-    private ComboBoxModel comboBoxModel = new DefaultComboBoxModel((Vector) Arrays.asList("hellu", "hjelp", "jajaja"));
+    //private ComboBoxModel comboBoxModel = new DefaultComboBoxModel(Arrays.asList("Help"));
 
     List<Patient> patients;
     Journal currentJournal;
@@ -68,6 +71,8 @@ public class JournalGUI extends HelperGUI {
     List<Disease> diseases;
 
     public JournalGUI() {
+
+
 
         init(MainPanel, "Hantera journaler", Accessibility.DOCTOR);
         setSize(550, 600);
@@ -81,14 +86,11 @@ public class JournalGUI extends HelperGUI {
         }
         JournalDataList.setModel(dataList);
 
-        String getItem = (String) SjukdomComboBox.getSelectedItem();
-        for (int i = 0; i < getItem.length(); i++) {
-            getItem.equals(getItem[i]);
-            if (getItem.equals(item[i])) {
-                getItem.toString();
-            }
+        DefaultComboBoxModel comboBoxModel = new DefaultComboBoxModel();
+        for (int i = 0; i < 5; i++) {
+            JLabel label =new JLabel("Item" + i );
+            comboBoxModel.addElement(label.getText());
         }
-        SjukdomComboBox = new JComboBox();
         SjukdomComboBox.setModel(comboBoxModel);
 
 
@@ -158,7 +160,9 @@ public class JournalGUI extends HelperGUI {
 
         SjukdomComboBox.addItemListener(new ItemListener() {
             @Override
-            public void itemStateChanged(ItemEvent e) {
+            public void itemStateChanged(ItemEvent e)
+            {
+                SjukdomComboBox = new JComboBox(comboBoxModel);
             }
         });
     }
@@ -183,4 +187,5 @@ public class JournalGUI extends HelperGUI {
             cbm.addElement(diseaseName);
         }
     }
+
 }
