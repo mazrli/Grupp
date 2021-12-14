@@ -11,11 +11,7 @@ import se.sahlgrenska.sjukhus.item.Item;
 import se.sahlgrenska.sjukhus.person.employee.Accessibility;
 
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -24,6 +20,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+
 
 import se.sahlgrenska.sjukhus.Room;
 
@@ -79,7 +76,7 @@ public class BookingGUI extends HelperGUI {
     private Booking booking;
     private int minWindowSize = 600;
     private int maxWindowSize = 700;
-    private String[] columnNames = {"Item name", "Quantity"};
+    private String[] columnNames = {"Redskap namn", "Kvantitet"};
     private DefaultTableModel tableModel;
     private boolean isActiveWard;
 
@@ -134,6 +131,7 @@ public class BookingGUI extends HelperGUI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Add new item button was pressed!");
+                new AddItemPopUp().setVisible(true);
             }
         });
     }
@@ -196,8 +194,8 @@ public class BookingGUI extends HelperGUI {
 
 
     private void createDefaultTableValues() {
-        tableModel.addColumn("Item name");
-        tableModel.addColumn("Quantity");
+        tableModel.addColumn(columnNames[0]);
+        tableModel.addColumn(columnNames[1]);
     }
 
 
