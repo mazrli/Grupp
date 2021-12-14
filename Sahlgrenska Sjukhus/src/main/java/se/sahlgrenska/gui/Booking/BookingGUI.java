@@ -81,7 +81,7 @@ public class BookingGUI extends HelperGUI {
     private int maxWindowSize = 700;
     private String[] columnNames = {"Item name", "Quantity"};
     private DefaultTableModel tableModel;
-
+    private boolean isActiveWard;
 
     public BookingGUI() {
         init(mainPanel, "Skapa bokning", new Dimension(minWindowSize, maxWindowSize), Accessibility.RECEPTIONIST);
@@ -100,39 +100,44 @@ public class BookingGUI extends HelperGUI {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                if (!checkComboBoxSelectedIndex(wardComboBox)) {
+                if (checkSelectedIndexIsFirstChoice(wardComboBox)) {
+                    isActiveWard = false;
                     System.out.println("You've not selected a ward!");
                     resetRoomMenu();
-                    tableModel = new DefaultTableModel();
                     return;
                 }
 
                 Ward selectedWard = (Ward) wardComboBox.getSelectedItem();
                 roomComboBox.setEnabled(true);
+                isActiveWard = true;
                 fillComboBoxRooms(selectedWard);
 
-                Room selectedRoom = (Room) roomComboBox.getSelectedItem();
-                fillRoomItems(selectedRoom);
-
+                if (!checkSelectedIndexIsFirstChoice(roomComboBox)) {
+                    Room selectedRoom = (Room) roomComboBox.getSelectedItem();
+                    fillRoomItems(selectedRoom);
+                }
             }
         });
 
         roomComboBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-                if (roomComboBox.getSelectedIndex() != 0) {
+                emptyItemList();
+                if (isActiveWard) {
                     Room selectedRoom = (Room) roomComboBox.getSelectedItem();
                     fillRoomItems(selectedRoom);
-                }  else{
-                    //clearea tabellen!
                 }
+
             }
         });
     }
 
-    private boolean checkComboBoxSelectedIndex(JComboBox combo) {
-        return combo.getSelectedIndex() != 0;
+    private boolean checkSelectedIndexIsFirstChoice(JComboBox combo) {
+        return combo.getSelectedIndex() == 0;
+    }
+
+    private void emptyItemList() {
+        tableModel.setRowCount(0);
     }
 
 
@@ -141,6 +146,12 @@ public class BookingGUI extends HelperGUI {
         roomComboBox.insertItemAt("Select room", 0);
         roomComboBox.setSelectedIndex(0);
         roomComboBox.setEnabled(false);
+
+
+        removeItemsBtn.setEnabled(false);
+        addItemsBtn.setEnabled(false);
+
+
     }
 
 
@@ -149,8 +160,7 @@ public class BookingGUI extends HelperGUI {
         itemsTable.setBackground(Color.WHITE);
         itemsTable.setShowGrid(true);
 
-        removeItemsBtn.setEnabled(false);
-        addItemsBtn.setEnabled(false);
+
         removePartBtn.setEnabled(false);
 
         wardComboBox.insertItemAt("Select ward", 0);
