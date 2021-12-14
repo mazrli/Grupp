@@ -17,20 +17,26 @@ public class Room {
     private int size;
     private HashMap<Item, Integer> itemsInRoom = new HashMap<Item, Integer>();
 
-    public Room(String name, int size) {
-        this.name = name;
-        this.size = size;
-
-    }
 
     public Room(String name, int size, HashMap<Item, Integer> itemsInRoom) {
         this.name = name;
         this.size = size;
         this.itemsInRoom = itemsInRoom;
-        addItemsToRoomTest();
+
+    }
+    public Room(String name, int size, Item item, int quantity) {
+        this.name = name;
+        this.size = size;
+        addItems(item,quantity);
     }
 
+    public String getName() {
+        return name;
+    }
 
+    public int getSize() {
+        return size;
+    }
 
     private void addItemsToRoomTest() {
         Item item1 = new Equipment("Defibrilator", "Starts hearts", 2500.5f, true);
@@ -43,17 +49,17 @@ public class Room {
         itemsInRoom.put(item3, 10);
     }
 
-
-    public void printRoomItems() {
-        for (Map.Entry<Item, Integer> roomItems :
-                itemsInRoom.entrySet()) {
-
-            // Printing all elements of a Map
-            System.out.print(roomItems.getKey() + " Amount: "
-                    + roomItems.getValue());
+    public void addItems(Item item, int quantity) {
+        int totalQuantity = quantity;
+        if(itemsInRoom.containsKey(item)){
+        Integer currentQuantity = itemsInRoom.get(item);
+            totalQuantity += currentQuantity;
         }
 
+        itemsInRoom.put(item,quantity);
+
     }
+
 
     public HashMap<Item, Integer> getItems() {
         return itemsInRoom;
@@ -76,4 +82,11 @@ public class Room {
     public int hashCode() {
         return Objects.hash(name, size, itemsInRoom);
     }
+
+    @Override
+    public String toString() {
+        return getName() + " (" + getSize() + "kvm)";
+    }
+
+
 }
