@@ -4,6 +4,7 @@ import se.sahlgrenska.sjukhus.item.Equipment;
 import se.sahlgrenska.sjukhus.item.Item;
 import se.sahlgrenska.sjukhus.item.Medicine;
 import se.sahlgrenska.sjukhus.person.Person;
+import se.sahlgrenska.sjukhus.person.patient.Patient;
 
 import java.time.LocalDate;
 import java.util.*;
@@ -51,6 +52,13 @@ public class Hospital {
         HashSet<Room> room1 = new HashSet<>(Arrays.asList(roomArr1));
         addWard(new Ward("Ward2", room1));
         System.out.println("Fake data added");
+    }
+
+    public Patient getPatient(String personnumber) {
+        for(Patient patient : archive.getBookings().keySet())
+            if(patient.getPersonNumber().equals(personnumber))
+                return patient;
+        return null;
     }
 
 
