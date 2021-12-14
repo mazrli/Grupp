@@ -101,15 +101,16 @@ public class JournalGUI extends HelperGUI {
 
         patients = Driver.getHospital().getArchive().getPatients().get(Driver.getCurrentUser());
 
-        //Delete a select patient in Journaldatalist.
+        //Delete data from selected List, Option: DataList or DiseaseList.
         RaderaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (JournalDataList.getSelectedValue() != null) {
-                    //Removes select item from dummylist.
+                    //Removes a patient.
                     dataList.removeElement(JournalDataList.getSelectedValue());
                 }
                 else if (DiseaseDataList.getSelectedValue() != null) {
+                    //Removes a disease.
                     diseaseList.removeElement(DiseaseDataList.getSelectedValue());
                 }
             }
