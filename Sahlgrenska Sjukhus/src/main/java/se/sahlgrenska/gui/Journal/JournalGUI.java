@@ -3,17 +3,27 @@ package se.sahlgrenska.gui.Journal;
 import se.sahlgrenska.gui.util.HelperGUI;
 import se.sahlgrenska.main.Driver;
 import se.sahlgrenska.sjukhus.Journal;
+import se.sahlgrenska.sjukhus.item.Item;
 import se.sahlgrenska.sjukhus.person.employee.Accessibility;
+import se.sahlgrenska.sjukhus.person.patient.Disease;
 import se.sahlgrenska.sjukhus.person.patient.Patient;
+import se.sahlgrenska.sjukhus.person.patient.Symptom;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import javax.swing.event.UndoableEditListener;
+import javax.swing.text.Document;
+import javax.swing.undo.CannotUndoException;
+import javax.swing.undo.UndoManager;
+import javax.swing.undo.UndoableEdit;
+import javax.swing.JComboBox;
+import java.awt.*;
+import java.awt.event.*;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
+
 
 public class JournalGUI extends HelperGUI {
 
@@ -52,15 +62,20 @@ public class JournalGUI extends HelperGUI {
     private JList DiseaseDataList;
     private JScrollPane JournalDataScrollPane;
     private JScrollPane DiseaseDataScrollPane;
+    //private ComboBoxModel comboBoxModel = new DefaultComboBoxModel(Arrays.asList("Help"));
 
     List<Patient> patients;
     Journal currentJournal;
+    UndoManager undoManager;
+    UndoableEdit edit;
+    List<Disease> diseases;
 
     public JournalGUI() {
 
+
+
         init(MainPanel, "Hantera journaler", Accessibility.DOCTOR);
         setSize(550, 600);
-
         //setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE); <--- Använd inte setDefaultCloseOperation!
 
         //Gernerates a dummylist of patients to test remove button
@@ -70,6 +85,14 @@ public class JournalGUI extends HelperGUI {
             dataList.add(i, label.getText());
         }
         JournalDataList.setModel(dataList);
+
+        DefaultComboBoxModel comboBoxModel = new DefaultComboBoxModel();
+        for (int i = 0; i < 5; i++) {
+            JLabel label =new JLabel("Item" + i );
+            comboBoxModel.addElement(label.getText());
+        }
+        SjukdomComboBox.setModel(comboBoxModel);
+
 
         patients = Driver.getHospital().getArchive().getPatients().get(Driver.getCurrentUser());
 
@@ -84,11 +107,14 @@ public class JournalGUI extends HelperGUI {
             }
         });
 
-        //Undo the latest save.
+        //Undo latest removed patient from list of patient(Incomplete).
         ÅngraButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                Stack<UndoManager> stack = new Stack<UndoManager>();
+                if (dataList.removeElement(JournalDataList.getSelectedValue()) == true) {
+                    stack.push(undoManager);
+                }
             }
         });
 
@@ -131,6 +157,14 @@ public class JournalGUI extends HelperGUI {
                 System.out.println(JournalDataList.getSelectedValue().toString());
             }
         });
+
+        SjukdomComboBox.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e)
+            {
+                SjukdomComboBox = new JComboBox(comboBoxModel);
+            }
+        });
     }
 
     //Makes it possible to load the Journal-list into Journaldatalist, otherwise it was not possible.
@@ -142,4 +176,16 @@ public class JournalGUI extends HelperGUI {
             JournalDataList.add(label);
         }
     }
+
+    public void ListOfDisease()
+    {
+        DefaultComboBoxModel cbm = new DefaultComboBoxModel();
+        SjukdomComboBox.setModel(cbm);
+        Disease disease = new Disease("");
+        String diseaseName = disease.getDiseaseName();
+        for (Disease disease1 : diseases) {
+            cbm.addElement(diseaseName);
+        }
+    }
+
 }
