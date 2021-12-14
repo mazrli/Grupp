@@ -4,6 +4,7 @@ import se.sahlgrenska.gui.Booking.BookingGUI;
 import se.sahlgrenska.sjukhus.person.employee.Employee;
 import se.sahlgrenska.sjukhus.person.patient.Patient;
 import se.sahlgrenska.sjukhus.item.Item;
+
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
@@ -15,8 +16,6 @@ public class Booking {
     private List<Employee> employees;
     private Ward ward;
     private Room room;
-
-
 
 
     public Booking(LocalDateTime time, List<Patient> patients, List<Employee> employees, Ward ward, Room room) {
@@ -32,10 +31,6 @@ public class Booking {
         return room;
 
     }
-
-
-
-
 
 
 }

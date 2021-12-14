@@ -1,8 +1,11 @@
 package se.sahlgrenska.sjukhus;
 
+import se.sahlgrenska.sjukhus.item.Equipment;
 import se.sahlgrenska.sjukhus.item.Item;
+import se.sahlgrenska.sjukhus.item.Medicine;
 import se.sahlgrenska.sjukhus.person.Person;
 
+import java.time.LocalDate;
 import java.util.*;
 
 public class Hospital {
@@ -10,13 +13,15 @@ public class Hospital {
     private String name;
     private int maxCapacity;
     private Map<Item, Integer> items;
-    private List<Person> persons;
+
+    private final Set<Person> persons;
+
     private Archive archive;
     private float balance;
     private Address address;
     private ArrayList<Ward> wards;
 
-    public Hospital(String name, int maxCapacity, Map<Item, Integer> items, List<Person> persons, Archive archive, float balance, Address address) {
+    public Hospital(String name, int maxCapacity, Map<Item, Integer> items, Set<Person> persons, Archive archive, float balance, Address address) {
         this.name = name;
         this.maxCapacity = maxCapacity;
         this.items = items;
@@ -29,12 +34,23 @@ public class Hospital {
     }
 
     private void fillArrayListTempUntilDatabaseConnection() {
-        Room roomArr[] = {new Room("Room 1", 20), new Room("Room2", 30)};
+
+        Item item1 = new Equipment("Defibrilator", "Starts hearts", 2500.5f, true);
+        Item item2 = new Equipment("MRI", "Scans body", 5000.0f, true);
+        Item item3 = new Medicine("Panodil", "Pain relief", 15.0f, LocalDate.now());
+        Item item4 = new Medicine("Alvedon", "Pain relief", 12.5f, LocalDate.now());
+
+        Room roomArr[] = {new Room("Room 1", 20,item1, 2), new Room("Room2", 30,item1, 4)};
         HashSet<Room> rooms = new HashSet<>(Arrays.asList(roomArr));
         addWard(new Ward("Ward1", rooms));
-        Room roomArr1[] = {new Room("Room 3", 15), new Room("Room6", 40)};
+
+        HashMap<Item, Integer> itemsInRoom = new HashMap<Item, Integer>();
+        itemsInRoom.put(item2, 1);
+        itemsInRoom.put(item3, 10);
+        Room roomArr1[] = {new Room("Room 3", 15, item4,45), new Room("Room6", 40,itemsInRoom)};
         HashSet<Room> room1 = new HashSet<>(Arrays.asList(roomArr1));
         addWard(new Ward("Ward2", room1));
+        System.out.println("Fake data added");
     }
 
 
@@ -47,6 +63,10 @@ public class Hospital {
         if (!wards.contains(ward)) {
             wards.add(ward);
         }
+    }
+
+    public Map<Item,Integer> getHospitalsStoredItems(){
+        return items;
     }
 
     public ArrayList<Ward> getWards() {
@@ -63,4 +83,7 @@ public class Hospital {
     }
 
 
+    public Set<Person> getPersons() {
+        return persons;
+    }
 }

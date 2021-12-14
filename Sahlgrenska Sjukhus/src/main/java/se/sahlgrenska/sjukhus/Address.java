@@ -13,4 +13,12 @@ public class Address {
         this.street = street;
         this.zip = zip;
     }
+
+    @Deprecated
+    public Address() {
+        this.country = "Sweden";
+        this.city = "Stockholm";
+        this.street = "Bråkmakargatan";
+        this.zip = "990 99";
+    }
 }
