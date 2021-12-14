@@ -34,6 +34,8 @@ public class Hospital {
         fillArrayListTempUntilDatabaseConnection();
     }
 
+
+
     private void fillArrayListTempUntilDatabaseConnection() {
 
         Item item1 = new Equipment("Defibrilator", "Starts hearts", 2500.5f, true);

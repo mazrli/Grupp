@@ -4,6 +4,7 @@ package se.sahlgrenska.gui.ordertest;
 import se.sahlgrenska.gui.util.HelperGUI;
 import se.sahlgrenska.gui.util.UtilGUI;
 import se.sahlgrenska.main.Driver;
+import se.sahlgrenska.sjukhus.item.Item;
 import se.sahlgrenska.sjukhus.person.employee.Accessibility;
 
 import javax.swing.*;
@@ -12,6 +13,7 @@ import javax.swing.event.AncestorListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Map;
 
 public class ItemsStatus extends HelperGUI {
     private JPanel HuvudPanel;
@@ -24,6 +26,8 @@ public class ItemsStatus extends HelperGUI {
     private JButton ButtonCancel;
     private JButton ButtonOk;
     private JTextField textField1;
+
+    Map<Item, Integer> items;
 
 
     Ordertest Ordertest = new Ordertest();
@@ -109,6 +113,7 @@ public class ItemsStatus extends HelperGUI {
             }
         });
 
+
     }
 
     public JButton getButtonOk() {
@@ -129,20 +134,13 @@ public class ItemsStatus extends HelperGUI {
         String[][] data = {
                 {" ", " ", " ", " ", " "},
                 {" ", " ", " ", " ", " "},
-
-                {" ", " ", " ", " ", " "},
-
-                {" ", " ", " ", " ", " "},
-
-                {" ", " ", " ", " ", " "},
-
-                {" ", " ", " ", " ", " "},
-
                 {" ", " ", " ", " ", " "},
                 {" ", " ", " ", " ", " "},
-
                 {" ", " ", " ", " ", " "},
-
+                {" ", " ", " ", " ", " "},
+                {" ", " ", " ", " ", " "},
+                {" ", " ", " ", " ", " "},
+                {" ", " ", " ", " ", " "},
                 {" ", " ", " ", " ", " "},
                 {" ", " ", " ", " ", " "},
                 {" ", " ", " ", " ", " "},
@@ -160,6 +158,12 @@ public class ItemsStatus extends HelperGUI {
 
 
     }
+
+
+    private void getHospitalsStoredItems(){
+
+    }
+
 }
 
 

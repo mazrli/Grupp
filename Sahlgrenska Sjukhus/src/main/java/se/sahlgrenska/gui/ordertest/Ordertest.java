@@ -31,7 +31,7 @@ public class Ordertest extends HelperGUI  implements ActionListener{
     private JTable table;
     private JButton buttonAdd;
     private JButton buttonEdit;
-    private JButton buttonRemove;
+    private JButton c;
     private JFormattedTextField formattedTextField1;
     private JTextArea textArea;
     private JButton buttonCancel;
@@ -160,6 +160,14 @@ public class Ordertest extends HelperGUI  implements ActionListener{
             }
         });
 
+        buttonCancel.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new JWindow(new  ItemsStatus());
+            }
+        });
+
+     
         table.addAncestorListener(new AncestorListener() {
             @Override
             public void ancestorAdded(AncestorEvent event) {
