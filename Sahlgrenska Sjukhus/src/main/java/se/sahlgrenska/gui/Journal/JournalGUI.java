@@ -80,7 +80,7 @@ public class JournalGUI extends HelperGUI {
         //Gernerates a dummylist of patients to test remove button
         DefaultListModel dataList = new DefaultListModel();
         for (int i = 0; i < 5; i++) {
-            JLabel label = new JLabel("Hasse" + i);
+            JLabel label = new JLabel("Hasse" + " " + i);
             dataList.add(i, label.getText());
         }
         JournalDataList.setModel(dataList);
@@ -92,7 +92,12 @@ public class JournalGUI extends HelperGUI {
         }
         SjukdomComboBox.setModel(comboBoxModel);
 
-
+        DefaultListModel diseaseList = new DefaultListModel();
+        for (int i = 0; i < 5; i++) {
+            JLabel label = new JLabel("Sjukdom" + " " + i);
+            diseaseList.add(i, label.getText());
+        }
+        DiseaseDataList.setModel(diseaseList);
 
         patients = Driver.getHospital().getArchive().getPatients().get(Driver.getCurrentUser());
 
@@ -103,6 +108,9 @@ public class JournalGUI extends HelperGUI {
                 if (JournalDataList.getSelectedValue() != null) {
                     //Removes select item from dummylist.
                     dataList.removeElement(JournalDataList.getSelectedValue());
+                }
+                else if (DiseaseDataList.getSelectedValue() != null) {
+                    diseaseList.removeElement(DiseaseDataList.getSelectedValue());
                 }
             }
         });
