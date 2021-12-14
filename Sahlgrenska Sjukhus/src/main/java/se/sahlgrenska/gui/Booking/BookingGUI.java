@@ -61,7 +61,7 @@ public class BookingGUI extends HelperGUI {
     private JPanel bookingLocationPanel;
     private JPanel wardPanel;
     private JPanel roomPanel;
-    private JComboBox wardComboBox;
+    private JComboBox wardComboBox; // = new DefaultComboBoxModel<>();
     private JComboBox roomComboBox;
     private JLabel wardLbl;
     private JLabel roomLbl;

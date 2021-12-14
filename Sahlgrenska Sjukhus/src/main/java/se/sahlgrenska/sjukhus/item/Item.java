@@ -2,7 +2,7 @@ package se.sahlgrenska.sjukhus.item;
 
 import java.util.Objects;
 
-public abstract class Item {
+public abstract class Item implements Comparable<Item>{
     public String name;
     public String description;
     public float price;
@@ -28,6 +28,27 @@ public abstract class Item {
     }
 
     @Override
+    public int compareTo(Item i) {
+        int comp = name.hashCode() - i.getName().hashCode();
+
+        if (comp != 0) {
+            return comp;
+        } else if(description.hashCode() - i.getDescription().hashCode() != 0){
+            return comp;
+        }  else {
+            if(price-i.getPrice() == 0){
+                comp = 0;
+            } else if(price-i.getPrice() > 1){
+                comp = -1;
+            } else {
+                 comp = 1;
+            }
+            return comp;
+        }
+
+    }
+
+    @Override
     public boolean equals(Object other) {
         if (this == other) {
             return true;
@@ -47,7 +68,7 @@ public abstract class Item {
 
     @Override
     public String toString(){
-        return getName()+" "+getDescription()+" "+getPrice();
+        return getName();
     }
 
 }

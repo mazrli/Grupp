@@ -126,7 +126,7 @@
                       </grid>
                     </constraints>
                     <properties>
-                      <font style="2"/>
+                      <font/>
                       <text value=""/>
                     </properties>
                   </component>
@@ -209,7 +209,7 @@
                           </grid>
                         </constraints>
                         <properties>
-                          <font style="2"/>
+                          <font/>
                           <text value=""/>
                         </properties>
                       </component>
