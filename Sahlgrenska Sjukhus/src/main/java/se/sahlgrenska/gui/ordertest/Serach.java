@@ -6,23 +6,24 @@ import java.awt.event.ActionListener;
 
 public class Serach extends JFrame implements ActionListener {
 
+    Ordertest Ordertest = new Ordertest();
 
-    static JFrame f;
-
-
-    static JButton b;
-
-    static JLabel l;
-
-    static JTextArea jt;
+     JFrame f;
 
 
-    Serach()
+     JButton b;
+
+     JLabel l;
+
+     JTextArea jt;
+
+
+   public Serach()
     {
     }
 
     // main class
-    public static void main(String[] args)
+    public  void main(String[] args)
     {
         f = new JFrame("textfield");
 
@@ -46,6 +47,7 @@ public class Serach extends JFrame implements ActionListener {
         f.setSize(300, 300);
 
         f.show();
+
 
 
     }
