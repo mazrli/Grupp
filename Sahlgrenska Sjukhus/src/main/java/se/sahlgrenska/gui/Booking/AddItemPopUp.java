@@ -1,6 +1,8 @@
 package se.sahlgrenska.gui.Booking;
 
 import se.sahlgrenska.gui.util.HelperGUI;
+import se.sahlgrenska.gui.util.misc.SuggestionDropDownDecorator;
+import se.sahlgrenska.gui.util.misc.TextComponentSuggestionClient;
 import se.sahlgrenska.main.Driver;
 import se.sahlgrenska.sjukhus.Hospital;
 import se.sahlgrenska.sjukhus.person.employee.Accessibility;
@@ -8,6 +10,7 @@ import se.sahlgrenska.sjukhus.item.Item;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.List;
 
 public class AddItemPopUp extends HelperGUI {
     private JPanel mainPanel;
@@ -41,7 +44,7 @@ public class AddItemPopUp extends HelperGUI {
         init(mainPanel, "Add new item", new Dimension(350, 400), Accessibility.NONE);
         hospital = Driver.getHospital();
 
-
+      //  SuggestionDropDownDecorator.decorate(personNumField, new TextComponentSuggestionClient(this::getSuggestions));
         searchItemTextField.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e) {
@@ -49,6 +52,14 @@ public class AddItemPopUp extends HelperGUI {
             }
         });
     }
+
+
+
+
+/*
+    private List<String> getSuggestions(String key){
+
+    }*/
 
 
 }

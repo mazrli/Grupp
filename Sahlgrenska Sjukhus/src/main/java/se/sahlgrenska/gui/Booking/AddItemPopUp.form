@@ -127,7 +127,7 @@
                     </constraints>
                     <properties>
                       <font style="2"/>
-                      <text value="Search item"/>
+                      <text value=""/>
                     </properties>
                   </component>
                   <component id="ee0e4" class="javax.swing.JLabel" binding="searchItemLbl">
@@ -210,7 +210,7 @@
                         </constraints>
                         <properties>
                           <font style="2"/>
-                          <text value="Enter amount"/>
+                          <text value=""/>
                         </properties>
                       </component>
                       <component id="e3c0d" class="javax.swing.JLabel" binding="enterQuantityLbl">
