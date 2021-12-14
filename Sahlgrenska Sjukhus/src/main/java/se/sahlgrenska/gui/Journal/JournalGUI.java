@@ -5,7 +5,9 @@ import se.sahlgrenska.main.Driver;
 import se.sahlgrenska.sjukhus.Journal;
 import se.sahlgrenska.sjukhus.item.Item;
 import se.sahlgrenska.sjukhus.person.employee.Accessibility;
+import se.sahlgrenska.sjukhus.person.patient.Disease;
 import se.sahlgrenska.sjukhus.person.patient.Patient;
+import se.sahlgrenska.sjukhus.person.patient.Symptom;
 
 import javax.swing.*;
 import javax.swing.event.UndoableEditListener;
@@ -13,14 +15,11 @@ import javax.swing.text.Document;
 import javax.swing.undo.CannotUndoException;
 import javax.swing.undo.UndoManager;
 import javax.swing.undo.UndoableEdit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.*;
+import java.awt.event.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
-import java.util.Stack;
 
 
 public class JournalGUI extends HelperGUI {
@@ -60,12 +59,13 @@ public class JournalGUI extends HelperGUI {
     private JList DiseaseDataList;
     private JScrollPane JournalDataScrollPane;
     private JScrollPane DiseaseDataScrollPane;
-    private String symptom;
+    private ComboBoxModel comboBoxModel = new DefaultComboBoxModel((Vector) Arrays.asList("hellu", "hjelp", "jajaja"));
 
     List<Patient> patients;
     Journal currentJournal;
     UndoManager undoManager;
     UndoableEdit edit;
+    List<Disease> diseases;
 
     public JournalGUI() {
 
@@ -80,6 +80,17 @@ public class JournalGUI extends HelperGUI {
             dataList.add(i, label.getText());
         }
         JournalDataList.setModel(dataList);
+
+        String getItem = (String) SjukdomComboBox.getSelectedItem();
+        for (int i = 0; i < getItem.length(); i++) {
+            getItem.equals(getItem[i]);
+            if (getItem.equals(item[i])) {
+                getItem.toString();
+            }
+        }
+        SjukdomComboBox = new JComboBox();
+        SjukdomComboBox.setModel(comboBoxModel);
+
 
         patients = Driver.getHospital().getArchive().getPatients().get(Driver.getCurrentUser());
 
@@ -144,10 +155,10 @@ public class JournalGUI extends HelperGUI {
                 System.out.println(JournalDataList.getSelectedValue().toString());
             }
         });
-        SjukdomComboBox.addMouseListener(new MouseAdapter() {
+
+        SjukdomComboBox.addItemListener(new ItemListener() {
             @Override
-            public void mouseClicked(MouseEvent e) {
-                
+            public void itemStateChanged(ItemEvent e) {
             }
         });
     }
@@ -162,8 +173,14 @@ public class JournalGUI extends HelperGUI {
         }
     }
 
-    public void ListOfDisease(JComboBox jComboBox)
+    public void ListOfDisease()
     {
-
+        DefaultComboBoxModel cbm = new DefaultComboBoxModel();
+        SjukdomComboBox.setModel(cbm);
+        Disease disease = new Disease("");
+        String diseaseName = disease.getDiseaseName();
+        for (Disease disease1 : diseases) {
+            cbm.addElement(diseaseName);
+        }
     }
 }
