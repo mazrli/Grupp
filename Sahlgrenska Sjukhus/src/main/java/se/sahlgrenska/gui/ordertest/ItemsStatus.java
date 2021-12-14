@@ -37,6 +37,7 @@ public class ItemsStatus extends HelperGUI {
         this.ButtonCancel = ButtonCancel;
         this.ButtonOk = ButtonOk;
 
+        setResizable(true);
 
         init(HuvudPanel, "ItesmsStatus", new Dimension(700, 700), Accessibility.RECEPTIONIST);
 
@@ -94,10 +95,21 @@ public class ItemsStatus extends HelperGUI {
             public void actionPerformed(ActionEvent e) {
                 setVisible(false);
                 Driver.getMainMenu().setVisible(true);
+
             }
         });
 
     }
+
+    public JButton getButtonOk() {
+        return ButtonOk;
+    }
+
+    public void setButtonOk(JButton buttonOk) {
+        ButtonOk = buttonOk;
+
+    }
+
     private void createUIComponents() {
         // TODO: place custom component creation code here
 
