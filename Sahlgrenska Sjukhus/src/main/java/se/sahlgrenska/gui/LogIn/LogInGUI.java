@@ -2,8 +2,10 @@ package se.sahlgrenska.gui.LogIn;
 
 import se.sahlgrenska.gui.util.HelperGUI;
 import se.sahlgrenska.gui.util.UtilGUI;
+import se.sahlgrenska.gui.util.misc.SuggestionDropDownDecorator;
+import se.sahlgrenska.gui.util.misc.TextComponentSuggestionClient;
 import se.sahlgrenska.main.Driver;
-import se.sahlgrenska.main.Util;
+import se.sahlgrenska.sjukhus.person.Person;
 import se.sahlgrenska.sjukhus.person.employee.*;
 
 import javax.swing.*;
@@ -25,15 +27,21 @@ public class LogInGUI extends HelperGUI {
     private JCheckBox rememberMeCheckBox;
     private JCheckBox visaLösenordCheckBox;
     private JLabel forgotPasswordJLabel;
+    private JLabel patientLabel;
 
     public LogInGUI() { //constructor
-        init(mainPanel, "Sahlgrenska sjukhus", new Dimension(380, 400), Accessibility.ADMIN);
+        init(mainPanel, "Sahlgrenska sjukhus", new Dimension(380, 420), Accessibility.ADMIN);
 
         loginButton.addActionListener(new LoginButtonActionListener());
         quitButton.addActionListener(new QuitButtonActionListener());
 
         forgotPasswordJLabel.setText("<HTML><U>Glömt lösenord?</U></HTML>");
         forgotPasswordJLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+
+        patientLabel.setText("<HTML><U>Jag är patient</U></HTML>");
+        patientLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+
+
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
@@ -54,14 +62,8 @@ public class LogInGUI extends HelperGUI {
         setVisible(true);
 
 
-        visaLösenordCheckBox.addItemListener(new ItemListener() {
-            public void itemStateChanged(ItemEvent e) {
-                if (e.getStateChange() == ItemEvent.SELECTED) {
-                    passwordField.setEchoChar('\0');
-                } else {
-                    passwordField.setEchoChar(Util.echoPWchar);
-                }
-            }
+        visaLösenordCheckBox.addItemListener(e -> {
+            UtilGUI.toggleVisibility(passwordField);
         });
 
         forgotPasswordJLabel.addMouseListener(new MouseAdapter() {
@@ -71,6 +73,13 @@ public class LogInGUI extends HelperGUI {
             }
         });
 
+        patientLabel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                setVisible(false);
+                LoginPatientGUI patientGUI = new LoginPatientGUI();
+            }
+        });
     }
 
     private void createUIComponents() {
@@ -81,7 +90,6 @@ public class LogInGUI extends HelperGUI {
         @Override
         public void actionPerformed(ActionEvent e) {
             if(isFilled()) {
-                delay();
 
                 LoginDetails loginDetails = new LoginDetails(usernameField.getText(), passwordField.getText());
                 Employee employee = Driver.getIOManager().getEmployee(loginDetails);
@@ -93,19 +101,28 @@ public class LogInGUI extends HelperGUI {
                     } else {
                         clearFields();
                     }
-
-                    setVisible(false);
-                    Driver.setup(employee);
-
+                    login(employee);
                 } else {
                     UtilGUI.error("Uppgifterna är ogiltiga");
-                    clearFields();
+                    passwordField.setText("");
                 }
             } else {
                 UtilGUI.error("Alla fält är obligatoriska");
             }
 
         }
+    }
+
+    private void login(Employee employee) {
+        loginButton.setEnabled(false);
+        quitButton.setEnabled(false);
+        Driver.setup(employee);
+    }
+
+    public void logout() {
+        setVisible(true);
+        loginButton.setEnabled(true);
+        quitButton.setEnabled(true);
     }
 
     private void delay() {
