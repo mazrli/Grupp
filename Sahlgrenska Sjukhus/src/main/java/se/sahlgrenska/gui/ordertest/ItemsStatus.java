@@ -1,5 +1,6 @@
 package se.sahlgrenska.gui.ordertest;
 
+
 import se.sahlgrenska.gui.util.HelperGUI;
 import se.sahlgrenska.gui.util.UtilGUI;
 import se.sahlgrenska.main.Driver;
@@ -12,70 +13,41 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Ordertest extends HelperGUI  implements ActionListener{
-    private JPanel panel;
-    private JScrollPane HuvudScrollPane;
-    private JPanel MenuBar;
-    private JPanel TablePanel;
-    private JPanel NotesPanel;
-    private JPanel MenuPanel;
+public class ItemsStatus extends HelperGUI {
     private JPanel HuvudPanel;
-    private JScrollPane TabelScrololPanel;
+    private JPanel Menubar;
+    private JScrollPane HuvudScrollPane;
+    private JPanel delarPanel;
+    private JPanel TablePanel;
+    private JScrollPane TableScrollPanel;
     private JTable table;
-    private JButton buttonAdd;
-    private JButton buttonEdit;
-    private JButton buttonRemove;
-    private JFormattedTextField formattedTextField1;
-    private JTextArea textArea;
-    private JButton buttonCancel;
-    private JButton buttonSendOrder;
-    private JPanel datom;
-    private JLabel testDatom;
-    private JLabel testordernotes;
-    private JPanel sumPanel;
-    private JPanel AddPanel;
-    private JLabel testUserName;
-    private JLabel userName;
-    private JPanel searchPanel;
+    private JButton ButtonCancel;
+    private JButton ButtonOk;
 
 
-    public Ordertest(){
+    Ordertest Ordertest = new Ordertest();
+
+    public ItemsStatus() {
         this.HuvudPanel = HuvudPanel;
-        this.panel = panel;
-        this.MenuPanel = MenuPanel;
-        this.HuvudScrollPane =HuvudScrollPane;
-        this.TabelScrololPanel = TabelScrololPanel;
+        this.HuvudScrollPane = HuvudScrollPane;
         this.TablePanel = TablePanel;
+        this.delarPanel = delarPanel;
+        this.TableScrollPanel = TableScrollPanel;
         this.table = table;
-        this.textArea = textArea;
-        this.searchPanel = searchPanel;
-
-
-
-
-
-        init(panel, "Order", new Dimension(700, 700), Accessibility.RECEPTIONIST);
-
-
-        getContentPane().setBackground(Color.lightGray);
-
-
-/*        ImageIcon image = new ImageIcon("https://avatars.dicebear.com/api/male/sddddf.svg");
-        setIconImage(image.getImage());*/
+        this.ButtonCancel = ButtonCancel;
+        this.ButtonOk = ButtonOk;
 
         setResizable(true);
 
+        init(HuvudPanel, "ItesmsStatus", new Dimension(700, 700), Accessibility.RECEPTIONIST);
 
 
-        MenuBar.addAncestorListener(new AncestorListener() {
+        Menubar.addAncestorListener(new AncestorListener() {
             @Override
             public void ancestorAdded(AncestorEvent event) {
                 setLayout(new FlowLayout());
 
-                //använder för att kunna ändra storlek
-                setResizable(true);
-
-                JMenuBar menuBar = new JMenuBar(); // change color of backgrund
+                JMenuBar menuBar = new JMenuBar();
 
 
                 JMenu fileMenu = new JMenu("File");
@@ -118,38 +90,26 @@ public class Ordertest extends HelperGUI  implements ActionListener{
             }
         });
 
-        buttonCancel.addActionListener(new ActionListener() {
+        ButtonCancel.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                setResizable(true);
                 setVisible(false);
                 Driver.getMainMenu().setVisible(true);
-            }
-        });
-
-        buttonAdd.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
 
             }
         });
-
-
-/*        searchPanel = new JPanel((LayoutManager) Serach.f);
-        searchPanel.setVisible(true);*/
-
-
-
-
-
-
-
-
-
-
-
 
     }
+
+    public JButton getButtonOk() {
+        return ButtonOk;
+    }
+
+    public void setButtonOk(JButton buttonOk) {
+        ButtonOk = buttonOk;
+
+    }
+
     private void createUIComponents() {
         // TODO: place custom component creation code here
 
@@ -162,7 +122,7 @@ public class Ordertest extends HelperGUI  implements ActionListener{
                 {"Tony", "yes", "4031", "CSE"},
                 {"Phepe", "yes", "4031", "CSE"},
                 {"Williamxpxs", "no", "4325", "cdsaZcfe"},
-                {"Williamfps", "yes", "4031", "CSE"},
+                {"Phepe", "yes", "4031", "CSE"},
                 {"Phepe", "yes", "4031", "CSE"},
                 {"Phepe", "yes", "4031", "CSE"},
                 {"Phepe", "yes", "4031", "CSE"},
@@ -173,19 +133,14 @@ public class Ordertest extends HelperGUI  implements ActionListener{
         };
         table = new JTable(data, columns);
         UtilGUI.changeJTableHeaderColour(table, tableHeaderColour);
-        getContentPane().setBackground(Color.lightGray);
 
-
-
-    }
-
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
 
 
     }
 }
+
+
+
 
 
 
