@@ -17,17 +17,17 @@ public class Room {
     private int size;
     private HashMap<Item, Integer> itemsInRoom = new HashMap<Item, Integer>();
 
-    public Room(String name, int size) {
-        this.name = name;
-        this.size = size;
-
-    }
 
     public Room(String name, int size, HashMap<Item, Integer> itemsInRoom) {
         this.name = name;
         this.size = size;
         this.itemsInRoom = itemsInRoom;
-        addItemsToRoomTest();
+
+    }
+    public Room(String name, int size, Item item, int quantity) {
+        this.name = name;
+        this.size = size;
+        addItems(item,quantity);
     }
 
     public String getName() {
@@ -49,7 +49,16 @@ public class Room {
         itemsInRoom.put(item3, 10);
     }
 
+    public void addItems(Item item, int quantity) {
+        int totalQuantity = quantity;
+        if(itemsInRoom.containsKey(item)){
+        Integer currentQuantity = itemsInRoom.get(item);
+            totalQuantity += currentQuantity;
+        }
 
+        itemsInRoom.put(item,quantity);
+
+    }
 
 
     public HashMap<Item, Integer> getItems() {
@@ -76,7 +85,7 @@ public class Room {
 
     @Override
     public String toString() {
-        return getName()+" ("+getSize() +"kvm)";
+        return getName() + " (" + getSize() + "kvm)";
     }
 
 

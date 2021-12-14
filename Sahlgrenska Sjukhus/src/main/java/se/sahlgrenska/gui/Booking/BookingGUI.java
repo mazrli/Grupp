@@ -13,11 +13,15 @@ import se.sahlgrenska.sjukhus.person.employee.Accessibility;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.event.TableModelListener;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 
@@ -75,6 +79,8 @@ public class BookingGUI extends HelperGUI {
     private Booking booking;
     private int minWindowSize = 600;
     private int maxWindowSize = 700;
+    private String[] columnNames = {"Item name", "Quantity"};
+    private DefaultTableModel tableModel;
 
 
     public BookingGUI() {
@@ -94,9 +100,10 @@ public class BookingGUI extends HelperGUI {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                if (wardComboBox.getSelectedIndex() == 0) {
+                if (!checkComboBoxSelectedIndex(wardComboBox)) {
                     System.out.println("You've not selected a ward!");
                     resetRoomMenu();
+                    tableModel = new DefaultTableModel();
                     return;
                 }
 
@@ -104,8 +111,26 @@ public class BookingGUI extends HelperGUI {
                 roomComboBox.setEnabled(true);
                 fillComboBoxRooms(selectedWard);
 
+                Room selectedRoom = (Room) roomComboBox.getSelectedItem();
+                fillRoomItems(selectedRoom);
+
             }
         });
+
+        roomComboBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                if(roomComboBox.getSelectedIndex() != 0) {
+                    Room selectedRoom = (Room) roomComboBox.getSelectedItem();
+                    fillRoomItems(selectedRoom);
+                }
+            }
+        });
+    }
+
+    private boolean checkComboBoxSelectedIndex(JComboBox combo) {
+        return combo.getSelectedIndex() != 0;
     }
 
 
@@ -120,14 +145,18 @@ public class BookingGUI extends HelperGUI {
     private void defaultBookingSetUp() {
         dateOutLbl.setText(LocalDateTime.now().format(Util.dateFormatter));
         itemsTable.setBackground(Color.WHITE);
+        itemsTable.setShowGrid(true);
 
         removeItemsBtn.setEnabled(false);
+        addItemsBtn.setEnabled(false);
         removePartBtn.setEnabled(false);
 
         wardComboBox.insertItemAt("Select ward", 0);
         fillComboBoxWards(hospital.getWards());
         wardComboBox.setSelectedIndex(0);
         resetRoomMenu();
+        createDefaultTableValues();
+
     }
 
 
@@ -136,18 +165,6 @@ public class BookingGUI extends HelperGUI {
             wardComboBox.addItem(wards.get(i));
         }
     }
-
-/*
-    public void printRoomItems() {
-        for (Map.Entry<Item, Integer> roomItems :
-                itemsInRoom.entrySet()) {
-
-            // Printing all elements of a Map
-            System.out.print(roomItems.getKey() + " Amount: "
-                    + roomItems.getValue());
-        }
-    }*/
-
 
     private void fillComboBoxRooms(Ward ward) {
         roomComboBox.removeAllItems();
@@ -161,14 +178,35 @@ public class BookingGUI extends HelperGUI {
     }
 
 
+    private void createDefaultTableValues() {
+        tableModel.addColumn("Item name");
+        tableModel.addColumn("Quantity");
+    }
+
+
+    private void fillRoomItems(Room room) {
+        if (room != null) {
+            HashMap<Item, Integer> roomItems = room.getItems();
+
+            for (Map.Entry<Item, Integer> itemsInRoom : roomItems.entrySet()) {
+                Item item = itemsInRoom.getKey();
+                Integer itemQuantity = itemsInRoom.getValue();
+
+                System.out.println(item.getName() + " " + itemQuantity);
+                tableModel.addRow(new Object[]{item, itemQuantity});
+            }
+            itemsTable.setModel(tableModel);
+        }
+    }
+
+
     private void createUIComponents() {
         // TODO: place custom component creation code here
         hospital = Driver.getHospital();
         Color tableHeaderColour = new Color(199, 199, 199);
 
-        String[] columns = {"Item name", "Quantity"};
-        String[][] data = {{"Defibrilator", "5"}, {"MRI", "2"}, {"Panodil", "10"}, {"Defibrilator", "5"}, {"MRI", "2"}, {"Panodil", "10"}, {"Defibrilator", "5"}, {"MRI", "2"}, {"Panodil", "10"}, {"Defibrilator", "5"}, {"MRI", "2"}, {"Panodil", "10"}};
-        itemsTable = new JTable(data, columns);
+        tableModel = new DefaultTableModel();
+        itemsTable = new JTable(tableModel);
         UtilGUI.changeJTableHeaderColour(itemsTable, tableHeaderColour);
     }
 }
