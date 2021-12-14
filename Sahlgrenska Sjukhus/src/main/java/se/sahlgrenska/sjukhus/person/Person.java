@@ -40,7 +40,17 @@ public class Person {
         return lastName;
     }
 
+    public String getFullName() {
+        return firstName + " " + lastName;
+    }
+
     public Gender getGender() {
         return gender;
     }
+
+    @Override
+    public String toString() {
+        return firstName + " " + lastName + " - " + personNumber;
+    }
 }
+
