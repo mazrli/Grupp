@@ -53,10 +53,9 @@ public class Driver {
 
         //lägg till alla menyer i subMenus
         //subMenus.add(new ItemsStatus());
-        //subMenus.add(new Ordertest());
+        subMenus.add(new Ordertest());
         subMenus.add(new JournalGUI());
         subMenus.add(new BookingGUI());
-        subMenus.add(new AdminGUI());
         adminGUI = new AdminGUI();
         subMenus.add(adminGUI);
 
