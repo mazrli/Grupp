@@ -7,6 +7,7 @@ import se.sahlgrenska.sjukhus.person.employee.Accessibility;
 import se.sahlgrenska.sjukhus.item.Item;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.*;
 
 public class AddItemPopUp extends HelperGUI {
     private JPanel mainPanel;
@@ -40,6 +41,13 @@ public class AddItemPopUp extends HelperGUI {
         init(mainPanel, "Add new item", new Dimension(350, 400), Accessibility.NONE);
         hospital = Driver.getHospital();
 
+
+        searchItemTextField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                super.keyTyped(e);
+            }
+        });
     }
 
 
