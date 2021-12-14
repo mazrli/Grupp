@@ -3,21 +3,16 @@ package se.sahlgrenska.gui.Booking;
 import se.sahlgrenska.gui.util.HelperGUI;
 import se.sahlgrenska.main.Driver;
 import se.sahlgrenska.sjukhus.Hospital;
-import se.sahlgrenska.sjukhus.item.Equipment;
-import se.sahlgrenska.sjukhus.item.Medicine;
-import se.sahlgrenska.sjukhus.person.employee.Accessibility;
 import se.sahlgrenska.sjukhus.item.Item;
-
-import java.time.LocalDate;
-import java.util.stream.Collectors;
-import java.util.TreeMap;
-
-import java.util.*;
+import se.sahlgrenska.sjukhus.person.employee.Accessibility;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
-import java.util.HashMap;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.util.*;
 
 public class AddItemPopUp extends HelperGUI {
     private JPanel mainPanel;
@@ -103,11 +98,10 @@ public class AddItemPopUp extends HelperGUI {
         }
     }
 
-    private Set<String> getSuggestions() { //Set<String>
+    private void  getSuggestions() { //Set<String>
 
         if (userSearchedItem == null || userSearchedItem.isEmpty()) {
             System.out.println(userSearchedItem + " returned null or was empty");
-            return null;
         }
 
         convertStoredItemMapToStringMap((HashMap) Driver.getHospital().getHospitalsStoredItems());
@@ -119,7 +113,8 @@ public class AddItemPopUp extends HelperGUI {
         }
         Set<String> itemStorageNames = (TreeSet) orderedHospitalStoredItems.keySet();
 
-        return itemStorageNames.stream().limit(10);
+      // return itemStorageNames.stream().limit(10);
+
     }
 
 /*

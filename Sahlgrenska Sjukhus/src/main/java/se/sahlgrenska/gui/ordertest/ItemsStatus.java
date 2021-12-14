@@ -38,6 +38,7 @@ public class ItemsStatus extends HelperGUI {
         this.ButtonOk = ButtonOk;
 
         setResizable(true);
+        setVisible(true);
 
         init(HuvudPanel, "ItesmsStatus", new Dimension(700, 700), Accessibility.RECEPTIONIST);
 

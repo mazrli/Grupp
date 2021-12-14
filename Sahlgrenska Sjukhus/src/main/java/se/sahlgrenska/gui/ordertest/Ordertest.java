@@ -2,7 +2,10 @@ package se.sahlgrenska.gui.ordertest;
 
 import se.sahlgrenska.gui.util.HelperGUI;
 import se.sahlgrenska.gui.util.UtilGUI;
+import se.sahlgrenska.gui.util.misc.SuggestionDropDownDecorator;
+import se.sahlgrenska.gui.util.misc.TextComponentSuggestionClient;
 import se.sahlgrenska.main.Driver;
+import se.sahlgrenska.sjukhus.person.Person;
 import se.sahlgrenska.sjukhus.person.employee.Accessibility;
 
 import javax.swing.*;
@@ -11,6 +14,10 @@ import javax.swing.event.AncestorListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class Ordertest extends HelperGUI  implements ActionListener{
     private JPanel panel;
@@ -37,7 +44,24 @@ public class Ordertest extends HelperGUI  implements ActionListener{
     private JLabel testUserName;
     private JLabel userName;
     private JPanel searchPanel;
+    private JTextField SerachTerxtfield;
 
+    String[] columns = {"Item name", "Quantity", "Price", "OrderDate"};
+    String[][] data = {
+            {"Defibrilator", "yes", "4031", "CSE"},
+            {"Mr", "yes", "4031", "CSE"},
+            {"Tony", "yes", "4031", "CSE"},
+            {"Phepe", "yes", "4031", "CSE"},
+            {"Williamxpxs", "no", "4325", "cdsaZcfe"},
+            {"Williamfps", "yes", "4031", "CSE"},
+            {"Phepe", "yes", "4031", "CSE"},
+            {"Phepe", "yes", "4031", "CSE"},
+            {"Willia", "yes", "4031", "CSE"},
+            {"Phepe", "yes", "4031", "CSE"},
+            {"Phepe", "yes", "4031", "CSE"},
+            {"Phepe", "yes", "4031", "CSE"},
+
+    };
 
     public Ordertest(){
         this.HuvudPanel = HuvudPanel;
@@ -50,7 +74,7 @@ public class Ordertest extends HelperGUI  implements ActionListener{
         this.textArea = textArea;
         this.searchPanel = searchPanel;
 
-
+        SuggestionDropDownDecorator.decorate(SerachTerxtfield, new TextComponentSuggestionClient(this::getSuggestions));
 
 
 
@@ -131,8 +155,29 @@ public class Ordertest extends HelperGUI  implements ActionListener{
             @Override
             public void actionPerformed(ActionEvent e) {
 
+                new ItemsStatus();
+
             }
         });
+
+        table.addAncestorListener(new AncestorListener() {
+            @Override
+            public void ancestorAdded(AncestorEvent event) {
+
+                setResizable(false);
+            }
+
+            @Override
+            public void ancestorRemoved(AncestorEvent event) {
+
+            }
+
+            @Override
+            public void ancestorMoved(AncestorEvent event) {
+
+            }
+        });
+
 
 
 /*        searchPanel = new JPanel((LayoutManager) Serach.f);
@@ -149,28 +194,44 @@ public class Ordertest extends HelperGUI  implements ActionListener{
 
 
 
+
     }
+
+    private List<String> getSuggestions(String key) {
+
+        List<String> result = new ArrayList<>();
+
+
+        if (key.isEmpty())
+            return null;
+
+        List<String> output = new ArrayList<>();
+        final String input = key.toUpperCase();
+
+        Set<Person> persons = Driver.getHospital().getPersons();
+
+        for(Person person : persons)
+            if(person.getFullName().toUpperCase().startsWith(input)
+                    || person.getFirstName().toUpperCase().startsWith(input)
+                    || person.getLastName().toUpperCase().startsWith(input)
+                    || person.getPersonNumber().startsWith(input)
+            ) {
+                output.add(person.toString());
+            }
+
+
+        return output.stream().limit(20).collect(Collectors.toList());
+
+
+
+    }
+
     private void createUIComponents() {
         // TODO: place custom component creation code here
 
         Color tableHeaderColour = new Color(199, 199, 199);
 
-        String[] columns = {"Item name", "Quantity", "Price", "OrderDate"};
-        String[][] data = {
-                {"Defibrilator", "yes", "4031", "CSE"},
-                {"Mr", "yes", "4031", "CSE"},
-                {"Tony", "yes", "4031", "CSE"},
-                {"Phepe", "yes", "4031", "CSE"},
-                {"Williamxpxs", "no", "4325", "cdsaZcfe"},
-                {"Williamfps", "yes", "4031", "CSE"},
-                {"Phepe", "yes", "4031", "CSE"},
-                {"Phepe", "yes", "4031", "CSE"},
-                {"Phepe", "yes", "4031", "CSE"},
-                {"Phepe", "yes", "4031", "CSE"},
-                {"Phepe", "yes", "4031", "CSE"},
-                {"Phepe", "yes", "4031", "CSE"},
 
-        };
         table = new JTable(data, columns);
         UtilGUI.changeJTableHeaderColour(table, tableHeaderColour);
         getContentPane().setBackground(Color.lightGray);
@@ -185,7 +246,72 @@ public class Ordertest extends HelperGUI  implements ActionListener{
 
 
     }
+
+
+
+    public void getSerach (){
+        Serach serach = new Serach();
+
+    }
+
 }
+
+
+
+/* class Serach extends JFrame implements ActionListener{
+
+
+    static JFrame f;
+
+
+    static JButton b;
+
+    static JLabel l;
+
+    static JTextArea jt;
+
+
+    Serach()
+    {
+    }
+    public static void main(String[] args)
+    {
+        f = new JFrame("textfield");
+
+        l = new JLabel("nothing entered");
+
+        b = new JButton("submit");
+
+        Serach te = new Serach();
+
+        b.addActionListener(te);
+
+        jt = new JTextArea(10, 10);
+
+        JPanel p = new JPanel();
+
+        p.add(jt);
+        p.add(b);
+        p.add(l);
+
+        f.add(p);
+        f.setSize(300, 300);
+
+        f.show();
+
+
+
+    }
+
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        String s = e.getActionCommand();
+        if (s.equals("submit")) {
+            l.setText(jt.getText());
+        }
+    }
+}*/
 
 
 
