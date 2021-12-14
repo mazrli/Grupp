@@ -52,8 +52,6 @@ public class Hospital {
     }
 
 
-
-
     public void addWard(Ward ward) {
         if (ward == null) {
             System.out.println("cant add null-value to hospital ward-list");

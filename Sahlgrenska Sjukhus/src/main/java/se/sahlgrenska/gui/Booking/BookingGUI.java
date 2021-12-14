@@ -100,7 +100,7 @@ public class BookingGUI extends HelperGUI {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                if (checkSelectedIndexIsFirstChoice(wardComboBox)) {
+                if (checkSelectedIndexIsFirstOption(wardComboBox)) {
                     isActiveWard = false;
                     System.out.println("You've not selected a ward!");
                     resetRoomMenu();
@@ -112,7 +112,7 @@ public class BookingGUI extends HelperGUI {
                 isActiveWard = true;
                 fillComboBoxRooms(selectedWard);
 
-                if (!checkSelectedIndexIsFirstChoice(roomComboBox)) {
+                if (!checkSelectedIndexIsFirstOption(roomComboBox)) {
                     Room selectedRoom = (Room) roomComboBox.getSelectedItem();
                     fillRoomItems(selectedRoom);
                 }
@@ -127,12 +127,18 @@ public class BookingGUI extends HelperGUI {
                     Room selectedRoom = (Room) roomComboBox.getSelectedItem();
                     fillRoomItems(selectedRoom);
                 }
+            }
+        });
 
+        addItemsBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("Add new item button was pressed!");
             }
         });
     }
 
-    private boolean checkSelectedIndexIsFirstChoice(JComboBox combo) {
+    private boolean checkSelectedIndexIsFirstOption(JComboBox combo) {
         return combo.getSelectedIndex() == 0;
     }
 
@@ -150,7 +156,6 @@ public class BookingGUI extends HelperGUI {
 
         removeItemsBtn.setEnabled(false);
         addItemsBtn.setEnabled(false);
-
 
     }
 
@@ -208,6 +213,7 @@ public class BookingGUI extends HelperGUI {
                 tableModel.addRow(new Object[]{item, itemQuantity});
             }
             itemsTable.setModel(tableModel);
+            addItemsBtn.setEnabled(true);
         }
     }
 
