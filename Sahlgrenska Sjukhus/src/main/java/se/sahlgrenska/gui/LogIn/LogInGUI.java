@@ -3,6 +3,7 @@ package se.sahlgrenska.gui.LogIn;
 import se.sahlgrenska.gui.util.HelperGUI;
 import se.sahlgrenska.gui.util.UtilGUI;
 import se.sahlgrenska.main.Driver;
+import se.sahlgrenska.main.Util;
 import se.sahlgrenska.sjukhus.person.employee.*;
 
 import javax.swing.*;
@@ -24,10 +25,9 @@ public class LogInGUI extends HelperGUI {
     private JCheckBox rememberMeCheckBox;
     private JCheckBox visaLösenordCheckBox;
     private JLabel forgotPasswordJLabel;
-    private final char echoPWchar = '●';
 
     public LogInGUI() { //constructor
-        init(mainPanel, "Sahlgrenska sjukhus", new Dimension(380, 400), Accessibility.ALL);
+        init(mainPanel, "Sahlgrenska sjukhus", new Dimension(380, 400), Accessibility.ADMIN);
 
         loginButton.addActionListener(new LoginButtonActionListener());
         quitButton.addActionListener(new QuitButtonActionListener());
@@ -59,7 +59,7 @@ public class LogInGUI extends HelperGUI {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
                     passwordField.setEchoChar('\0');
                 } else {
-                    passwordField.setEchoChar(echoPWchar);
+                    passwordField.setEchoChar(Util.echoPWchar);
                 }
             }
         });

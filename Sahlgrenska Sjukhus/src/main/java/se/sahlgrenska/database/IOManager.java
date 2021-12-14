@@ -77,8 +77,11 @@ public class IOManager {
 
                 Person person = new Person(fistName, lastName, personNum, gender, phone, address);
 
+                String username = resultSet.getString(14);
+                String password = resultSet.getString(15);
 
-                LoginDetails loginDetails = new LoginDetails("*****", "*********");
+                LoginDetails loginDetails = new LoginDetails(username, password);
+
                 Employee employee = new Employee(person, id, salary, workingHours, accessibility, loginDetails);
                 employees.add(employee);
 
@@ -88,6 +91,7 @@ public class IOManager {
             }
         return employees;
     }
+
 
 
     public Employee getEmployee(LoginDetails loginDetails) {
@@ -183,9 +187,8 @@ public class IOManager {
 
             writer.close();
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (URISyntaxException e) {
+        } catch (IOException | URISyntaxException e) {
+            UtilGUI.error("Fel med save.txt, kolla den är kvar eller lägg till den.");
             e.printStackTrace();
         }
     }
@@ -206,6 +209,7 @@ public class IOManager {
             }
 
         } catch (URISyntaxException | IOException e) {
+            UtilGUI.error("Fel med save.txt, kolla den är kvar eller lägg till den.");
             e.printStackTrace();
         }
 

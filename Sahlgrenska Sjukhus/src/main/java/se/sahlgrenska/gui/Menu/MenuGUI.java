@@ -1,17 +1,15 @@
 package se.sahlgrenska.gui.Menu;
 
-import se.sahlgrenska.database.IOManager;
+import org.apache.batik.swing.JSVGCanvas;
 import se.sahlgrenska.gui.util.HelperGUI;
 import se.sahlgrenska.main.Driver;
 import se.sahlgrenska.main.Util;
 import se.sahlgrenska.sjukhus.person.employee.Accessibility;
 import se.sahlgrenska.sjukhus.person.employee.Employee;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.List;
@@ -64,10 +62,7 @@ public class MenuGUI extends HelperGUI {
         employeeIDLabel.setFont(Util.biggerFont);
 
 
-        imageLabel = getImage();
 
-        if(imageLabel != null)
-            topPanel.add(imageLabel);
 
         topPanel.add(userLabel);
         topPanel.add(dateLabel);
@@ -111,7 +106,7 @@ public class MenuGUI extends HelperGUI {
         List<HelperGUI> availableMenus = new ArrayList<>();
         for(HelperGUI subMenu: Driver.subMenus) {
 
-            if(currentUser.getAccessibility() == subMenu.getAccessibility() || currentUser.getAccessibility() == Accessibility.ALL) {
+            if(currentUser.getAccessibility() == subMenu.getAccessibility() || currentUser.getAccessibility() == Accessibility.ADMIN) {
                 availableMenus.add(subMenu);
             }
 
@@ -138,7 +133,7 @@ public class MenuGUI extends HelperGUI {
 
         setVisible(true);
 
-        init(mainPanel, "Sahlgrenska sjukhus", Accessibility.ALL);
+        init(mainPanel, "Sahlgrenska sjukhus", Accessibility.ADMIN);
 
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
@@ -160,19 +155,11 @@ public class MenuGUI extends HelperGUI {
     }
 
 
-    private JLabel getImage() {
-        String path = "https://joeschmoe.io/api/v1/random";
-        JLabel jLabel = null;
-        try {
-            URL url = new URL(path);
-            Image bufferedImage = ImageIO.read(url);
-
-            if(bufferedImage != null)
-                jLabel = new JLabel(new ImageIcon(bufferedImage));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return jLabel;
+    private JSVGCanvas getImage() {
+        JSVGCanvas jsvgCanvas = new JSVGCanvas();
+        jsvgCanvas.setURI("https://avatars.dicebear.com/api/male/sddddf.svg");
+        mainPanel.add(jsvgCanvas);
+        return jsvgCanvas;
     }
 
     /*
