@@ -1,6 +1,8 @@
 package se.sahlgrenska.gui.Booking;
 
 import se.sahlgrenska.gui.util.HelperGUI;
+import se.sahlgrenska.gui.util.misc.SuggestionDropDownDecorator;
+import se.sahlgrenska.gui.util.misc.TextComponentSuggestionClient;
 import se.sahlgrenska.main.Driver;
 import se.sahlgrenska.sjukhus.Hospital;
 import se.sahlgrenska.sjukhus.item.Equipment;
@@ -9,6 +11,7 @@ import se.sahlgrenska.sjukhus.person.employee.Accessibility;
 import se.sahlgrenska.sjukhus.item.Item;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.TreeMap;
 
@@ -45,38 +48,35 @@ public class AddItemPopUp extends HelperGUI {
 
     private Item selectedItem;
     private int quantity = 0;
-    private String userSearchedItem = "";
-    private TreeMap<String,Integer> orderedHospitalStoredItems;
+    private TreeMap<String, Integer> orderedHospitalStoredItems;
 
     public AddItemPopUp() {
         init(mainPanel, "Add new item", new Dimension(350, 400), Accessibility.NONE);
 
         setDefaultValues();
-
+        SuggestionDropDownDecorator.decorate(searchItemTextField, new TextComponentSuggestionClient(this::getSuggestions));
 
         searchItemTextField.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e) {
                 super.keyTyped(e);
 
-                userSearchedItem = searchItemTextField.getText().trim();
+                searchItemTextField.getText();
 
-                //       SuggestionDropDownDecorator.decorate(searchItemTextField, new TextComponentSuggestionClient(this::getSuggestions));
             }
         });
 
         searchItemBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("searched word is: " + userSearchedItem);
-                getSuggestions();
+                System.out.println("searched word is: " + searchItemTextField.getText());
+                //getSuggestions();
             }
         });
     }
 
     private void setDefaultValues() {
         hospital = Driver.getHospital();
-
 
     }
 
@@ -103,23 +103,23 @@ public class AddItemPopUp extends HelperGUI {
         }
     }
 
-    private Set<String> getSuggestions() { //Set<String>
+    private List<String> getSuggestions(String key) { //Set<String>
 
-        if (userSearchedItem == null || userSearchedItem.isEmpty()) {
-            System.out.println(userSearchedItem + " returned null or was empty");
-            return null;
+        if (key == null || key.isEmpty()) {
+            System.out.println(key + " returned null or was empty");
+            // return null;
         }
 
         convertStoredItemMapToStringMap((HashMap) Driver.getHospital().getHospitalsStoredItems());
 
-        if (orderedHospitalStoredItems != null && orderedHospitalStoredItems.containsKey(userSearchedItem)) {
-            System.out.println(userSearchedItem + " existed in hospitalStorage och sjukhuset har " + orderedHospitalStoredItems.get(userSearchedItem).toString());
+        if (orderedHospitalStoredItems != null && orderedHospitalStoredItems.containsKey(key)) {
+            System.out.println(key + " existed in hospitalStorage och sjukhuset har " + orderedHospitalStoredItems.get(key).toString());
         } else {
-            System.out.println(userSearchedItem + " DOES NOT exist in hospitalStorage");
+            System.out.println(key + " DOES NOT exist in hospitalStorage");
         }
-        Set<String> itemStorageNames = (TreeSet) orderedHospitalStoredItems.keySet();
+        List<String> itemStorageNames = new ArrayList<String>(orderedHospitalStoredItems.keySet());
 
-        return itemStorageNames.stream().limit(10);
+        return itemStorageNames.stream().limit(10).collect(Collectors.toList());
     }
 
 /*
