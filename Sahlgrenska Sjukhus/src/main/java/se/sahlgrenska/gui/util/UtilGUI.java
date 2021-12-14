@@ -37,12 +37,20 @@ public class UtilGUI {
         JOptionPane.showMessageDialog(null, message, title, type);
     }
 
+    /*
+        Bestämde mig för att göra en metod för detta då det blev så populärt
+        (den visar/gömmer lösenordet)
+     */
+    public static void toggleVisibility(JPasswordField pwField) {
+        pwField.setEchoChar( pwField.getEchoChar() == '●' ? '\0' : '●');
+    }
 
-
-
-
-
-
+    public static String getPasswordString(JPasswordField pwField) {
+        String out = "";
+        for(char c : pwField.getPassword())
+            out += c;
+        return out;
+    }
 
 
 

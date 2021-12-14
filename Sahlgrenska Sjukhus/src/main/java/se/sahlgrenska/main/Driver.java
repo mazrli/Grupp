@@ -18,8 +18,7 @@ import se.sahlgrenska.sjukhus.person.employee.Employee;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 import java.util.List;
 
 public class Driver {
@@ -29,6 +28,7 @@ public class Driver {
     private static Hospital hospital;
 
     private static LogInGUI logInGUI;
+    private static AdminGUI adminGUI;
     private static MenuGUI mainMenu;
 
     private static final IOManager ioManger = new IOManager();
@@ -43,17 +43,22 @@ public class Driver {
 
 
     public static void setup(Employee employee) {
+        logInGUI.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
         currentUser = employee;
         Driver.getIOManager().query(String.format("INSERT INTO online VALUES(%s) ON DUPLICATE KEY UPDATE employee_id = employee_id;", currentUser.getId()));
 
-        hospital = new Hospital("Sahlgrenska sjukhuset", 200, new HashMap<Item, Integer>(), new ArrayList<Person>(), new Archive(), 500000, new Address("Göteborg", "Blå stråket 5", "413 45", "Åmål"));
+        Set<Person> persons = ioManger.getAllPersons();
+        hospital = new Hospital("Sahlgrenska sjukhuset", 200, new HashMap<Item, Integer>(), persons, new Archive(), 500000, new Address("Göteborg", "Blå stråket 5", "413 45", "Åmål"));
 
         //lägg till alla menyer i subMenus
         subMenus.add(new JournalGUI());
         subMenus.add(new BookingGUI());
         subMenus.add(new OrderGUI());
-        subMenus.add(new AdminGUI());
+        adminGUI = new AdminGUI();
+        subMenus.add(adminGUI);
 
+        logInGUI.setVisible(false);
+        logInGUI.setCursor(Cursor.getDefaultCursor());
         mainMenu = new MenuGUI(employee);
     }
 
@@ -109,5 +114,7 @@ public class Driver {
     }
 
 
-
+    public static AdminGUI getAdminGUI() {
+        return adminGUI;
+    }
 }
