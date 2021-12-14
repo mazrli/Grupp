@@ -3,9 +3,12 @@ package se.sahlgrenska.gui.Booking;
 import se.sahlgrenska.gui.util.HelperGUI;
 import se.sahlgrenska.main.Driver;
 import se.sahlgrenska.sjukhus.Hospital;
+import se.sahlgrenska.sjukhus.item.Equipment;
+import se.sahlgrenska.sjukhus.item.Medicine;
 import se.sahlgrenska.sjukhus.person.employee.Accessibility;
 import se.sahlgrenska.sjukhus.item.Item;
 
+import java.time.LocalDate;
 import java.util.stream.Collectors;
 import java.util.TreeMap;
 
@@ -119,5 +122,22 @@ public class AddItemPopUp extends HelperGUI {
         return itemStorageNames.stream().limit(10);
     }
 
+/*
+    private void fillItemsStorageForHospital(){
+        Item item1 = new Equipment("Defibrilator", "Starts hearts", 2500.5f, true);
+        Item item2 = new Equipment("MRI", "Scans body", 5000.0f, true);
+        Item item5 = new Equipment("Stethoscope", "Heartbeats", 5000.0f, true);
+        Item item3 = new Medicine("Panodil", "Pain relief", 15.0f, LocalDate.now());
+        Item item4 = new Medicine("Alvedon", "Pain relief", 12.5f, LocalDate.now());
+        Item item6 = new Medicine("SARS-vaccine", "Covid", 105.2f, LocalDate.now());
+
+        items.put(item1,25);
+        items.put(item2,10);
+        items.put(item3,15);
+        items.put(item4,50);
+        items.put(item5,30);
+        items.put(item6,44);
+
+    }*/
 
 }
