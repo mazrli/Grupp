@@ -7,6 +7,11 @@ import se.sahlgrenska.sjukhus.person.employee.Accessibility;
 import se.sahlgrenska.sjukhus.person.patient.Patient;
 
 import javax.swing.*;
+import javax.swing.event.UndoableEditListener;
+import javax.swing.text.Document;
+import javax.swing.undo.CannotUndoException;
+import javax.swing.undo.UndoManager;
+import javax.swing.undo.UndoableEdit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -14,6 +19,7 @@ import java.awt.event.MouseEvent;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class JournalGUI extends HelperGUI {
 
@@ -52,15 +58,17 @@ public class JournalGUI extends HelperGUI {
     private JList DiseaseDataList;
     private JScrollPane JournalDataScrollPane;
     private JScrollPane DiseaseDataScrollPane;
+    private UndoableEdit edit;
 
     List<Patient> patients;
     Journal currentJournal;
+    UndoManager undoManager = new UndoManager();
+    
 
     public JournalGUI() {
 
         init(MainPanel, "Hantera journaler", Accessibility.DOCTOR);
         setSize(550, 600);
-
         //setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE); <--- Använd inte setDefaultCloseOperation!
 
         //Gernerates a dummylist of patients to test remove button
@@ -88,7 +96,13 @@ public class JournalGUI extends HelperGUI {
         ÅngraButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                try {
+                    undoManager.undo();
+                } catch (CannotUndoException cex) {
+                    cex.printStackTrace();
+                } finally {
+                    ÅngraButton.setEnabled(edit.canUndo());
+                }
             }
         });
 
