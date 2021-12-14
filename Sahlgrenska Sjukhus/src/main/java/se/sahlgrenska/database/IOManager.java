@@ -41,6 +41,22 @@ public class IOManager {
     }
     //test3
 
+    public int getEmployeeID(String personNumber) {
+        if(database.isConnected()) {
+            try {
+                Statement statement = database.getConnection().createStatement();
+                ResultSet resultSet = callProcedure("getEmployeeID", personNumber);
+
+                while(resultSet.next())
+                    return resultSet.getInt(1);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+        }
+        return -1;
+    }
+
     public Set<Employee> getAllEmployees(LoginDetails loginDetails) {
 
         if(database.isConnected()) {
@@ -136,6 +152,81 @@ public class IOManager {
 
         return employee;
     }
+    public Set<Person> getAllPersons() {
+        Set<Person> persons = new HashSet<>();
+
+        if(database.isConnected()) {
+            try {
+                Statement statement = database.getConnection().createStatement();
+                String query = String.format("SELECT * FROM person p INNER JOIN address a ON p.address_id = a.id");
+                ResultSet resultSet = statement.executeQuery(query);
+
+                while(resultSet.next()) {
+
+                    String personNum = resultSet.getString(1);
+                    String fistName = resultSet.getString(2);
+                    String lastName = resultSet.getString(3);
+                    String phone = resultSet.getString(4);
+                    Gender gender = Gender.valueOf(resultSet.getString(5));
+
+                    int addressID = resultSet.getInt(6);
+                    int addressID2 = resultSet.getInt(7);
+
+                    String country = resultSet.getString(8);
+                    String city = resultSet.getString(9);
+                    String street = resultSet.getString(10);
+                    String zip = resultSet.getString(11);
+
+                    Address address = new Address(country, city, street, zip);
+
+
+                    Person person = new Person(fistName, lastName, personNum, gender, phone, address);
+                    persons.add(person);
+                }
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return persons;
+    }
+
+    public Person getPerson(String personNumber) {
+        Person person = null;
+
+        if(database.isConnected()) {
+            try {
+                Statement statement = database.getConnection().createStatement();
+                String query = String.format("SELECT * FROM person WHERE person.person_number = \"%s\"", personNumber);
+                ResultSet resultSet = statement.executeQuery(query);
+
+                while(resultSet.next()) {
+
+                    String personNum = resultSet.getString(1);
+                    String fistName = resultSet.getString(2);
+                    String lastName = resultSet.getString(3);
+                    String phone = resultSet.getString(4);
+                    Gender gender = Gender.valueOf(resultSet.getString(5));
+
+
+                    /*
+                    String country = resultSet.getString(10);
+                    String city = resultSet.getString(11);
+                    String street = resultSet.getString(12);
+                    String zip = resultSet.getString(13);
+
+                    Address address = new Address(country, city, street, zip);
+                     */
+
+                    person = new Person(fistName, lastName, personNum, gender, phone, new Address());
+                }
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return person;
+    }
 
     /*
         metod för att köra mysql procedures
@@ -193,6 +284,7 @@ public class IOManager {
         }
     }
 
+
     public LoginDetails getRemember() {
         LoginDetails loginDetails = null;
 
@@ -218,5 +310,10 @@ public class IOManager {
 
     public void closeDB() {
         database.close();
+    }
+
+    public void deleteUser(String id) {
+        query(String.format("DELETE FROM employee WHERE id = %s", id));
+        query(String.format("DELETE FROM login_details WHERE employee_id = %s", id));
     }
 }

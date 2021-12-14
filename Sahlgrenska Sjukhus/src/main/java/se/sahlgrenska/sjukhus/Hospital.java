@@ -13,13 +13,15 @@ public class Hospital {
     private String name;
     private int maxCapacity;
     private Map<Item, Integer> items;
-    private List<Person> persons;
+
+    private final Set<Person> persons;
+
     private Archive archive;
     private float balance;
     private Address address;
     private ArrayList<Ward> wards;
 
-    public Hospital(String name, int maxCapacity, Map<Item, Integer> items, List<Person> persons, Archive archive, float balance, Address address) {
+    public Hospital(String name, int maxCapacity, Map<Item, Integer> items, Set<Person> persons, Archive archive, float balance, Address address) {
         this.name = name;
         this.maxCapacity = maxCapacity;
         this.items = items;
@@ -52,8 +54,6 @@ public class Hospital {
     }
 
 
-
-
     public void addWard(Ward ward) {
         if (ward == null) {
             System.out.println("cant add null-value to hospital ward-list");
@@ -63,6 +63,10 @@ public class Hospital {
         if (!wards.contains(ward)) {
             wards.add(ward);
         }
+    }
+
+    public Map<Item,Integer> getHospitalsStoredItems(){
+        return items;
     }
 
     public ArrayList<Ward> getWards() {
@@ -79,4 +83,7 @@ public class Hospital {
     }
 
 
+    public Set<Person> getPersons() {
+        return persons;
+    }
 }

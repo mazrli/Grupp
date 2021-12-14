@@ -1,6 +1,5 @@
 package se.sahlgrenska.gui.Menu;
 
-import org.apache.batik.swing.JSVGCanvas;
 import se.sahlgrenska.gui.util.HelperGUI;
 import se.sahlgrenska.main.Driver;
 import se.sahlgrenska.main.Util;
@@ -155,12 +154,6 @@ public class MenuGUI extends HelperGUI {
     }
 
 
-    private JSVGCanvas getImage() {
-        JSVGCanvas jsvgCanvas = new JSVGCanvas();
-        jsvgCanvas.setURI("https://avatars.dicebear.com/api/male/sddddf.svg");
-        mainPanel.add(jsvgCanvas);
-        return jsvgCanvas;
-    }
 
     /*
         Logga ut
@@ -183,10 +176,10 @@ public class MenuGUI extends HelperGUI {
         Driver.getSubMenus().clear();
 
         //hide main menu
-        Driver.getMainMenu().setVisible(false);
+        setVisible(false);
 
         //show login menu
-        Driver.getLoginGUI().setVisible(true);
+        Driver.getLoginGUI().logout();
     }
 
 

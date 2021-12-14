@@ -11,7 +11,7 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="Sahlgrenska Sjukhus" target="17" />
-      <module name="SahlgrenskaSjukhus" target="17" />
+      <module name="SahlgrenskaSjukhus" target="16" />
     </bytecodeTargetLevel>
   </component>
 </project>

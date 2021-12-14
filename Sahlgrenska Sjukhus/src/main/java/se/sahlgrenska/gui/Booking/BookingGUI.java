@@ -11,11 +11,7 @@ import se.sahlgrenska.sjukhus.item.Item;
 import se.sahlgrenska.sjukhus.person.employee.Accessibility;
 
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -24,6 +20,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+
 
 import se.sahlgrenska.sjukhus.Room;
 
@@ -79,9 +76,9 @@ public class BookingGUI extends HelperGUI {
     private Booking booking;
     private int minWindowSize = 600;
     private int maxWindowSize = 700;
-    private String[] columnNames = {"Item name", "Quantity"};
+    private String[] columnNames = {"Redskap namn", "Kvantitet"};
     private DefaultTableModel tableModel;
-
+    private boolean isActiveWard;
 
     public BookingGUI() {
         init(mainPanel, "Skapa bokning", new Dimension(minWindowSize, maxWindowSize), Accessibility.RECEPTIONIST);
@@ -100,37 +97,51 @@ public class BookingGUI extends HelperGUI {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                if (!checkComboBoxSelectedIndex(wardComboBox)) {
+                if (checkSelectedIndexIsFirstOption(wardComboBox)) {
+                    isActiveWard = false;
                     System.out.println("You've not selected a ward!");
                     resetRoomMenu();
-                    tableModel = new DefaultTableModel();
                     return;
                 }
 
                 Ward selectedWard = (Ward) wardComboBox.getSelectedItem();
                 roomComboBox.setEnabled(true);
+                isActiveWard = true;
                 fillComboBoxRooms(selectedWard);
 
-                Room selectedRoom = (Room) roomComboBox.getSelectedItem();
-                fillRoomItems(selectedRoom);
-
+                if (!checkSelectedIndexIsFirstOption(roomComboBox)) {
+                    Room selectedRoom = (Room) roomComboBox.getSelectedItem();
+                    fillRoomItems(selectedRoom);
+                }
             }
         });
 
         roomComboBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-                if(roomComboBox.getSelectedIndex() != 0) {
+                emptyItemList();
+                if (isActiveWard) {
                     Room selectedRoom = (Room) roomComboBox.getSelectedItem();
                     fillRoomItems(selectedRoom);
                 }
             }
         });
+
+        addItemsBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("Add new item button was pressed!");
+                new AddItemPopUp().setVisible(true);
+            }
+        });
     }
 
-    private boolean checkComboBoxSelectedIndex(JComboBox combo) {
-        return combo.getSelectedIndex() != 0;
+    private boolean checkSelectedIndexIsFirstOption(JComboBox combo) {
+        return combo.getSelectedIndex() == 0;
+    }
+
+    private void emptyItemList() {
+        tableModel.setRowCount(0);
     }
 
 
@@ -139,6 +150,11 @@ public class BookingGUI extends HelperGUI {
         roomComboBox.insertItemAt("Select room", 0);
         roomComboBox.setSelectedIndex(0);
         roomComboBox.setEnabled(false);
+
+
+        removeItemsBtn.setEnabled(false);
+        addItemsBtn.setEnabled(false);
+
     }
 
 
@@ -147,8 +163,7 @@ public class BookingGUI extends HelperGUI {
         itemsTable.setBackground(Color.WHITE);
         itemsTable.setShowGrid(true);
 
-        removeItemsBtn.setEnabled(false);
-        addItemsBtn.setEnabled(false);
+
         removePartBtn.setEnabled(false);
 
         wardComboBox.insertItemAt("Select ward", 0);
@@ -179,8 +194,8 @@ public class BookingGUI extends HelperGUI {
 
 
     private void createDefaultTableValues() {
-        tableModel.addColumn("Item name");
-        tableModel.addColumn("Quantity");
+        tableModel.addColumn(columnNames[0]);
+        tableModel.addColumn(columnNames[1]);
     }
 
 
@@ -196,6 +211,7 @@ public class BookingGUI extends HelperGUI {
                 tableModel.addRow(new Object[]{item, itemQuantity});
             }
             itemsTable.setModel(tableModel);
+            addItemsBtn.setEnabled(true);
         }
     }
 

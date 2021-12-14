@@ -50,4 +50,14 @@ public class Employee extends Person {
                     getLastName()
             );
     }
+
+
+
+    public float getSalary() {
+        return salary;
+    }
+
+    public float getWorkingHours() {
+        return workingHours;
+    }
 }
