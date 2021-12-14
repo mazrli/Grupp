@@ -1,19 +1,30 @@
 package se.sahlgrenska.gui.Journal;
 
+import com.sun.source.doctree.ThrowsTree;
 import se.sahlgrenska.gui.util.HelperGUI;
 import se.sahlgrenska.main.Driver;
 import se.sahlgrenska.sjukhus.Journal;
+import se.sahlgrenska.sjukhus.item.Item;
 import se.sahlgrenska.sjukhus.person.employee.Accessibility;
+import se.sahlgrenska.sjukhus.person.patient.Disease;
 import se.sahlgrenska.sjukhus.person.patient.Patient;
+import se.sahlgrenska.sjukhus.person.patient.Symptom;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import javax.swing.event.UndoableEditListener;
+import javax.swing.text.Document;
+import javax.swing.undo.CannotUndoException;
+import javax.swing.undo.UndoManager;
+import javax.swing.undo.UndoableEdit;
+import javax.swing.JComboBox;
+import java.awt.*;
+import java.awt.event.*;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
+
 
 public class JournalGUI extends HelperGUI {
 
@@ -49,18 +60,21 @@ public class JournalGUI extends HelperGUI {
     private JLabel RumLabel;
     private JLabel LäkareLabel;
     private JList JournalDataList;
-    private JList DiseaseDataList;
     private JScrollPane JournalDataScrollPane;
     private JScrollPane DiseaseDataScrollPane;
+    private JList DiseaseDataList;
+    private JScrollPane CommentScrollPane;
 
     List<Patient> patients;
     Journal currentJournal;
+    UndoManager undoManager;
+    UndoableEdit edit;
+    List<Disease> diseases;
 
     public JournalGUI() {
 
         init(MainPanel, "Hantera journaler", Accessibility.DOCTOR);
         setSize(550, 600);
-
         //setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE); <--- Använd inte setDefaultCloseOperation!
 
         //Gernerates a dummylist of patients to test remove button
@@ -70,6 +84,15 @@ public class JournalGUI extends HelperGUI {
             dataList.add(i, label.getText());
         }
         JournalDataList.setModel(dataList);
+
+        DefaultComboBoxModel comboBoxModel = new DefaultComboBoxModel();
+        for (int i = 0; i < 10; i++) {
+            JLabel label =new JLabel("Sjukdom" + " " + i );
+            comboBoxModel.addElement(label.getText());
+        }
+        SjukdomComboBox.setModel(comboBoxModel);
+
+
 
         patients = Driver.getHospital().getArchive().getPatients().get(Driver.getCurrentUser());
 
@@ -84,11 +107,14 @@ public class JournalGUI extends HelperGUI {
             }
         });
 
-        //Undo the latest save.
+        //Undo latest removed patient from list of patient(Incomplete).
         ÅngraButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                Stack<UndoManager> stack = new Stack<UndoManager>();
+                if (dataList.removeElement(JournalDataList.getSelectedValue()) == true) {
+                    stack.push(undoManager);
+                }
             }
         });
 
@@ -114,7 +140,7 @@ public class JournalGUI extends HelperGUI {
             }
         });
 
-        //Cancel the window and move back to the window menu.
+        //Cancel the window and move back to the menu.
         AvbrytButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -131,6 +157,22 @@ public class JournalGUI extends HelperGUI {
                 System.out.println(JournalDataList.getSelectedValue().toString());
             }
         });
+
+        SjukdomComboBox.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e)
+            {
+                try {
+                    if (e.getStateChange() == ItemEvent.SELECTED) {
+                        if (!comboBoxModel.getSelectedItem().toString().equals("Choose")) {
+                            JOptionPane.showMessageDialog(null, comboBoxModel.getSelectedItem().toString() + " is selected");
+                        }
+                    }
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
+            }
+        });
     }
 
     //Makes it possible to load the Journal-list into Journaldatalist, otherwise it was not possible.
@@ -142,4 +184,5 @@ public class JournalGUI extends HelperGUI {
             JournalDataList.add(label);
         }
     }
+
 }

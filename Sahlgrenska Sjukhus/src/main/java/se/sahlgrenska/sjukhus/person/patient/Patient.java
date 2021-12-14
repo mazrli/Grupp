@@ -9,7 +9,7 @@ import javax.management.Notification;
 import java.util.List;
 
 public class Patient extends Person {
-   //public List<Journal> journals;
+    //public List<Journal> journals;
     private int patientID;
     private List<Disease> diseases;
     private List<Notification> notifications;

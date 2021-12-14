@@ -10,6 +10,7 @@ import java.util.Map;
 public class Archive {
     private Map<Patient, List<Journal>> journals;
     private Map<Patient, List<Booking>> bookings;
+
     private Map<Employee, List<Patient>> patients;
 
     public Archive() {

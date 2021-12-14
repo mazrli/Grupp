@@ -1,10 +1,7 @@
 package se.sahlgrenska.database;
 
 import se.sahlgrenska.gui.util.UtilGUI;
-import se.sahlgrenska.sjukhus.Address;
-import se.sahlgrenska.sjukhus.Archive;
-import se.sahlgrenska.sjukhus.Booking;
-import se.sahlgrenska.sjukhus.Hospital;
+import se.sahlgrenska.sjukhus.*;
 import se.sahlgrenska.sjukhus.item.Item;
 import se.sahlgrenska.sjukhus.person.Gender;
 import se.sahlgrenska.sjukhus.person.Person;
@@ -380,14 +377,20 @@ public class IOManager {
     public Hospital loadHospitalData() {
 
         Set<Person> persons = getAllPersons();
-        Set<Patient> patients = getPatients();
+        //Set<Journal> journals;
+        //Set<Patient> patients = getPatients();
 
         Map<Patient, List<Booking>> bookings = new HashMap<>();
+        Map<Patient, List<Journal>> journals = new HashMap<>();
+        List<Journal> journals1 = new ArrayList<>();
+        Map<Employee, List<Patient>> patients = new HashMap<>();
 
-        Archive archive = new Archive();
+        Archive archive = new Archive(journals, bookings, patients);
+
 
 
         Hospital hospital = new Hospital("Sahlgrenska sjukhuset", 200, new HashMap<Item, Integer>(), persons, new Archive(), 500000, new Address("Göteborg", "Blå stråket 5", "413 45", "Åmål"));
+        hospital.setArchive(archive);
 
         return hospital;
     }
