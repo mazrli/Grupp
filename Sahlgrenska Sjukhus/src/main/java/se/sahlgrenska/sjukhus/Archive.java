@@ -16,10 +16,13 @@ public class Archive {
         journals = new HashMap<>();
         bookings = new HashMap<>();
         patients = new HashMap<>();
-
     }
 
-
+    public Archive(Map<Patient, List<Journal>> journals, Map<Patient, List<Booking>> bookings, Map<Employee, List<Patient>> patients) {
+        this.journals = journals;
+        this.bookings = bookings;
+        this.patients = patients;
+    }
 
     public Map<Employee, List<Patient>> getPatients() {
         return patients;

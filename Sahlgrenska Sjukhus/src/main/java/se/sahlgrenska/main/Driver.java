@@ -6,15 +6,10 @@ import se.sahlgrenska.gui.Journal.JournalGUI;
 import se.sahlgrenska.gui.LogIn.LogInGUI;
 import se.sahlgrenska.gui.Menu.MenuGUI;
 import se.sahlgrenska.gui.admin.AdminGUI;
-import se.sahlgrenska.gui.ordertest.ItemsStatus;
 import se.sahlgrenska.gui.ordertest.Ordertest;
 import se.sahlgrenska.gui.util.HelperGUI;
 import se.sahlgrenska.gui.util.UtilGUI;
-import se.sahlgrenska.sjukhus.Address;
-import se.sahlgrenska.sjukhus.Archive;
 import se.sahlgrenska.sjukhus.Hospital;
-import se.sahlgrenska.sjukhus.item.Item;
-import se.sahlgrenska.sjukhus.person.Person;
 import se.sahlgrenska.sjukhus.person.employee.Employee;
 
 import javax.swing.*;
@@ -48,8 +43,7 @@ public class Driver {
         currentUser = employee;
         Driver.getIOManager().query(String.format("INSERT INTO online VALUES(%s) ON DUPLICATE KEY UPDATE employee_id = employee_id;", currentUser.getId()));
 
-        Set<Person> persons = ioManger.getAllPersons();
-        hospital = new Hospital("Sahlgrenska sjukhuset", 200, new HashMap<Item, Integer>(), persons, new Archive(), 500000, new Address("Göteborg", "Blå stråket 5", "413 45", "Åmål"));
+        hospital = ioManger.loadHospitalData();
 
         //lägg till alla menyer i subMenus
         //subMenus.add(new ItemsStatus());
