@@ -126,7 +126,8 @@
                       </grid>
                     </constraints>
                     <properties>
-                      <text value=""/>
+                      <font style="2"/>
+                      <text value="Search item"/>
                     </properties>
                   </component>
                   <component id="ee0e4" class="javax.swing.JLabel" binding="searchItemLbl">
@@ -207,7 +208,10 @@
                             <preferred-size width="150" height="-1"/>
                           </grid>
                         </constraints>
-                        <properties/>
+                        <properties>
+                          <font style="2"/>
+                          <text value="Enter amount"/>
+                        </properties>
                       </component>
                       <component id="e3c0d" class="javax.swing.JLabel" binding="enterQuantityLbl">
                         <constraints>
