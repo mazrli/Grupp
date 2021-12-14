@@ -3,6 +3,7 @@ package se.sahlgrenska.gui.Journal;
 import se.sahlgrenska.gui.util.HelperGUI;
 import se.sahlgrenska.main.Driver;
 import se.sahlgrenska.sjukhus.Journal;
+import se.sahlgrenska.sjukhus.item.Item;
 import se.sahlgrenska.sjukhus.person.employee.Accessibility;
 import se.sahlgrenska.sjukhus.person.patient.Patient;
 
@@ -19,6 +20,7 @@ import java.awt.event.MouseEvent;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 
 public class JournalGUI extends HelperGUI {
@@ -58,12 +60,12 @@ public class JournalGUI extends HelperGUI {
     private JList DiseaseDataList;
     private JScrollPane JournalDataScrollPane;
     private JScrollPane DiseaseDataScrollPane;
-    private UndoableEdit edit;
+    private String symptom;
 
     List<Patient> patients;
     Journal currentJournal;
-    UndoManager undoManager = new UndoManager();
-    
+    UndoManager undoManager;
+    UndoableEdit edit;
 
     public JournalGUI() {
 
@@ -92,16 +94,13 @@ public class JournalGUI extends HelperGUI {
             }
         });
 
-        //Undo the latest save.
+        //Undo latest removed patient from list of patient(Incomplete).
         ÅngraButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                try {
-                    undoManager.undo();
-                } catch (CannotUndoException cex) {
-                    cex.printStackTrace();
-                } finally {
-                    ÅngraButton.setEnabled(edit.canUndo());
+                Stack<UndoManager> stack = new Stack<UndoManager>();
+                if (dataList.removeElement(JournalDataList.getSelectedValue()) == true) {
+                    stack.push(undoManager);
                 }
             }
         });
@@ -145,6 +144,12 @@ public class JournalGUI extends HelperGUI {
                 System.out.println(JournalDataList.getSelectedValue().toString());
             }
         });
+        SjukdomComboBox.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                
+            }
+        });
     }
 
     //Makes it possible to load the Journal-list into Journaldatalist, otherwise it was not possible.
@@ -155,5 +160,10 @@ public class JournalGUI extends HelperGUI {
             JLabel label = new JLabel(patient.getFirstName());
             JournalDataList.add(label);
         }
+    }
+
+    public void ListOfDisease(JComboBox jComboBox)
+    {
+
     }
 }
