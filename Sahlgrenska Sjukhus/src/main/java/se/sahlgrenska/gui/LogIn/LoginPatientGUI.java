@@ -1,13 +1,21 @@
 package se.sahlgrenska.gui.LogIn;
 
+import se.sahlgrenska.database.IOManager;
 import se.sahlgrenska.gui.util.HelperGUI;
+import se.sahlgrenska.gui.util.UtilGUI;
+import se.sahlgrenska.gui.util.components.JTextFieldPlaceholder;
 import se.sahlgrenska.gui.util.misc.SuggestionDropDownDecorator;
 import se.sahlgrenska.gui.util.misc.TextComponentSuggestionClient;
 import se.sahlgrenska.main.Driver;
+import se.sahlgrenska.sjukhus.Hospital;
+import se.sahlgrenska.sjukhus.person.Person;
 import se.sahlgrenska.sjukhus.person.employee.Accessibility;
+import se.sahlgrenska.sjukhus.person.patient.Patient;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
@@ -32,11 +40,26 @@ public class LoginPatientGUI extends HelperGUI {
             }
         });
 
+        okButton.addActionListener(e -> {
+
+            String in = textField1.getText();
+            if(in.length() == 12) {
+                Patient patient = Driver.getHospital().getPatient(in);
+
+                if(patient != null) {
+                    System.out.println("Yoooo");
+                } else {
+                    UtilGUI.error(String.format("Vi hittade ingen registrerad patient\n med personnumret \"%s\"", in));
+                }
+            } else {
+                UtilGUI.error("Ange ett personnummer.");
+            }
+
+        });
     }
 
 
-
-
-
-
+    private void createUIComponents() {
+        textField1 = new JTextFieldPlaceholder("YYYYMMDDXXXX");
+    }
 }

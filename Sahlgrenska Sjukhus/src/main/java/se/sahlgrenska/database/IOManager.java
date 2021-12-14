@@ -1,17 +1,23 @@
 package se.sahlgrenska.database;
 
 import se.sahlgrenska.gui.util.UtilGUI;
-import se.sahlgrenska.main.Driver;
 import se.sahlgrenska.sjukhus.Address;
+import se.sahlgrenska.sjukhus.Archive;
+import se.sahlgrenska.sjukhus.Booking;
+import se.sahlgrenska.sjukhus.Hospital;
+import se.sahlgrenska.sjukhus.item.Item;
 import se.sahlgrenska.sjukhus.person.Gender;
 import se.sahlgrenska.sjukhus.person.Person;
 import se.sahlgrenska.sjukhus.person.employee.*;
+import se.sahlgrenska.sjukhus.person.patient.BloodType;
+import se.sahlgrenska.sjukhus.person.patient.Disease;
+import se.sahlgrenska.sjukhus.person.patient.Patient;
 
+import javax.management.Notification;
 import java.io.*;
 import java.net.URISyntaxException;
 import java.sql.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class IOManager {
 
@@ -152,6 +158,33 @@ public class IOManager {
 
         return employee;
     }
+
+    private Person getPersonPre(ResultSet resultSet) {
+        Person person = null;
+        try {
+        String personNumm = resultSet.getString(1);
+        String firstName = resultSet.getString(2);
+        String lastName = resultSet.getString(3);
+        String phoneNum= resultSet.getString(4);
+        Gender gender = Gender.valueOf(resultSet.getString(5));
+
+        String country = resultSet.getString(6);
+        String city = resultSet.getString(7);
+        String street = resultSet.getString(8);
+        String zip = resultSet.getString(9);
+
+        Address address = new Address(country, city, street, zip);
+        person = new Person(firstName, lastName, personNumm, gender, phoneNum, address);
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return person;
+    }
+
+
     public Set<Person> getAllPersons() {
         Set<Person> persons = new HashSet<>();
 
@@ -315,5 +348,47 @@ public class IOManager {
     public void deleteUser(String id) {
         query(String.format("DELETE FROM employee WHERE id = %s", id));
         query(String.format("DELETE FROM login_details WHERE employee_id = %s", id));
+    }
+
+    public Set<Patient> getPatients() {
+        Set<Patient> patients = new HashSet<>();
+
+        if (database.isConnected()) {
+            ResultSet resultSet = callProcedure("getPatients");
+
+            try {
+                while(resultSet.next()) {
+                    Person person = getPersonPre(resultSet);
+                    int patient_id = resultSet.getInt("id");
+                    String conditionDescription = resultSet.getString("condition_description");
+                    boolean criticalCondition = resultSet.getBoolean("critical_condition");
+                    BloodType bloodType = BloodType.valueOf(resultSet.getString("blood_type"));
+
+                    Patient patient = new Patient(person, patient_id, new ArrayList<Disease>(), new ArrayList<Notification>(), conditionDescription, criticalCondition, bloodType);
+                    patients.add(patient);
+
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return patients;
+    }
+
+
+    public Hospital loadHospitalData() {
+
+        Set<Person> persons = getAllPersons();
+        Set<Patient> patients = getPatients();
+
+        Map<Patient, List<Booking>> bookings = new HashMap<>();
+
+        Archive archive = new Archive();
+
+
+        Hospital hospital = new Hospital("Sahlgrenska sjukhuset", 200, new HashMap<Item, Integer>(), persons, new Archive(), 500000, new Address("Göteborg", "Blå stråket 5", "413 45", "Åmål"));
+
+        return hospital;
     }
 }
