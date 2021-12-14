@@ -121,9 +121,11 @@ public class BookingGUI extends HelperGUI {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                if(roomComboBox.getSelectedIndex() != 0) {
+                if (roomComboBox.getSelectedIndex() != 0) {
                     Room selectedRoom = (Room) roomComboBox.getSelectedItem();
                     fillRoomItems(selectedRoom);
+                }  else{
+                    //clearea tabellen!
                 }
             }
         });
