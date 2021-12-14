@@ -1,5 +1,6 @@
 package se.sahlgrenska.gui.Journal;
 
+import com.sun.source.doctree.ThrowsTree;
 import se.sahlgrenska.gui.util.HelperGUI;
 import se.sahlgrenska.main.Driver;
 import se.sahlgrenska.sjukhus.Journal;
@@ -59,10 +60,10 @@ public class JournalGUI extends HelperGUI {
     private JLabel RumLabel;
     private JLabel LäkareLabel;
     private JList JournalDataList;
-    private JList DiseaseDataList;
     private JScrollPane JournalDataScrollPane;
     private JScrollPane DiseaseDataScrollPane;
-    //private ComboBoxModel comboBoxModel = new DefaultComboBoxModel(Arrays.asList("Help"));
+    private JList DiseaseDataList;
+    private JScrollPane CommentScrollPane;
 
     List<Patient> patients;
     Journal currentJournal;
@@ -71,8 +72,6 @@ public class JournalGUI extends HelperGUI {
     List<Disease> diseases;
 
     public JournalGUI() {
-
-
 
         init(MainPanel, "Hantera journaler", Accessibility.DOCTOR);
         setSize(550, 600);
@@ -87,11 +86,12 @@ public class JournalGUI extends HelperGUI {
         JournalDataList.setModel(dataList);
 
         DefaultComboBoxModel comboBoxModel = new DefaultComboBoxModel();
-        for (int i = 0; i < 5; i++) {
-            JLabel label =new JLabel("Item" + i );
+        for (int i = 0; i < 10; i++) {
+            JLabel label =new JLabel("Sjukdom" + " " + i );
             comboBoxModel.addElement(label.getText());
         }
         SjukdomComboBox.setModel(comboBoxModel);
+
 
 
         patients = Driver.getHospital().getArchive().getPatients().get(Driver.getCurrentUser());
@@ -140,7 +140,7 @@ public class JournalGUI extends HelperGUI {
             }
         });
 
-        //Cancel the window and move back to the window menu.
+        //Cancel the window and move back to the menu.
         AvbrytButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -162,7 +162,15 @@ public class JournalGUI extends HelperGUI {
             @Override
             public void itemStateChanged(ItemEvent e)
             {
-                SjukdomComboBox = new JComboBox(comboBoxModel);
+                try {
+                    if (e.getStateChange() == ItemEvent.SELECTED) {
+                        if (!comboBoxModel.getSelectedItem().toString().equals("Choose")) {
+                            JOptionPane.showMessageDialog(null, comboBoxModel.getSelectedItem().toString() + " is selected");
+                        }
+                    }
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
             }
         });
     }
@@ -174,17 +182,6 @@ public class JournalGUI extends HelperGUI {
             journals.addAll(Driver.getHospital().getArchive().getJournals().get(patient));
             JLabel label = new JLabel(patient.getFirstName());
             JournalDataList.add(label);
-        }
-    }
-
-    public void ListOfDisease()
-    {
-        DefaultComboBoxModel cbm = new DefaultComboBoxModel();
-        SjukdomComboBox.setModel(cbm);
-        Disease disease = new Disease("");
-        String diseaseName = disease.getDiseaseName();
-        for (Disease disease1 : diseases) {
-            cbm.addElement(diseaseName);
         }
     }
 
