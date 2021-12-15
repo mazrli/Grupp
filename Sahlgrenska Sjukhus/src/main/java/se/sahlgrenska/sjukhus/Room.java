@@ -15,19 +15,20 @@ import java.util.Objects;
 public class Room {
     private String name;
     private int size;
-    private HashMap<Item, Integer> itemsInRoom = new HashMap<Item, Integer>();
+    private Map<Item, Integer> itemsInRoom = new HashMap<Item, Integer>();
 
 
-    public Room(String name, int size, HashMap<Item, Integer> itemsInRoom) {
+    public Room(String name, int size, Map<Item, Integer> itemsInRoom) {
         this.name = name;
         this.size = size;
         this.itemsInRoom = itemsInRoom;
 
     }
+
     public Room(String name, int size, Item item, int quantity) {
         this.name = name;
         this.size = size;
-        addItems(item,quantity);
+        addItems(item, quantity);
     }
 
     public String getName() {
@@ -51,17 +52,15 @@ public class Room {
 
     public void addItems(Item item, int quantity) {
         int totalQuantity = quantity;
-        if(itemsInRoom.containsKey(item)){
-        Integer currentQuantity = itemsInRoom.get(item);
+        if (itemsInRoom.containsKey(item)) {
+            Integer currentQuantity = itemsInRoom.get(item);
             totalQuantity += currentQuantity;
         }
-
-        itemsInRoom.put(item,quantity);
-
+        itemsInRoom.put(item, totalQuantity);
     }
 
 
-    public HashMap<Item, Integer> getItems() {
+    public Map<Item, Integer> getItems() {
         return itemsInRoom;
     }
 

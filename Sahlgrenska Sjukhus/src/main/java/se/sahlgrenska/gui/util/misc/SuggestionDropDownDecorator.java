@@ -7,6 +7,8 @@ import javax.swing.text.JTextComponent;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.List;
 
 import static java.awt.event.KeyEvent.*;
@@ -109,6 +111,13 @@ public class SuggestionDropDownDecorator<C extends JComponent> {
                 }
             }
         });
+
+        listComp.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                selectFromList(null);
+            }
+        });
     }
 
     private void selectFromList(KeyEvent e) {
@@ -116,11 +125,13 @@ public class SuggestionDropDownDecorator<C extends JComponent> {
             int selectedIndex = listComp.getSelectedIndex();
             if (selectedIndex != -1) {
                 popupMenu.setVisible(false);
-                String selectedValue = listComp.getSelectedValue().split("-")[1].trim();
+                String value = listComp.getSelectedValue();
+                String selectedValue = value.contains("-") ? value.split("-")[1].trim() : value;
                 disableTextEvent = true;
                 suggestionClient.setSelectedText(invoker, selectedValue);
                 disableTextEvent = false;
-                e.consume();
+                if(e != null)
+                    e.consume();
             }
         }
     }

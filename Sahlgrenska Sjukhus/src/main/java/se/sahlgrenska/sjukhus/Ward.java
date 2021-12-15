@@ -3,12 +3,13 @@ package se.sahlgrenska.sjukhus;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 public class Ward {
     private String name;
-    private HashSet<Room> rooms;
+    private Set<Room> rooms;
 
-    public Ward(String name, HashSet<Room> rooms) { //Vi borde egentligen kolla dessa innan de tilldelas.
+    public Ward(String name, Set<Room> rooms) { //Vi borde egentligen kolla dessa innan de tilldelas.
         this.name = name;
         this.rooms = rooms;
     }
@@ -30,7 +31,7 @@ public class Ward {
     }
 
 
-    public HashSet<Room> getRooms(){
+    public Set<Room> getRooms(){
         return rooms;
     }
 

@@ -38,58 +38,82 @@ public class MenuGUI extends HelperGUI {
 
     private final Employee currentUser;
 
+    private final Color testColor = new Color(219, 255, 253);
+    private final Color testColor2 = new Color(206, 248, 245);
+
+    private final Color topPanelColor = testColor;//;Color.ORANGE;
+    private final Color mainPanelColor = testColor; //Color.BLUE;
+    private final Color contentPanelColor = testColor; //Color.red;
+    private final Color leftPanelColor = testColor2; //Color.GREEN;
+    private final Color rightPanelColor = testColor2; //Color.BLUE;
+    private final Color bottomPanelColor = testColor; //Color.YELLOW;
+
+    private int vSize = 160;
+
     public MenuGUI(Employee currentUser) {
         this.currentUser = currentUser;
 
         setLayout(new BorderLayout());
 
         mainPanel = new JPanel(new BorderLayout());
-        mainPanel.setBackground(Color.blue);
+        mainPanel.setBackground(mainPanelColor);
 
         topPanel = new JPanel();
         GridLayout topPanelLayout = new GridLayout(2, 3, 10, 10);
         topPanel.setLayout(topPanelLayout);
-        topPanel.setBackground(Color.ORANGE);
+        //topPanel.setBackground(topPanelColor);
 
         userLabel = new JLabel(Driver.getCurrentUser().getFirstName() + " " + Driver.getCurrentUser().getLastName());
         userLabel.setFont(Util.biggerFont);
 
         dateLabel = new JLabel(LocalDateTime.now().format(Util.dateFormatter));
+        /*
         dateLabel.setFont(Util.biggerFont);
+         */
 
         employeeIDLabel = new JLabel(currentUser.getAccessibility().toString());
         employeeIDLabel.setFont(Util.biggerFont);
 
-
+        onlineLabel.setFont(Util.biggerFont);
 
 
         topPanel.add(userLabel);
-        topPanel.add(dateLabel);
-        topPanel.add(employeeIDLabel);
+        //topPanel.add(dateLabel);
         topPanel.add(onlineLabel);
+        topPanel.add(employeeIDLabel);
+
+        List<HelperGUI> availableMenus = new ArrayList<>();
+        for(HelperGUI subMenu: Driver.subMenus)
+            if(currentUser.getAccessibility() == subMenu.getAccessibility() || currentUser.getAccessibility() == Accessibility.ADMIN)
+                availableMenus.add(subMenu);
+
+
+        vSize -= (availableMenus.size() * 20);
+
+        System.out.println(vSize);
+
         topPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         mainPanel.add(topPanel, BorderLayout.NORTH);
 
         leftPanel = new JPanel();
         mainPanel.add(leftPanel, BorderLayout.WEST);
-        leftPanel.setBackground(Color.GREEN);
+        //leftPanel.setBackground(leftPanelColor);
         leftPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 20));
 
         rightPanel = new JPanel();
         mainPanel.add(rightPanel, BorderLayout.EAST);
-        rightPanel.setBackground(Color.BLUE);
+        //rightPanel.setBackground(rightPanelColor);
         rightPanel.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 0));
 
 
         contentPanel = new JPanel();
-        contentPanel.setBackground(Color.RED);
-        contentPanel.setBorder(BorderFactory.createEmptyBorder(50, 0, 50, 0 ));
-
+        //contentPanel.setBackground(contentPanelColor);
+        contentPanel.setBorder(BorderFactory.createEmptyBorder(vSize, 20, vSize, 20));
         mainPanel.add(contentPanel, BorderLayout.CENTER);
 
 
         bottomPanel = new JPanel();
-        bottomPanel.setBackground(Color.YELLOW);
+        //bottomPanel.setBackground(bottomPanelColor);
         logoutButton = new JButton("Logga ut");
         bottomPanel.add(logoutButton);
         mainPanel.add(bottomPanel, BorderLayout.SOUTH);
@@ -102,29 +126,11 @@ public class MenuGUI extends HelperGUI {
         });
 
 
-        List<HelperGUI> availableMenus = new ArrayList<>();
-        for(HelperGUI subMenu: Driver.subMenus) {
-
-            if(currentUser.getAccessibility() == subMenu.getAccessibility() || currentUser.getAccessibility() == Accessibility.ADMIN) {
-                availableMenus.add(subMenu);
-            }
-
-        }
 
         GridLayout contentPanelLayout = new GridLayout(availableMenus.size(), 2, 10, 5);
         contentPanel.setLayout(contentPanelLayout);
 
-        if(false) {
-            int num = (int) (Math.random() * 6) + 1;
 
-            for (int i = 0; i < num; i++) {
-                JButton button = new JButton("test " + i);
-                button.setPreferredSize(new Dimension(80, 30));
-                button.setFont(Util.biggerFont);
-                button.setAlignmentX(Component.CENTER_ALIGNMENT);
-                contentPanel.add(button);
-            }
-        }
 
         for(HelperGUI helperGUI : availableMenus) {
             addButton(helperGUI);

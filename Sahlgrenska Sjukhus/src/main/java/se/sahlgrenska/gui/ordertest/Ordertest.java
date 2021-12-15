@@ -5,6 +5,7 @@ import se.sahlgrenska.gui.util.UtilGUI;
 import se.sahlgrenska.gui.util.misc.SuggestionDropDownDecorator;
 import se.sahlgrenska.gui.util.misc.TextComponentSuggestionClient;
 import se.sahlgrenska.main.Driver;
+import se.sahlgrenska.sjukhus.item.Item;
 import se.sahlgrenska.sjukhus.person.Person;
 import se.sahlgrenska.sjukhus.person.employee.Accessibility;
 
@@ -45,8 +46,9 @@ public class Ordertest extends HelperGUI  implements ActionListener{
     private JLabel userName;
     private JPanel searchPanel;
     private JTextField SerachTerxtfield;
+    private JButton serachAdd;
 
-    String[] columns = {"Item name", "Quantity", "Price", "OrderDate"};
+    String[] columns = {"Namn", "Beskrivning", "Mängd", "Pris"};
     String[][] data = {
             {"Defibrilator", "yes", "4031", "CSE"},
             {"Mr", "yes", "4031", "CSE"},
@@ -63,29 +65,15 @@ public class Ordertest extends HelperGUI  implements ActionListener{
 
     };
 
-    public Ordertest(){
-        this.HuvudPanel = HuvudPanel;
-        this.panel = panel;
-        this.MenuPanel = MenuPanel;
-        this.HuvudScrollPane =HuvudScrollPane;
-        this.TabelScrololPanel = TabelScrololPanel;
-        this.TablePanel = TablePanel;
-        this.table = table;
-        this.textArea = textArea;
-        this.searchPanel = searchPanel;
+    public Ordertest() {
 
         SuggestionDropDownDecorator.decorate(SerachTerxtfield, new TextComponentSuggestionClient(this::getSuggestions));
-
-
 
         init(panel, "Order", new Dimension(700, 700), Accessibility.RECEPTIONIST);
 
 
         getContentPane().setBackground(Color.lightGray);
 
-
-/*        ImageIcon image = new ImageIcon("https://avatars.dicebear.com/api/male/sddddf.svg");
-        setIconImage(image.getImage());*/
 
         setResizable(true);
 
@@ -145,7 +133,6 @@ public class Ordertest extends HelperGUI  implements ActionListener{
         buttonCancel.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                setResizable(true);
                 setVisible(false);
                 Driver.getMainMenu().setVisible(true);
             }
@@ -187,60 +174,37 @@ public class Ordertest extends HelperGUI  implements ActionListener{
         });
 
 
-
-/*        searchPanel = new JPanel((LayoutManager) Serach.f);
-        searchPanel.setVisible(true);*/
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
 
     private List<String> getSuggestions(String key) {
 
-        List<String> result = new ArrayList<>();
-
-
         if (key.isEmpty())
             return null;
 
-        List<String> output = new ArrayList<>();
+        List<String> result = new ArrayList<>();
         final String input = key.toUpperCase();
 
-        Set<Person> persons = Driver.getHospital().getPersons();
-
-        for(Person person : persons)
-            if(person.getFullName().toUpperCase().startsWith(input)
-                    || person.getFirstName().toUpperCase().startsWith(input)
-                    || person.getLastName().toUpperCase().startsWith(input)
-                    || person.getPersonNumber().startsWith(input)
-            ) {
-                output.add(person.toString());
-            }
 
 
-        return output.stream().limit(20).collect(Collectors.toList());
+        for(Item item : Driver.getHospital().getHospitalsStoredItems().keySet())
+            if(item.toString().toUpperCase().startsWith(input))
+                result.add(item.toString());
 
 
-
+        return result.stream().limit(20).collect(Collectors.toList());
     }
 
-    private void createUIComponents() {
-        // TODO: place custom component creation code here
 
+
+
+    private void createUIComponents() {
         Color tableHeaderColour = new Color(199, 199, 199);
 
 
         table = new JTable(data, columns);
+
+
+
         UtilGUI.changeJTableHeaderColour(table, tableHeaderColour);
         getContentPane().setBackground(Color.lightGray);
 
@@ -256,71 +220,6 @@ public class Ordertest extends HelperGUI  implements ActionListener{
     }
 
 
-
-    public void getSerach (){
-        Serach serach = new Serach();
-
-    }
-
 }
-
-
-
-/* class Serach extends JFrame implements ActionListener{
-
-
-    static JFrame f;
-
-
-    static JButton b;
-
-    static JLabel l;
-
-    static JTextArea jt;
-
-
-    Serach()
-    {
-    }
-    public static void main(String[] args)
-    {
-        f = new JFrame("textfield");
-
-        l = new JLabel("nothing entered");
-
-        b = new JButton("submit");
-
-        Serach te = new Serach();
-
-        b.addActionListener(te);
-
-        jt = new JTextArea(10, 10);
-
-        JPanel p = new JPanel();
-
-        p.add(jt);
-        p.add(b);
-        p.add(l);
-
-        f.add(p);
-        f.setSize(300, 300);
-
-        f.show();
-
-
-
-    }
-
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        String s = e.getActionCommand();
-        if (s.equals("submit")) {
-            l.setText(jt.getText());
-        }
-    }
-}*/
-
-
 
 
