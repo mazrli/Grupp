@@ -61,7 +61,7 @@ public class AddItemPopUp extends HelperGUI {
     private int maxQuantity = 10;
 
 
-    public AddItemPopUp(Room room, JComboBox roomComboBox) {
+    public AddItemPopUp(Room room) {
         init(mainPanel, "Nytt redskap", new Dimension(350, 400), Accessibility.NONE);
         hospital = Driver.getHospital();
 

@@ -133,7 +133,7 @@ public class BookingGUI extends HelperGUI {
         addItemsBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                AddItemPopUp addItemPopUp = new AddItemPopUp(selectedRoom, roomComboBox);
+                AddItemPopUp addItemPopUp = new AddItemPopUp(selectedRoom);
                 addItemPopUp.setVisible(true);
 
 
