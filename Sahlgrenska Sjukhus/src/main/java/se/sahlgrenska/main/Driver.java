@@ -33,6 +33,10 @@ public class Driver {
     private static boolean hasBeenSetup = false;
 
     public static void main(String[] args) {
+
+        System.out.println("Ta gärna bort \"false\" printen om ni hittar :)");
+
+
         setupOS();
         logInGUI = new LogInGUI();
     }
