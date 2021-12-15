@@ -24,10 +24,11 @@ public class Room {
         this.itemsInRoom = itemsInRoom;
 
     }
+
     public Room(String name, int size, Item item, int quantity) {
         this.name = name;
         this.size = size;
-        addItems(item,quantity);
+        addItems(item, quantity);
     }
 
     public String getName() {
@@ -51,13 +52,13 @@ public class Room {
 
     public void addItems(Item item, int quantity) {
         int totalQuantity = quantity;
-        if(itemsInRoom.containsKey(item)){
-        Integer currentQuantity = itemsInRoom.get(item);
+        if (itemsInRoom.containsKey(item)) {
+            Integer currentQuantity = itemsInRoom.get(item);
             totalQuantity += currentQuantity;
         }
 
-        itemsInRoom.put(item,quantity);
-
+        itemsInRoom.put(item, quantity);
+        System.out.println(item+" has been added to roomlist with "+quantity+" in quantity");
     }
 
 

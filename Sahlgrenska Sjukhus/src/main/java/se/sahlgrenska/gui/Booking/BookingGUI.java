@@ -6,6 +6,7 @@ import se.sahlgrenska.main.Driver;
 import se.sahlgrenska.main.Util;
 import se.sahlgrenska.sjukhus.Booking;
 import se.sahlgrenska.sjukhus.Hospital;
+import se.sahlgrenska.sjukhus.Room;
 import se.sahlgrenska.sjukhus.Ward;
 import se.sahlgrenska.sjukhus.item.Item;
 import se.sahlgrenska.sjukhus.person.employee.Accessibility;
@@ -16,11 +17,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDateTime;
-import java.util.*;
 import java.util.List;
-
-
-import se.sahlgrenska.sjukhus.Room;
+import java.util.Map;
+import java.util.Set;
 
 public class BookingGUI extends HelperGUI {
 
@@ -79,6 +78,7 @@ public class BookingGUI extends HelperGUI {
     private String[] columnNames = {"Redskap namn", "Kvantitet"};
     private DefaultTableModel tableModel;
     private boolean isActiveWard;
+    private Room selectedRoom;
 
     public BookingGUI() {
         init(mainPanel, "Skapa bokning", new Dimension(minWindowSize, maxWindowSize), Accessibility.RECEPTIONIST);
@@ -121,21 +121,45 @@ public class BookingGUI extends HelperGUI {
             public void actionPerformed(ActionEvent e) {
                 emptyItemList();
                 if (isActiveWard) {
-                    Room selectedRoom = (Room) roomComboBox.getSelectedItem();
+                    selectedRoom = (Room) roomComboBox.getSelectedItem();
                     fillRoomItems(selectedRoom);
                 }
             }
         });
 
+
+
+
+
+
         addItemsBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Add new item button was pressed!");
-                AddItemPopUp addItemPopUp = new AddItemPopUp();
+                AddItemPopUp addItemPopUp = new AddItemPopUp(selectedRoom);
                 addItemPopUp.setVisible(true);
+
+                //refresha sidan!
+
+                removeItemsBtn.setEnabled(true);
+            }
+        });
+
+
+        removeItemsBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                for (Map.Entry<Item, Integer> hosStorage : hospital.getHospitalsStoredItems().entrySet()) {
+                    System.out.println(hosStorage);
+                }
+
             }
         });
     }
+
+
+
+
 
     private boolean checkSelectedIndexIsFirstOption(JComboBox combo) {
         return combo.getSelectedIndex() == 0;
@@ -153,7 +177,7 @@ public class BookingGUI extends HelperGUI {
         roomComboBox.setEnabled(false);
 
 
-        removeItemsBtn.setEnabled(false);
+        // removeItemsBtn.setEnabled(false);                                                         GÖR DENNA OKOMMENTERAD SENARE PHOEBS!
         addItemsBtn.setEnabled(false);
 
     }
@@ -184,7 +208,6 @@ public class BookingGUI extends HelperGUI {
 
     private void fillComboBoxRooms(Ward ward) {
         roomComboBox.removeAllItems();
-        System.out.println(ward + " was selected");
         Set<Room> wardRooms = ward.getRooms();
         if (wardRooms != null) {
             for (Room r : wardRooms) {

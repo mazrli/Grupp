@@ -30,7 +30,7 @@ public class Hospital {
         this.balance = balance;
         this.address = address;
         this.wards = new ArrayList<>();
-        fillArrayListTempUntilDatabaseConnection();
+       // fillArrayListTempUntilDatabaseConnection();
     }
 
     public Hospital(String name, int maxCapacity, float balance, Map<Item, Integer> storage, Address address, List<Ward> wards) {
@@ -107,6 +107,7 @@ public class Hospital {
     public Map<Item,Integer> getHospitalsStoredItems(){
         return items;
     }
+
 
     public List<Ward> getWards() {
         return wards;

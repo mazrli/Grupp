@@ -8,13 +8,17 @@ import se.sahlgrenska.sjukhus.Hospital;
 import se.sahlgrenska.sjukhus.item.Item;
 
 
+import java.awt.print.Book;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.TreeMap;
 
 import java.util.*;
 
+import se.sahlgrenska.sjukhus.item.Medicine;
+import se.sahlgrenska.sjukhus.Room;
 import se.sahlgrenska.sjukhus.person.employee.Accessibility;
 
 
@@ -56,10 +60,10 @@ public class AddItemPopUp extends HelperGUI {
     private int maxQuantity = 10;
 
 
-    public AddItemPopUp() {
+    public AddItemPopUp(Room room) {
         init(mainPanel, "Nytt redskap", new Dimension(350, 400), Accessibility.NONE);
+        hospital = Driver.getHospital();
 
-        setDefaultValues();
         SuggestionDropDownDecorator.decorate(searchItemTextField, new TextComponentSuggestionClient(this::getSuggestions));
 
         decreaseQuantBtn.addActionListener(new ActionListener() {
@@ -82,8 +86,12 @@ public class AddItemPopUp extends HelperGUI {
             public void actionPerformed(ActionEvent e) {
                 String userInput = searchItemTextField.getText();
 
+                if (orderedHospitalStoredItems == null) {
+                    System.out.println("NULL ORDERHOSPITALLIST");
+                    return;
+                }
+
                 if (userInput.isEmpty() || quantityTxtField.getText().isEmpty()) {
-                    System.out.println("Nothing was entered in search bar");
                     JOptionPane.showMessageDialog(null, "Fyll i båda sökfälten", "Error", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
@@ -98,13 +106,11 @@ public class AddItemPopUp extends HelperGUI {
                     maxQuantity = quantity;
 
                     if (validateQuantityInput()) {
-
-
-
+                        room.addItems(selectedItem,quantity);
                         JOptionPane.showMessageDialog(null, "Items name: " + selectedItem.getName() + " Max amount: " + maxQuantity + " Du valde: " + quantity, "Summary", JOptionPane.INFORMATION_MESSAGE);
                     }
 
-
+                    setVisible(false);
                 } else {
                     JOptionPane.showMessageDialog(null, "Angivna redskapet finns inte hos sjukhuset", "Error", JOptionPane.ERROR_MESSAGE);
                 }
@@ -119,6 +125,8 @@ public class AddItemPopUp extends HelperGUI {
                 setVisible(false);
             }
         });
+
+
     }
 
 
@@ -129,7 +137,6 @@ public class AddItemPopUp extends HelperGUI {
 
             if (isValidAmount(userInp)) {
                 quantity = userInp;
-                System.out.println("Yay, within range " + userInp);
                 isValid = true;
             } else {
                 JOptionPane.showMessageDialog(null, "Ogiltig kvantitet för det valda redskapet! Det finns totalt " + maxQuantity + "st tillgängliga", "Error", JOptionPane.ERROR_MESSAGE);
@@ -160,7 +167,7 @@ public class AddItemPopUp extends HelperGUI {
 
     private Item findSearchedItem(String itemName) {
 
-        HashMap<Item, Integer> storedItems = (HashMap) Driver.getHospital().getHospitalsStoredItems();
+        HashMap<Item, Integer> storedItems = (HashMap) hospital.getHospitalsStoredItems();
         for (Map.Entry<Item, Integer> hospitalsItems : storedItems.entrySet()) {
 
             if (hospitalsItems.getKey().getName().equalsIgnoreCase(itemName)) {
@@ -171,19 +178,15 @@ public class AddItemPopUp extends HelperGUI {
     }
 
 
-    private void setDefaultValues() {
-        hospital = Driver.getHospital();
-
-    }
-
-    private void convertStoredItemMapToStringMap(HashMap<Item, Integer> itemsMap) {
+    private void convertStoredItemMapToStringMap(Map<Item, Integer> itemsMap) {
 
         if (itemsMap == null || itemsMap.isEmpty()) {
+            System.out.println("ItemsMap to be converted is null/empty");
             return;
         }
 
         orderedHospitalStoredItems = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
-        HashMap<Item, Integer> hospitalItem = itemsMap;
+        HashMap<Item, Integer> hospitalItem = (HashMap) itemsMap;
 
         for (Map.Entry<Item, Integer> ent : hospitalItem.entrySet()) {
             System.out.println(ent);
@@ -198,6 +201,14 @@ public class AddItemPopUp extends HelperGUI {
         }
     }
 
+    public Item getSelectedItem() {
+        return selectedItem;
+    }
+
+    public int getSelectedItemQuantity() {
+        return quantity;
+    }
+
 
     private List<String> getSuggestions(String key) {
 
@@ -205,13 +216,12 @@ public class AddItemPopUp extends HelperGUI {
             System.out.println(key + " returned null or was empty");
         }
 
-        convertStoredItemMapToStringMap((HashMap) Driver.getHospital().getHospitalsStoredItems());
+        convertStoredItemMapToStringMap(hospital.getHospitalsStoredItems());
 
         if (orderedHospitalStoredItems != null && orderedHospitalStoredItems.containsKey(key)) {
             System.out.println(key + " existed in hospitalStorage och sjukhuset har " + orderedHospitalStoredItems.get(key).toString());
-        } else {
-            System.out.println(key + " DOES NOT exist in hospitalStorage");
         }
+
         List<String> itemStorageNames = new ArrayList<String>(orderedHospitalStoredItems.keySet());
 
         return itemStorageNames.stream().limit(10).collect(Collectors.toList());
