@@ -4,6 +4,7 @@ package se.sahlgrenska.gui.ordertest;
 import se.sahlgrenska.gui.util.HelperGUI;
 import se.sahlgrenska.gui.util.UtilGUI;
 import se.sahlgrenska.main.Driver;
+import se.sahlgrenska.sjukhus.item.Item;
 import se.sahlgrenska.sjukhus.person.employee.Accessibility;
 
 import javax.swing.*;
@@ -12,6 +13,7 @@ import javax.swing.event.AncestorListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Map;
 
 public class ItemsStatus extends HelperGUI {
     private JPanel HuvudPanel;
@@ -23,6 +25,9 @@ public class ItemsStatus extends HelperGUI {
     private JTable table;
     private JButton ButtonCancel;
     private JButton ButtonOk;
+    private JTextField textField1;
+
+    Map<Item, Integer> items;
 
 
     Ordertest Ordertest = new Ordertest();
@@ -100,6 +105,15 @@ public class ItemsStatus extends HelperGUI {
             }
         });
 
+        ButtonOk.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setVisible(false);
+                Driver.getMainMenu().setVisible(true);
+            }
+        });
+
+
     }
 
     public JButton getButtonOk() {
@@ -116,20 +130,26 @@ public class ItemsStatus extends HelperGUI {
 
         Color tableHeaderColour = new Color(199, 199, 199);
 
-        String[] columns = {"Item name", "Quantity", "Price", "OrderDate"};
+        String[] columns = {"Name", "Quantity", "Storage Status", "OrderDate", "DeliveryDate"};
         String[][] data = {
-                {"Defibrilator", "yes", "4031", "CSE"},
-                {"Mr", "yes", "4031", "CSE"},
-                {"Tony", "yes", "4031", "CSE"},
-                {"Phepe", "yes", "4031", "CSE"},
-                {"Williamxpxs", "no", "4325", "cdsaZcfe"},
-                {"Phepe", "yes", "4031", "CSE"},
-                {"Phepe", "yes", "4031", "CSE"},
-                {"Phepe", "yes", "4031", "CSE"},
-                {"Phepe", "yes", "4031", "CSE"},
-                {"Phepe", "yes", "4031", "CSE"},
-                {"Phepe", "yes", "4031", "CSE"},
-                {"Phepe", "yes", "4031", "CSE"},
+                {" ", " ", " ", " ", " "},
+                {" ", " ", " ", " ", " "},
+                {" ", " ", " ", " ", " "},
+                {" ", " ", " ", " ", " "},
+                {" ", " ", " ", " ", " "},
+                {" ", " ", " ", " ", " "},
+                {" ", " ", " ", " ", " "},
+                {" ", " ", " ", " ", " "},
+                {" ", " ", " ", " ", " "},
+                {" ", " ", " ", " ", " "},
+                {" ", " ", " ", " ", " "},
+                {" ", " ", " ", " ", " "},
+                {" ", " ", " ", " ", " "},
+                {" ", " ", " ", " ", " "},
+                {" ", " ", " ", " ", " "},
+
+
+
 
         };
         table = new JTable(data, columns);
@@ -138,6 +158,12 @@ public class ItemsStatus extends HelperGUI {
 
 
     }
+
+
+    private void getHospitalsStoredItems(){
+
+    }
+
 }
 
 
