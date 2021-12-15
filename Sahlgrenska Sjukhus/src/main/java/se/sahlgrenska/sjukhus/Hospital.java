@@ -33,7 +33,7 @@ public class Hospital {
        // fillArrayListTempUntilDatabaseConnection();
     }
 
-    public Hospital(String name, int maxCapacity, float balance, Address address, List<Ward> wards) {
+    public Hospital(String name, int maxCapacity, float balance, Map<Item, Integer> storage, Address address, List<Ward> wards) {
         this.name = name;
         this.maxCapacity = maxCapacity;
         this.balance = balance;

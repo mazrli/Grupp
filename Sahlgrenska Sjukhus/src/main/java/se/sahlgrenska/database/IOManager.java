@@ -14,14 +14,10 @@ import se.sahlgrenska.sjukhus.person.patient.Disease;
 import se.sahlgrenska.sjukhus.person.patient.Patient;
 
 import javax.management.Notification;
-import javax.swing.plaf.nimbus.State;
-import java.awt.desktop.SystemEventListener;
-import java.awt.print.Book;
 import java.io.*;
 import java.net.URISyntaxException;
 import java.sql.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.*;
 import java.util.Date;
 
@@ -396,7 +392,9 @@ public class IOManager {
     public Hospital loadHospitalData() {
 
         Hospital hospital = loadHospital();
+
         Set<Person> persons = getAllPersons();
+
         hospital.setPersons(persons);
 
         //Set<Journal> journals;
@@ -456,7 +454,11 @@ public class IOManager {
                     List<Ward> ward = getWards(id);
 
                     Address address = getAddress(resultSet);
-                    hospital = new Hospital(name, maxCapacity, balance, address, ward);
+                    Map<Item, Integer> storage = getStorage(id);
+
+                    hospital = new Hospital(name, maxCapacity, balance, storage, address, ward);
+
+                    System.out.println(storage.toString());
                 }
 
             } catch (SQLException e) {
@@ -518,13 +520,12 @@ public class IOManager {
         return rooms;
     }
 
-    private Map<Item, Integer> getItems(int room_id) {
+
+    private Map<Item, Integer> getItemsPRE(ResultSet resultSet) {
         Map<Item, Integer> items = new HashMap<>();
-        Statement statement = null;
+
         try {
-            statement = database.getConnection().createStatement();
-            ResultSet resultSet = statement.executeQuery(String.format("SELECT * FROM item i WHERE i.room_id = %s", room_id));
-            while(resultSet.next()) {
+            while (resultSet.next()) {
                 Item item = null;
 
                 ItemType type = ItemType.valueOf(resultSet.getString("type"));
@@ -536,7 +537,7 @@ public class IOManager {
                 boolean reusable = resultSet.getBoolean("reusable");
 
 
-                if(type == ItemType.MEDICINE) {
+                if (type == ItemType.MEDICINE) {
                     LocalDate d = new java.sql.Date(expirationDate.getTime()).toLocalDate();
                     item = new Medicine(name, description, price, d);
                 } else
@@ -549,6 +550,29 @@ public class IOManager {
         }
 
         return items;
+    }
+
+
+    private Map<Item, Integer> getItems(int room_id) {
+        try {
+            Statement statement = database.getConnection().createStatement();
+            ResultSet resultSet = statement.executeQuery(String.format("SELECT * FROM item i WHERE i.room_id = %s", room_id));
+            return getItemsPRE(resultSet);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private Map<Item, Integer> getStorage(int hospital_id) {
+        try {
+            Statement statement = database.getConnection().createStatement();
+            ResultSet resultSet = statement.executeQuery(String.format("SELECT * FROM item i WHERE i.hospital_id = %s", hospital_id));
+            return getItemsPRE(resultSet);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     private Map<Patient, List<Booking>> getBookings() {
@@ -586,5 +610,23 @@ public class IOManager {
             }
 
         return bookingMap;
+    }
+
+    public Patient getPatient(String personNumber) {
+        Patient patient = null;
+
+        if(database.isConnected()) {
+            try {
+                Statement statement = database.getConnection().createStatement();
+                ResultSet resultSet = callProcedure("getPatient", personNumber);
+                while(resultSet.next()) {
+                    patient = getPatientPre(resultSet);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return patient;
     }
 }

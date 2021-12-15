@@ -1,6 +1,7 @@
 package se.sahlgrenska.gui.LogIn;
 
 import se.sahlgrenska.database.IOManager;
+import se.sahlgrenska.gui.patient.PatientGUI;
 import se.sahlgrenska.gui.util.HelperGUI;
 import se.sahlgrenska.gui.util.UtilGUI;
 import se.sahlgrenska.gui.util.components.JTextFieldPlaceholder;
@@ -42,14 +43,17 @@ public class LoginPatientGUI extends HelperGUI {
 
         okButton.addActionListener(e -> {
 
-            String in = textField1.getText();
-            if(in.length() == 12) {
-                Patient patient = Driver.getHospital().getPatient(in);
+            String personNumber = textField1.getText();
+            if(personNumber.length() == 12) {
+                Patient patient = Driver.getIOManager().getPatient(personNumber);
 
                 if(patient != null) {
-                    System.out.println("Yoooo");
+
+                    Driver.initHospital(this);
+                    PatientGUI patientGUI = new PatientGUI(patient);
+
                 } else {
-                    UtilGUI.error(String.format("Vi hittade ingen registrerad patient\n med personnumret \"%s\"", in));
+                    UtilGUI.error(String.format("Vi hittade ingen registrerad patient\n med personnumret \"%s\"", personNumber));
                 }
             } else {
                 UtilGUI.error("Ange ett personnummer.");
