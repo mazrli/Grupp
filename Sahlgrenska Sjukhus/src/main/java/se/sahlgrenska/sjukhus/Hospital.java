@@ -44,7 +44,7 @@ public class Hospital {
 
     private void fillArrayListTempUntilDatabaseConnection() {
 
-        Item item1 = new Equipment("Defibrilator", "Starts hearts", 2500.5f, true);
+        Item item1 = new Equipment("Defibrillator", "Starts hearts", 2500.5f, true);
         Item item2 = new Equipment("MRI", "Scans body", 5000.0f, true);
         Item item3 = new Medicine("Panodil", "Pain relief", 15.0f, LocalDate.now());
         Item item4 = new Medicine("Alvedon", "Pain relief", 12.5f, LocalDate.now());

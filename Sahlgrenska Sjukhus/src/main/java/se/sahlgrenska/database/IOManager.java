@@ -399,6 +399,10 @@ public class IOManager {
         Set<Person> persons = getAllPersons();
         hospital.setPersons(persons);
 
+        for(Ward ward : hospital.getWards())
+            for (Room room : ward.getRooms())
+                System.out.println(room.getItems().toString());
+
         //Set<Journal> journals;
         //Set<Patient> patients = getPatients();
         Map<Patient, List<Booking>> bookings = getBookings();
@@ -503,11 +507,11 @@ public class IOManager {
 
                 while(resultSet.next()) {
 
-                    int item_id = resultSet.getInt("item_id");
+                    int item_id = resultSet.getInt("id");
                     int size = resultSet.getInt("size");
                     Map<Item, Integer> items = getItems(item_id);
                     Room room = new Room(Integer.toString(item_id), size, items);
-
+                    rooms.add(room);
                 }
 
             } catch (SQLException e) {
@@ -534,11 +538,12 @@ public class IOManager {
                 float price = resultSet.getFloat("price");
                 Date expirationDate = resultSet.getDate("expiration_date");
                 boolean reusable = resultSet.getBoolean("reusable");
-                LocalDate d = new java.sql.Date(expirationDate.getTime()).toLocalDate();
 
-                if(type == ItemType.MEDICINE)
+
+                if(type == ItemType.MEDICINE) {
+                    LocalDate d = new java.sql.Date(expirationDate.getTime()).toLocalDate();
                     item = new Medicine(name, description, price, d);
-                else
+                } else
                     item = new Equipment(name, description, price, reusable);
 
                 items.put(item, quantity);
