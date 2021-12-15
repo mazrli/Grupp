@@ -6,6 +6,7 @@ import se.sahlgrenska.main.Driver;
 import se.sahlgrenska.main.Util;
 import se.sahlgrenska.sjukhus.Booking;
 import se.sahlgrenska.sjukhus.Hospital;
+import se.sahlgrenska.sjukhus.Room;
 import se.sahlgrenska.sjukhus.Ward;
 import se.sahlgrenska.sjukhus.item.Item;
 import se.sahlgrenska.sjukhus.person.employee.Accessibility;
@@ -16,11 +17,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDateTime;
-import java.util.*;
 import java.util.List;
-
-
-import se.sahlgrenska.sjukhus.Room;
+import java.util.Map;
+import java.util.Set;
 
 public class BookingGUI extends HelperGUI {
 
@@ -130,9 +129,21 @@ public class BookingGUI extends HelperGUI {
         addItemsBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Add new item button was pressed!");
                 AddItemPopUp addItemPopUp = new AddItemPopUp();
                 addItemPopUp.setVisible(true);
+
+                Item newItem = addItemPopUp.getSelectedItem();
+                int newItemQuant = addItemPopUp.getSelectedItemQuantity();
+
+                if (newItem == null || newItemQuant <= 0) {
+                    System.out.println("Ingen item valdes/returnerades");
+                    return;
+                }
+                System.out.println(newItem+" quantity: "+newItemQuant+" to be added");
+
+
+
+
             }
         });
     }
@@ -208,7 +219,7 @@ public class BookingGUI extends HelperGUI {
                 Item item = itemsInRoom.getKey();
                 Integer itemQuantity = itemsInRoom.getValue();
 
-                System.out.println(item.getName() + " " + itemQuantity);
+             //   System.out.println(item.getName() + " " + itemQuantity);
                 tableModel.addRow(new Object[]{item, itemQuantity});
             }
             itemsTable.setModel(tableModel);
