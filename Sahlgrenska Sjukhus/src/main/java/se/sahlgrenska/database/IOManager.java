@@ -322,7 +322,7 @@ public class IOManager {
 
     public void remember(LoginDetails loginDetails) {
         try {
-            File file = new File(getClass().getResource("save.txt").toURI());
+            File file = new File(getClass().getClassLoader().getResource("save.txt").toURI());
 
             BufferedWriter writer = new BufferedWriter(new FileWriter(file));
 
@@ -335,6 +335,7 @@ public class IOManager {
 
         } catch (Exception e) {
             System.out.println("Fel med save.txt, kolla att den är kvar eller skapa ny (i resource mappen)");
+            e.printStackTrace();
         }
     }
 
@@ -343,7 +344,7 @@ public class IOManager {
         LoginDetails loginDetails = new LoginDetails("", "");
 
         try {
-            File file = new File(getClass().getResource("save.txt").toURI());
+            File file = new File(getClass().getClassLoader().getResource("save.txt").toURI());
             BufferedReader reader = new BufferedReader(new FileReader(file));
 
             String line = reader.readLine();
@@ -356,6 +357,7 @@ public class IOManager {
 
         } catch (Exception e) {
             System.out.println("Fel med save.txt, kolla att den är kvar eller skapa ny (i resource mappen)");
+            e.printStackTrace();
         }
 
         return loginDetails;
