@@ -2,10 +2,7 @@ package se.sahlgrenska.gui.LogIn;
 
 import se.sahlgrenska.gui.util.HelperGUI;
 import se.sahlgrenska.gui.util.UtilGUI;
-import se.sahlgrenska.gui.util.misc.SuggestionDropDownDecorator;
-import se.sahlgrenska.gui.util.misc.TextComponentSuggestionClient;
 import se.sahlgrenska.main.Driver;
-import se.sahlgrenska.sjukhus.person.Person;
 import se.sahlgrenska.sjukhus.person.employee.*;
 
 import javax.swing.*;
@@ -25,7 +22,7 @@ public class LogInGUI extends HelperGUI {
     private JPasswordField passwordField;
     private JPanel fieldPanel;
     private JCheckBox rememberMeCheckBox;
-    private JCheckBox visaLösenordCheckBox;
+    private JCheckBox showPasswordBox;
     private JLabel forgotPasswordJLabel;
     private JLabel patientLabel;
 
@@ -62,7 +59,7 @@ public class LogInGUI extends HelperGUI {
         setVisible(true);
 
 
-        visaLösenordCheckBox.addItemListener(e -> {
+        showPasswordBox.addItemListener(e -> {
             UtilGUI.toggleVisibility(passwordField);
         });
 

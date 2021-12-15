@@ -67,7 +67,7 @@ public class Ordertest extends HelperGUI  implements ActionListener{
 
     public Ordertest() {
 
-        SuggestionDropDownDecorator.decorate(SerachTerxtfield, new TextComponentSuggestionClient(this::getSuggestions));
+        //SuggestionDropDownDecorator.decorate(SerachTerxtfield, new TextComponentSuggestionClient(this::getSuggestions));
 
         init(panel, "Order", new Dimension(700, 700), Accessibility.RECEPTIONIST);
 
