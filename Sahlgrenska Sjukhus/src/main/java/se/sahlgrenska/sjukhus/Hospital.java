@@ -44,6 +44,13 @@ public class Hospital {
         this.id = id;
     }
 
+    public Hospital(String Namn, String Beskrivning, String Mängd, String Pris) {
+
+    }
+
+
+
+
 
     private void fillArrayListTempUntilDatabaseConnection() {
 

@@ -16,6 +16,8 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -115,10 +117,55 @@ public class BookingGUI extends HelperGUI {
                 }
             }
         });
-
+/*
         roomComboBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                emptyItemList();
+                if (isActiveWard) {
+                    selectedRoom = (Room) roomComboBox.getSelectedItem();
+                    fillRoomItems(selectedRoom);
+                }
+            }
+        });*/
+
+
+        addItemsBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AddItemPopUp addItemPopUp = new AddItemPopUp(selectedRoom, roomComboBox);
+                addItemPopUp.setVisible(true);
+
+
+                //      tableModel.fireTableDataChanged();
+                //    fillRoomItems(selectedRoom);
+                removeItemsBtn.setEnabled(true);
+             //   roomComboBox.set
+            }
+
+
+
+
+        });
+
+
+        removeItemsBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                //remove from Room and hospital add to hospital amount
+
+                for (Map.Entry<Item, Integer> hosStorage : hospital.getHospitalsStoredItems().entrySet()) {
+                    System.out.println(hosStorage);
+                }
+
+            }
+        });
+
+
+        roomComboBox.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
                 emptyItemList();
                 if (isActiveWard) {
                     selectedRoom = (Room) roomComboBox.getSelectedItem();
@@ -129,36 +176,7 @@ public class BookingGUI extends HelperGUI {
 
 
 
-
-
-
-        addItemsBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                AddItemPopUp addItemPopUp = new AddItemPopUp(selectedRoom);
-                addItemPopUp.setVisible(true);
-
-                //refresha sidan!
-
-                removeItemsBtn.setEnabled(true);
-            }
-        });
-
-
-        removeItemsBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                for (Map.Entry<Item, Integer> hosStorage : hospital.getHospitalsStoredItems().entrySet()) {
-                    System.out.println(hosStorage);
-                }
-
-            }
-        });
     }
-
-
-
 
 
     private boolean checkSelectedIndexIsFirstOption(JComboBox combo) {
@@ -176,8 +194,7 @@ public class BookingGUI extends HelperGUI {
         roomComboBox.setSelectedIndex(0);
         roomComboBox.setEnabled(false);
 
-
-        // removeItemsBtn.setEnabled(false);                                                         GÖR DENNA OKOMMENTERAD SENARE PHOEBS!
+        removeItemsBtn.setEnabled(false);
         addItemsBtn.setEnabled(false);
 
     }
