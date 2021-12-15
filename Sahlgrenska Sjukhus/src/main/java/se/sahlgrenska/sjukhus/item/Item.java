@@ -66,9 +66,13 @@ public abstract class Item implements Comparable<Item>{
         return Objects.hash(getName(), getDescription(), getPrice());
     }
 
+    public String[] toTable() {
+        return new String[]{name, "1", String.valueOf(price), description};
+    }
+
     @Override
     public String toString(){
-        return getName();
+        return name;
     }
 
 }
