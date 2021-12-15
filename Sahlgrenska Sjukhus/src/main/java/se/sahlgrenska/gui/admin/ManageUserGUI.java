@@ -98,11 +98,13 @@ public class ManageUserGUI extends HelperGUI {
         String passwordConfirm = UtilGUI.getPasswordString(repeatPasswordField);
         String personnummer = personNumField.getText();
 
-        Person person = user != null ? user : Driver.getIOManager().getPerson(personnummer);
+        boolean createNew = user == null;
+
+        Person person = createNew ? Driver.getIOManager().getPerson(personnummer) : user;
 
         if(person == null) {
             UtilGUI.error(String.format("En person med personnummer \"%s\" hittades inte.", personnummer));
-        } else if (user == null && !password.equals(passwordConfirm)) {
+        } else if (createNew && !password.equals(passwordConfirm)) {
             UtilGUI.error("Lösenorden matchar inte.");
         } else if (password.length() < 5 || password.length() > 20) {
             UtilGUI.error("Lösenordet måste vara mellan 5-20 tecken långt.");
@@ -111,8 +113,7 @@ public class ManageUserGUI extends HelperGUI {
         } else {
             LoginDetails loginDetails = new LoginDetails(username, password);
 
-            if(Driver.getIOManager().getEmployee(loginDetails) != null)  { //login already exists
-                if(user == null || !user.getLoginDetails().equals(loginDetails)) //fix
+            if(doesAccountExists(loginDetails) && createNew || !user.getLoginDetails().equals(loginDetails)) {
                     UtilGUI.error("Detta lösenordet eller användarnamnet är upptaget.");
             } else if (Driver.getIOManager().getEmployeeID(personnummer) != -1) {
                 UtilGUI.error("Den här användaren har redan ett konto.");
@@ -147,6 +148,10 @@ public class ManageUserGUI extends HelperGUI {
             }
         }
         return false;
+    }
+
+    private boolean doesAccountExists(LoginDetails loginDetails) {
+         return Driver.getIOManager().getEmployee(loginDetails) != null;
     }
 
     private boolean isFilled() {

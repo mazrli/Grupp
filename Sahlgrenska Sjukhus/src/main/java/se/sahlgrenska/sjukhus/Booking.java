@@ -32,5 +32,14 @@ public class Booking {
 
     }
 
-
+    @Override
+    public String toString() {
+        return "Booking{" +
+                "time=" + time +
+                ", patients=" + patients +
+                ", employees=" + employees +
+                ", ward=" + ward +
+                ", room=" + room +
+                '}';
+    }
 }

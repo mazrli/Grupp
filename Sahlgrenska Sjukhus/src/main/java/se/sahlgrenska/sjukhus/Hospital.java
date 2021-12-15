@@ -19,6 +19,7 @@ public class Hospital {
     private float balance;
     private Address address;
     private List<Ward> wards;
+    private int id;
 
     @Deprecated
     public Hospital(String name, int maxCapacity, Map<Item, Integer> items, Set<Person> persons, Archive archive, float balance, Address address) {
@@ -33,13 +34,14 @@ public class Hospital {
         fillArrayListTempUntilDatabaseConnection();
     }
 
-    public Hospital(String name, int maxCapacity, float balance, Map<Item, Integer> storage, Address address, List<Ward> wards) {
+    public Hospital(String name, int maxCapacity, float balance, Map<Item, Integer> storage, Address address, List<Ward> wards, int id) {
         this.name = name;
         this.maxCapacity = maxCapacity;
         this.balance = balance;
         this.address = address;
         this.wards = wards;
         this.items = storage;
+        this.id = id;
     }
 
 
@@ -127,5 +129,9 @@ public class Hospital {
 
     public Set<Person> getPersons() {
         return persons;
+    }
+
+    public int getId() {
+        return id;
     }
 }
