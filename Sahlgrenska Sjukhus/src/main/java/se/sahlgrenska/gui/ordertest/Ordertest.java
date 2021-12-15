@@ -150,7 +150,6 @@ public class Ordertest extends HelperGUI  implements ActionListener{
         buttonCancel.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new JWindow(new  ItemsStatus());
             }
         });
 
