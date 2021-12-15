@@ -71,6 +71,7 @@ public class BookingGUI extends HelperGUI {
     private JScrollPane itemScrollPanel;
     private LocalDateTime date;
 
+
     private Hospital hospital;
     private Booking booking;
     private int minWindowSize = 600;
@@ -147,7 +148,7 @@ public class BookingGUI extends HelperGUI {
 
     private void resetRoomMenu() {
         roomComboBox.removeAllItems();
-        roomComboBox.insertItemAt("Select room", 0);
+        roomComboBox.insertItemAt("Välj rum", 0);
         roomComboBox.setSelectedIndex(0);
         roomComboBox.setEnabled(false);
 
@@ -166,7 +167,7 @@ public class BookingGUI extends HelperGUI {
 
         removePartBtn.setEnabled(false);
 
-        wardComboBox.insertItemAt("Select ward", 0);
+        wardComboBox.insertItemAt("Välj avdelning", 0);
         fillComboBoxWards(hospital.getWards());
         wardComboBox.setSelectedIndex(0);
         resetRoomMenu();
