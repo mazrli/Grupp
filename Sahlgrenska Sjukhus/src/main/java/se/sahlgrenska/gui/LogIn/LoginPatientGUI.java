@@ -47,7 +47,9 @@ public class LoginPatientGUI extends HelperGUI {
                 Patient patient = Driver.getIOManager().getPatient(personNumber);
 
                 if(patient != null) {
+
                     System.out.println("WIP");
+
                 } else {
                     UtilGUI.error(String.format("Vi hittade ingen registrerad patient\n med personnumret \"%s\"", personNumber));
                 }
