@@ -110,14 +110,12 @@ public class AddItemPopUp extends HelperGUI {
                         int hospitalCurrentQuantity = hospital.getItemStorageQuantity(selectedItem);
 
                         boolean isEnoughItemsToWithdraw = (hospitalCurrentQuantity - quantity) >= 0;
-
                         if (isEnoughItemsToWithdraw) {
-                            System.out.println("Yay enough to withdraw item");
+
                             hospital.removeItem(selectedItem, quantity);
                             room.addItems(selectedItem, quantity);
+                           // JOptionPane.showMessageDialog(null, "Items name: " + selectedItem.getName() + " Max amount: " + maxQuantity + " Du valde: " + quantity, "Summary", JOptionPane.INFORMATION_MESSAGE);
                         }
-
-                        JOptionPane.showMessageDialog(null, "Items name: " + selectedItem.getName() + " Max amount: " + maxQuantity + " Du valde: " + quantity, "Summary", JOptionPane.INFORMATION_MESSAGE);
                     }
 
                     setVisible(false);
