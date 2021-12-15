@@ -8,6 +8,7 @@ import se.sahlgrenska.sjukhus.Hospital;
 import se.sahlgrenska.sjukhus.item.Item;
 
 
+import java.awt.print.Book;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -17,6 +18,7 @@ import java.util.TreeMap;
 import java.util.*;
 
 import se.sahlgrenska.sjukhus.item.Medicine;
+import se.sahlgrenska.sjukhus.Room;
 import se.sahlgrenska.sjukhus.person.employee.Accessibility;
 
 
@@ -58,7 +60,7 @@ public class AddItemPopUp extends HelperGUI {
     private int maxQuantity = 10;
 
 
-    public AddItemPopUp() {
+    public AddItemPopUp(Room room) {
         init(mainPanel, "Nytt redskap", new Dimension(350, 400), Accessibility.NONE);
         hospital = Driver.getHospital();
 
@@ -90,7 +92,6 @@ public class AddItemPopUp extends HelperGUI {
                 }
 
                 if (userInput.isEmpty() || quantityTxtField.getText().isEmpty()) {
-                    System.out.println("Nothing was entered in search bar");
                     JOptionPane.showMessageDialog(null, "Fyll i båda sökfälten", "Error", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
@@ -105,12 +106,11 @@ public class AddItemPopUp extends HelperGUI {
                     maxQuantity = quantity;
 
                     if (validateQuantityInput()) {
-
-
+                        room.addItems(selectedItem,quantity);
                         JOptionPane.showMessageDialog(null, "Items name: " + selectedItem.getName() + " Max amount: " + maxQuantity + " Du valde: " + quantity, "Summary", JOptionPane.INFORMATION_MESSAGE);
                     }
 
-
+                    setVisible(false);
                 } else {
                     JOptionPane.showMessageDialog(null, "Angivna redskapet finns inte hos sjukhuset", "Error", JOptionPane.ERROR_MESSAGE);
                 }
@@ -125,6 +125,8 @@ public class AddItemPopUp extends HelperGUI {
                 setVisible(false);
             }
         });
+
+
     }
 
 
@@ -135,7 +137,6 @@ public class AddItemPopUp extends HelperGUI {
 
             if (isValidAmount(userInp)) {
                 quantity = userInp;
-                System.out.println("Yay, within range " + userInp);
                 isValid = true;
             } else {
                 JOptionPane.showMessageDialog(null, "Ogiltig kvantitet för det valda redskapet! Det finns totalt " + maxQuantity + "st tillgängliga", "Error", JOptionPane.ERROR_MESSAGE);
@@ -177,7 +178,6 @@ public class AddItemPopUp extends HelperGUI {
     }
 
 
-
     private void convertStoredItemMapToStringMap(Map<Item, Integer> itemsMap) {
 
         if (itemsMap == null || itemsMap.isEmpty()) {
@@ -217,15 +217,12 @@ public class AddItemPopUp extends HelperGUI {
         }
 
         convertStoredItemMapToStringMap(hospital.getHospitalsStoredItems());
-        List<String> itemStorageNames;
+
         if (orderedHospitalStoredItems != null && orderedHospitalStoredItems.containsKey(key)) {
             System.out.println(key + " existed in hospitalStorage och sjukhuset har " + orderedHospitalStoredItems.get(key).toString());
-           // itemStorageNames = new ArrayList<String>(orderedHospitalStoredItems.keySet());
-
-        } else {
-            System.out.println(key + " DOES NOT exist in hospitalStorage");
         }
-        itemStorageNames = new ArrayList<String>(orderedHospitalStoredItems.keySet());
+
+        List<String> itemStorageNames = new ArrayList<String>(orderedHospitalStoredItems.keySet());
 
         return itemStorageNames.stream().limit(10).collect(Collectors.toList());
 

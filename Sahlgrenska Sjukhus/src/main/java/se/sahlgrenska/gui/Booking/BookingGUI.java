@@ -78,6 +78,7 @@ public class BookingGUI extends HelperGUI {
     private String[] columnNames = {"Redskap namn", "Kvantitet"};
     private DefaultTableModel tableModel;
     private boolean isActiveWard;
+    private Room selectedRoom;
 
     public BookingGUI() {
         init(mainPanel, "Skapa bokning", new Dimension(minWindowSize, maxWindowSize), Accessibility.RECEPTIONIST);
@@ -120,30 +121,30 @@ public class BookingGUI extends HelperGUI {
             public void actionPerformed(ActionEvent e) {
                 emptyItemList();
                 if (isActiveWard) {
-                    Room selectedRoom = (Room) roomComboBox.getSelectedItem();
+                    selectedRoom = (Room) roomComboBox.getSelectedItem();
                     fillRoomItems(selectedRoom);
                 }
             }
         });
 
+
+
+
+
+
         addItemsBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                AddItemPopUp addItemPopUp = new AddItemPopUp();
+                AddItemPopUp addItemPopUp = new AddItemPopUp(selectedRoom);
                 addItemPopUp.setVisible(true);
 
-                Item newItem = addItemPopUp.getSelectedItem();
-                int newItemQuant = addItemPopUp.getSelectedItemQuantity();
-
-                if (newItem == null || newItemQuant <= 0) {
-                    System.out.println("Ingen item valdes/returnerades");
-                    return;
-                }
-                System.out.println(newItem + " quantity: " + newItemQuant + " to be added");
+                //refresha sidan!
 
                 removeItemsBtn.setEnabled(true);
             }
         });
+
+
         removeItemsBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -155,6 +156,10 @@ public class BookingGUI extends HelperGUI {
             }
         });
     }
+
+
+
+
 
     private boolean checkSelectedIndexIsFirstOption(JComboBox combo) {
         return combo.getSelectedIndex() == 0;
@@ -203,7 +208,6 @@ public class BookingGUI extends HelperGUI {
 
     private void fillComboBoxRooms(Ward ward) {
         roomComboBox.removeAllItems();
-        System.out.println(ward + " was selected");
         Set<Room> wardRooms = ward.getRooms();
         if (wardRooms != null) {
             for (Room r : wardRooms) {
@@ -227,7 +231,7 @@ public class BookingGUI extends HelperGUI {
                 Item item = itemsInRoom.getKey();
                 Integer itemQuantity = itemsInRoom.getValue();
 
-                //   System.out.println(item.getName() + " " + itemQuantity);
+                System.out.println(item.getName() + " " + itemQuantity);
                 tableModel.addRow(new Object[]{item, itemQuantity});
             }
             itemsTable.setModel(tableModel);
