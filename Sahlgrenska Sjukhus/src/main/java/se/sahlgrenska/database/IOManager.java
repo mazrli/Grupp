@@ -399,10 +399,6 @@ public class IOManager {
         Set<Person> persons = getAllPersons();
         hospital.setPersons(persons);
 
-        for(Ward ward : hospital.getWards())
-            for (Room room : ward.getRooms())
-                System.out.println(room.getItems().toString());
-
         //Set<Journal> journals;
         //Set<Patient> patients = getPatients();
         Map<Patient, List<Booking>> bookings = getBookings();
