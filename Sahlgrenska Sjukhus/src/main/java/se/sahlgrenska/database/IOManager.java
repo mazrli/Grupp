@@ -331,7 +331,7 @@ public class IOManager {
 
             writer.close();
 
-        } catch (IOException | URISyntaxException e) {
+        } catch (Exception e) {
             UtilGUI.error("Fel med save.txt, kolla den är kvar eller lägg till den.");
             e.printStackTrace();
         }
@@ -353,7 +353,7 @@ public class IOManager {
                 loginDetails = new LoginDetails(stuff[0], stuff[1]);
             }
 
-        } catch (URISyntaxException | IOException e) {
+        } catch (Exception e) {
             UtilGUI.error("Fel med save.txt, kolla den är kvar eller lägg till den.");
             e.printStackTrace();
         }
