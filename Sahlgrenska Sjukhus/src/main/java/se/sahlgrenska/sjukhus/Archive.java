@@ -1,17 +1,24 @@
 package se.sahlgrenska.sjukhus;
 
 import se.sahlgrenska.sjukhus.person.employee.Employee;
+import se.sahlgrenska.sjukhus.person.patient.Disease;
 import se.sahlgrenska.sjukhus.person.patient.Patient;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class Archive {
     private Map<Patient, List<Journal>> journals;
     private Map<Patient, List<Booking>> bookings;
+    private Set<Disease> diseases;
 
     private Map<Employee, List<Patient>> patients;
+
+    public Set<Disease> getDiseases() {
+        return diseases;
+    }
 
     public Archive() {
         journals = new HashMap<>();
