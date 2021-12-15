@@ -6,18 +6,20 @@ import se.sahlgrenska.gui.util.misc.SuggestionDropDownDecorator;
 import se.sahlgrenska.gui.util.misc.TextComponentSuggestionClient;
 import se.sahlgrenska.main.Driver;
 import se.sahlgrenska.sjukhus.item.Item;
-import se.sahlgrenska.sjukhus.person.Person;
 import se.sahlgrenska.sjukhus.person.employee.Accessibility;
 
 import javax.swing.*;
 import javax.swing.event.AncestorEvent;
 import javax.swing.event.AncestorListener;
+import javax.swing.event.CaretEvent;
+import javax.swing.event.CaretListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 public class Ordertest extends HelperGUI  implements ActionListener{
@@ -48,20 +50,31 @@ public class Ordertest extends HelperGUI  implements ActionListener{
     private JTextField SerachTerxtfield;
     private JButton serachAdd;
 
+
+
+
     String[] columns = {"Namn", "Beskrivning", "Mängd", "Pris"};
     String[][] data = {
-            {"Defibrilator", "yes", "4031", "CSE"},
-            {"Mr", "yes", "4031", "CSE"},
-            {"Tony", "yes", "4031", "CSE"},
-            {"Phepe", "yes", "4031", "CSE"},
-            {"Williamxpxs", "no", "4325", "cdsaZcfe"},
-            {"Williamfps", "yes", "4031", "CSE"},
-            {"Phepe", "yes", "4031", "CSE"},
-            {"Phepe", "yes", "4031", "CSE"},
-            {"Willia", "yes", "4031", "CSE"},
-            {"Phepe", "yes", "4031", "CSE"},
-            {"Phepe", "yes", "4031", "CSE"},
-            {"Phepe", "yes", "4031", "CSE"},
+            {"", "", "", ""},
+            {"", "", "", ""},
+            {"", "", "", ""},
+            {"", "", "", ""},
+            {"", "", "", ""},
+            {"", "", "", ""},
+            {"", "", "", ""},
+            {"", "", "", ""},
+            {"", "", "", ""},
+            {"", "", "", ""},
+            {"", "", "", ""},
+            {"", "", "", ""},
+            {"", "", "", ""},
+            {"", "", "", ""},
+            {"", "", "", ""},
+            {"", "", "", ""},
+            {"", "", "", ""},
+            {"", "", "", ""},
+            {"", "", "", ""},
+
 
     };
 
@@ -76,6 +89,18 @@ public class Ordertest extends HelperGUI  implements ActionListener{
 
 
         setResizable(true);
+
+
+/*        addHospital( new Hospital(" Defibrillator", "Starts hearts ", " 2500.5f", " 500"));
+        addHospital( new Hospital(" MRI", "Starts hearts ", " 2500.5f", " 500"));
+        addHospital( new Hospital(" Panodil", "Starts hearts ", " 2500.5f", " 500"));
+        addHospital( new Hospital(" Alvedon", "Starts hearts ", " 2500.5f", " 500"));
+        addHospital( new Hospital(" Defibrillator", "Starts hearts ", " 2500.5f", " 500"));
+        addHospital( new Hospital(" Defibrillator", "Starts hearts ", " 2500.5f", " 500"));
+        addHospital( new Hospital(" Defibrillator", "Starts hearts ", " 2500.5f", " 500"));
+        addHospital( new Hospital(" Defibrillator", "Starts hearts ", " 2500.5f", " 500"));
+        addHospital( new Hospital(" Defibrillator", "Starts hearts ", " 2500.5f", " 500"));
+        addHospital( new Hospital(" Defibrillator", "Starts hearts ", " 2500.5f", " 500"));*/
 
 
 
@@ -137,12 +162,20 @@ public class Ordertest extends HelperGUI  implements ActionListener{
                 Driver.getMainMenu().setVisible(true);
             }
         });
+        buttonSendOrder.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setResizable(true);
+                setVisible(false);
+                Driver.getMainMenu().setVisible(true);
+            }
+        });
 
         buttonAdd.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                new ItemsStatus();
+
 
             }
         });
@@ -153,7 +186,7 @@ public class Ordertest extends HelperGUI  implements ActionListener{
             }
         });
 
-     
+
         table.addAncestorListener(new AncestorListener() {
             @Override
             public void ancestorAdded(AncestorEvent event) {
@@ -173,6 +206,18 @@ public class Ordertest extends HelperGUI  implements ActionListener{
         });
 
 
+        testUserName.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                super.componentResized(e);
+            }
+        });
+        SerachTerxtfield.addCaretListener(new CaretListener() {
+            @Override
+            public void caretUpdate(CaretEvent e) {
+
+            }
+        });
     }
 
     private List<String> getSuggestions(String key) {
@@ -204,12 +249,28 @@ public class Ordertest extends HelperGUI  implements ActionListener{
 
 
 
+
+
         UtilGUI.changeJTableHeaderColour(table, tableHeaderColour);
         getContentPane().setBackground(Color.lightGray);
 
 
 
     }
+
+
+/*        new Hospital(" Defibrillator", "Starts hearts ", " 2500.5f", " 500");
+        new Hospital("Panodil ", "Scans body ", " 2500.5f", " 12312");
+        new Hospital(" MRI", "Pain relief ", "2500.5f ", "323 ");
+        new Hospital(" Alvedon", " Pain relief", " 2500.5f", " 200");
+        new Hospital(" ", " ", " 2500.5f", " ");
+        new Hospital(" ", " ", " 2500.5f", " ");
+        new Hospital(" ", " ", " 2500.5f", " ");
+        new Hospital(" ", " ", " 2500.5f", " ");
+        new Hospital(" ", " ", " 2500.5f", " ");
+        new Hospital(" ", " ", " 2500.5f", " ");
+        */
+
 
 
     @Override
