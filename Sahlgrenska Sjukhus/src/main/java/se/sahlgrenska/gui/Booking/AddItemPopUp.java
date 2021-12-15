@@ -205,12 +205,10 @@ public class AddItemPopUp extends HelperGUI {
     }
 
     public Item getSelectedItem() {
-        selectedItem = new Medicine("Nässpray", "Bekämpar bihålleinflamation", 26.9f, LocalDate.now());
         return selectedItem;
     }
 
     public int getSelectedItemQuantity() {
-        quantity = 6;
         return quantity;
     }
 
