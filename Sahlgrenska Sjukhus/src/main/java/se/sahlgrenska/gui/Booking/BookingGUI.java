@@ -16,6 +16,8 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -115,7 +117,7 @@ public class BookingGUI extends HelperGUI {
                 }
             }
         });
-
+/*
         roomComboBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -125,20 +127,22 @@ public class BookingGUI extends HelperGUI {
                     fillRoomItems(selectedRoom);
                 }
             }
-        });
+        });*/
 
 
         addItemsBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                AddItemPopUp addItemPopUp = new AddItemPopUp(selectedRoom);
+                AddItemPopUp addItemPopUp = new AddItemPopUp(selectedRoom, roomComboBox);
                 addItemPopUp.setVisible(true);
 
 
-          //      tableModel.fireTableDataChanged();
-            //    fillRoomItems(selectedRoom);
+                //      tableModel.fireTableDataChanged();
+                //    fillRoomItems(selectedRoom);
                 removeItemsBtn.setEnabled(true);
+             //   roomComboBox.set
             }
+
 
 
 
@@ -157,6 +161,19 @@ public class BookingGUI extends HelperGUI {
 
             }
         });
+        roomComboBox.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                emptyItemList();
+                if (isActiveWard) {
+                    selectedRoom = (Room) roomComboBox.getSelectedItem();
+                    fillRoomItems(selectedRoom);
+                }
+            }
+        });
+
+
+
     }
 
 
