@@ -45,6 +45,7 @@ public class Ordertest extends HelperGUI  implements ActionListener{
     private JLabel userName;
     private JPanel searchPanel;
     private JTextField SerachTerxtfield;
+    private JButton serachAdd;
 
     String[] columns = {"Item name", "Quantity", "Price", "OrderDate"};
     String[][] data = {
