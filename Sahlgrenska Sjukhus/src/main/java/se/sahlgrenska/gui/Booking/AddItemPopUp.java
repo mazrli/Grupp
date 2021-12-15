@@ -1,10 +1,22 @@
 package se.sahlgrenska.gui.Booking;
 
 import se.sahlgrenska.gui.util.HelperGUI;
+import se.sahlgrenska.gui.util.misc.SuggestionDropDownDecorator;
+import se.sahlgrenska.gui.util.misc.TextComponentSuggestionClient;
 import se.sahlgrenska.main.Driver;
 import se.sahlgrenska.sjukhus.Hospital;
 import se.sahlgrenska.sjukhus.item.Item;
+
+
+import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.TreeMap;
+
+import java.util.*;
+
 import se.sahlgrenska.sjukhus.person.employee.Accessibility;
+
 
 import javax.swing.*;
 import java.awt.*;
@@ -40,38 +52,135 @@ public class AddItemPopUp extends HelperGUI {
 
     private Item selectedItem;
     private int quantity = 0;
-    private String userSearchedItem = "";
-    private TreeMap<String,Integer> orderedHospitalStoredItems;
+    private TreeMap<String, Integer> orderedHospitalStoredItems;
+    private int maxQuantity;
 
     public AddItemPopUp() {
         init(mainPanel, "Add new item", new Dimension(350, 400), Accessibility.NONE);
 
         setDefaultValues();
-
+        SuggestionDropDownDecorator.decorate(searchItemTextField, new TextComponentSuggestionClient(this::getSuggestions));
 
         searchItemTextField.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e) {
                 super.keyTyped(e);
-
-                userSearchedItem = searchItemTextField.getText().trim();
-
-                //       SuggestionDropDownDecorator.decorate(searchItemTextField, new TextComponentSuggestionClient(this::getSuggestions));
+                searchItemTextField.getText();
+                //Q: Behövs denna ens? Den gör ju typ inget...
             }
+
+
         });
 
         searchItemBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("searched word is: " + userSearchedItem);
-                getSuggestions();
+                String userInput = searchItemTextField.getText();
+
+                if (orderedHospitalStoredItems == null) {
+                    System.out.println("Nothing was entered in search bar");
+                    return;
+                }
+
+                System.out.println("searched word is: " + searchItemTextField.getText());
+                if (orderedHospitalStoredItems.containsKey(userInput)) {
+
+                    selectedItem = findSearchedItem(userInput);
+                    if (selectedItem == null) {
+                        return;
+                    }
+                    quantity = orderedHospitalStoredItems.get(userInput);
+                    maxQuantity = quantity;
+
+                    quantityTxtField.setText(maxQuantity + "");
+                    keepButtonsInRange(quantity);
+
+                    System.out.println("Items name: " + selectedItem.getName() + " max amount: " + maxQuantity);
+                }
+                return;
+            }
+        });
+
+
+        quantityTxtField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                super.keyTyped(e);
+                try {
+                    int userInp = Integer.parseInt(quantityTxtField.getText());
+
+                    keepButtonsInRange(userInp);
+                    if (isValidAmount(userInp)) {
+                        quantityTxtField.setText(userInp + "");
+                        System.out.println("Yay, within range " + userInp);
+                    }
+
+                } catch (NumberFormatException exception) {
+                    System.out.println(exception.toString() + " was not an integer number! Please enter integer numerical input!");
+
+                }
+
+            }
+
+
+        });
+
+
+        decreaseQuantBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                keepButtonsInRange(--quantity);
+            }
+        });
+        increaseQuantBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                keepButtonsInRange(++quantity);
+            }
+        });
+        addItemBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                if (selectedItem != null) {
+
+                }
             }
         });
     }
 
+
+    private boolean isValidAmount(int inp) {
+        return inp <= 0 && inp >= maxQuantity;
+    }
+
+    private void keepButtonsInRange(int quantity) {
+        increaseQuantBtn.setEnabled(true);
+        decreaseQuantBtn.setEnabled(true);
+        if (quantity >= maxQuantity) {
+            increaseQuantBtn.setEnabled(false);
+        } else if (quantity <= 0) {
+            decreaseQuantBtn.setEnabled(false);
+        }
+        quantityTxtField.setText(quantity + "");
+    }
+
+
+    private Item findSearchedItem(String itemName) {
+
+        HashMap<Item, Integer> storedItems = (HashMap) Driver.getHospital().getHospitalsStoredItems();
+        for (Map.Entry<Item, Integer> hospitalsItems : storedItems.entrySet()) {
+
+            if (hospitalsItems.getKey().getName().equalsIgnoreCase(itemName)) {
+                return hospitalsItems.getKey();
+            }
+        }
+        return null;
+    }
+
+
     private void setDefaultValues() {
         hospital = Driver.getHospital();
-
 
     }
 
@@ -92,47 +201,29 @@ public class AddItemPopUp extends HelperGUI {
     }
 
     private void printTreeMap(TreeMap<String, Integer> hospitalItemStorageOrg) {
-        System.out.println("TREEEEMAP");
         for (Map.Entry<String, Integer> ent : hospitalItemStorageOrg.entrySet()) {
             System.out.println(ent);
         }
     }
 
-    private void  getSuggestions() { //Set<String>
 
-        if (userSearchedItem == null || userSearchedItem.isEmpty()) {
-            System.out.println(userSearchedItem + " returned null or was empty");
+    private List<String> getSuggestions(String key) {
+
+        if (key == null || key.isEmpty()) {
+            System.out.println(key + " returned null or was empty");
         }
 
         convertStoredItemMapToStringMap((HashMap) Driver.getHospital().getHospitalsStoredItems());
 
-        if (orderedHospitalStoredItems != null && orderedHospitalStoredItems.containsKey(userSearchedItem)) {
-            System.out.println(userSearchedItem + " existed in hospitalStorage och sjukhuset har " + orderedHospitalStoredItems.get(userSearchedItem).toString());
+        if (orderedHospitalStoredItems != null && orderedHospitalStoredItems.containsKey(key)) {
+            System.out.println(key + " existed in hospitalStorage och sjukhuset har " + orderedHospitalStoredItems.get(key).toString());
         } else {
-            System.out.println(userSearchedItem + " DOES NOT exist in hospitalStorage");
+            System.out.println(key + " DOES NOT exist in hospitalStorage");
         }
-        Set<String> itemStorageNames = (TreeSet) orderedHospitalStoredItems.keySet();
+        List<String> itemStorageNames = new ArrayList<String>(orderedHospitalStoredItems.keySet());
 
-      // return itemStorageNames.stream().limit(10);
+        return itemStorageNames.stream().limit(10).collect(Collectors.toList());
 
     }
-
-/*
-    private void fillItemsStorageForHospital(){
-        Item item1 = new Equipment("Defibrilator", "Starts hearts", 2500.5f, true);
-        Item item2 = new Equipment("MRI", "Scans body", 5000.0f, true);
-        Item item5 = new Equipment("Stethoscope", "Heartbeats", 5000.0f, true);
-        Item item3 = new Medicine("Panodil", "Pain relief", 15.0f, LocalDate.now());
-        Item item4 = new Medicine("Alvedon", "Pain relief", 12.5f, LocalDate.now());
-        Item item6 = new Medicine("SARS-vaccine", "Covid", 105.2f, LocalDate.now());
-
-        items.put(item1,25);
-        items.put(item2,10);
-        items.put(item3,15);
-        items.put(item4,50);
-        items.put(item5,30);
-        items.put(item6,44);
-
-    }*/
 
 }
