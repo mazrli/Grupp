@@ -161,6 +161,8 @@ public class BookingGUI extends HelperGUI {
 
             }
         });
+
+
         roomComboBox.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
