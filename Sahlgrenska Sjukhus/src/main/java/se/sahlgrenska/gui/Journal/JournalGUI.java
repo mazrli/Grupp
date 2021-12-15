@@ -32,7 +32,7 @@ import java.util.List;
 public class JournalGUI extends HelperGUI {
 
 
-    private JPanel mainPanel;
+    private JPanel MainPanel;
     private JPanel TopPanel;
     private JLabel JournalTitleLabel;
     private JPanel LeftPanel;
@@ -80,7 +80,7 @@ public class JournalGUI extends HelperGUI {
 
     public JournalGUI() {
 
-        init(mainPanel, "Hantera journaler", Accessibility.DOCTOR);
+        init(MainPanel, "Hantera journaler", Accessibility.DOCTOR);
         setSize(550, 600);
         //setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE); <--- Använd inte setDefaultCloseOperation!
 
