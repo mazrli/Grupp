@@ -39,6 +39,7 @@ public class Hospital {
         this.balance = balance;
         this.address = address;
         this.wards = wards;
+        this.items = storage;
     }
 
 
