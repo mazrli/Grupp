@@ -45,6 +45,8 @@ public class Driver {
 
         hospital = ioManger.loadHospitalData();
 
+        System.out.println(hospital == null);
+
         //lägg till alla menyer i subMenus
         //subMenus.add(new ItemsStatus());
         subMenus.add(new Ordertest());

@@ -160,6 +160,7 @@ public class ManageUserGUI extends HelperGUI {
                 &&
                 accessibilityModelBox.getSelectedItem() != Accessibility.NONE;
     }
+
     private List<String> getSuggestions(String key) {
 
         if (key.isEmpty())
