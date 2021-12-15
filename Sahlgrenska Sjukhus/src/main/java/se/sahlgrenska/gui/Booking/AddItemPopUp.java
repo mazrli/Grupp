@@ -47,42 +47,47 @@ public class AddItemPopUp extends HelperGUI {
     private JPanel quantitySearchPanel;
     private JLabel enterQuantityLbl;
     private JPanel inputPanel;
+    private JLabel quantityOutLbl;
     private Hospital hospital;
 
-
     private Item selectedItem;
-    private int quantity = 0;
+    private int quantity = 1;
     private TreeMap<String, Integer> orderedHospitalStoredItems;
-    private int maxQuantity;
+    private int maxQuantity = 10;
+
 
     public AddItemPopUp() {
-        init(mainPanel, "Add new item", new Dimension(350, 400), Accessibility.NONE);
+        init(mainPanel, "Nytt redskap", new Dimension(350, 400), Accessibility.NONE);
 
         setDefaultValues();
         SuggestionDropDownDecorator.decorate(searchItemTextField, new TextComponentSuggestionClient(this::getSuggestions));
 
-        searchItemTextField.addKeyListener(new KeyAdapter() {
+        decreaseQuantBtn.addActionListener(new ActionListener() {
             @Override
-            public void keyTyped(KeyEvent e) {
-                super.keyTyped(e);
-                searchItemTextField.getText();
-                //Q: Behövs denna ens? Den gör ju typ inget...
+            public void actionPerformed(ActionEvent e) {
+                keepButtonsInRange(--quantity);
             }
-
-
         });
 
-        searchItemBtn.addActionListener(new ActionListener() {
+        increaseQuantBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                keepButtonsInRange(quantity++);
+            }
+        });
+
+
+        addItemBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String userInput = searchItemTextField.getText();
 
-                if (orderedHospitalStoredItems == null) {
+                if (userInput.isEmpty() || quantityTxtField.getText().isEmpty()) {
                     System.out.println("Nothing was entered in search bar");
+                    JOptionPane.showMessageDialog(null, "Fyll i båda sökfälten", "Error", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
 
-                System.out.println("searched word is: " + searchItemTextField.getText());
                 if (orderedHospitalStoredItems.containsKey(userInput)) {
 
                     selectedItem = findSearchedItem(userInput);
@@ -92,66 +97,53 @@ public class AddItemPopUp extends HelperGUI {
                     quantity = orderedHospitalStoredItems.get(userInput);
                     maxQuantity = quantity;
 
-                    quantityTxtField.setText(maxQuantity + "");
-                    keepButtonsInRange(quantity);
-
-                    System.out.println("Items name: " + selectedItem.getName() + " max amount: " + maxQuantity);
-                }
-                return;
-            }
-        });
+                    if (validateQuantityInput()) {
 
 
-        quantityTxtField.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-                super.keyTyped(e);
-                try {
-                    int userInp = Integer.parseInt(quantityTxtField.getText());
 
-                    keepButtonsInRange(userInp);
-                    if (isValidAmount(userInp)) {
-                        quantityTxtField.setText(userInp + "");
-                        System.out.println("Yay, within range " + userInp);
+                        JOptionPane.showMessageDialog(null, "Items name: " + selectedItem.getName() + " Max amount: " + maxQuantity + " Du valde: " + quantity, "Summary", JOptionPane.INFORMATION_MESSAGE);
                     }
 
-                } catch (NumberFormatException exception) {
-                    System.out.println(exception.toString() + " was not an integer number! Please enter integer numerical input!");
 
+                } else {
+                    JOptionPane.showMessageDialog(null, "Angivna redskapet finns inte hos sjukhuset", "Error", JOptionPane.ERROR_MESSAGE);
                 }
 
-            }
 
-
-        });
-
-
-        decreaseQuantBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                keepButtonsInRange(--quantity);
             }
         });
-        increaseQuantBtn.addActionListener(new ActionListener() {
+
+        cancelBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                keepButtonsInRange(++quantity);
-            }
-        });
-        addItemBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                if (selectedItem != null) {
-
-                }
+                setVisible(false);
             }
         });
     }
 
 
+    private boolean validateQuantityInput() {
+        boolean isValid = false;
+        try {
+            int userInp = Integer.parseInt(quantityTxtField.getText());
+
+            if (isValidAmount(userInp)) {
+                quantity = userInp;
+                System.out.println("Yay, within range " + userInp);
+                isValid = true;
+            } else {
+                JOptionPane.showMessageDialog(null, "Ogiltig kvantitet för det valda redskapet! Det finns totalt " + maxQuantity + "st tillgängliga", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+
+        } catch (NumberFormatException exception) {
+            System.out.println(exception.toString() + " was not an integer number! Please enter integer numerical input!");
+
+        }
+        return isValid;
+    }
+
     private boolean isValidAmount(int inp) {
-        return inp <= 0 && inp >= maxQuantity;
+        return inp > 0 && inp <= maxQuantity;
     }
 
     private void keepButtonsInRange(int quantity) {
@@ -159,7 +151,7 @@ public class AddItemPopUp extends HelperGUI {
         decreaseQuantBtn.setEnabled(true);
         if (quantity >= maxQuantity) {
             increaseQuantBtn.setEnabled(false);
-        } else if (quantity <= 0) {
+        } else if (quantity <= 1) {
             decreaseQuantBtn.setEnabled(false);
         }
         quantityTxtField.setText(quantity + "");
