@@ -45,7 +45,8 @@ public class Driver {
      */
     public static void initHospital(HelperGUI helperGUI) {
         helperGUI.getMainPanel().setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-        hospital = ioManger.loadHospitalData();
+        hospital = ioManger.loadHospital();
+        ioManger.loadHospitalData(hospital);
         helperGUI.getMainPanel().setCursor(Cursor.getDefaultCursor());
     }
 

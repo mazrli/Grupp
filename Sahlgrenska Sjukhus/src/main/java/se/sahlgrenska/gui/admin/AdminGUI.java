@@ -99,7 +99,7 @@ public class AdminGUI extends HelperGUI {
 
         init(mainPanel, "Hantera Användare", new Dimension(550, 650), Accessibility.ADMIN);
 
-        nyAnvändareButton.addActionListener(e -> {
+        editUserButton.addActionListener(e -> {
             ManageUserGUI manageUserGUI = new ManageUserGUI("Ny användare");
         });
 
@@ -107,7 +107,7 @@ public class AdminGUI extends HelperGUI {
             UtilGUI.toggleVisibility(passwordField);
         });
 
-        editUserButton.addActionListener(e -> {
+        nyAnvändareButton.addActionListener(e -> {
             if(selectedUser != null) {
                 ManageUserGUI manageUserGUI = new ManageUserGUI(selectedUser);
             } else {
