@@ -343,6 +343,7 @@ public class IOManager {
 
         try {
             File file = new File(getClass().getResource("/save.txt").toURI());
+
             BufferedReader reader = new BufferedReader(new FileReader(file));
 
             String line = reader.readLine();
@@ -354,7 +355,7 @@ public class IOManager {
             }
 
         } catch (Exception e) {
-            UtilGUI.error("Fel med save.txt, kolla den är kvar eller lägg till den.");
+            UtilGUI.error("Fel med save.txt, kolla den är kvar eller lägg till den.2");
             e.printStackTrace();
         }
 
