@@ -112,7 +112,7 @@
                   </component>
                 </children>
               </grid>
-              <component id="9913b" class="javax.swing.JCheckBox" binding="showPasswordBox">
+              <component id="9913b" class="javax.swing.JCheckBox" binding="visaLösenordCheckBox">
                 <constraints>
                   <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>

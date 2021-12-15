@@ -22,7 +22,7 @@ public class LogInGUI extends HelperGUI {
     private JPasswordField passwordField;
     private JPanel fieldPanel;
     private JCheckBox rememberMeCheckBox;
-    private JCheckBox showPasswordBox;
+    private JCheckBox visaLösenordCheckBox;
     private JLabel forgotPasswordJLabel;
     private JLabel patientLabel;
 
@@ -59,7 +59,7 @@ public class LogInGUI extends HelperGUI {
         setVisible(true);
 
 
-        showPasswordBox.addItemListener(e -> {
+        visaLösenordCheckBox.addItemListener(e -> {
             UtilGUI.toggleVisibility(passwordField);
         });
 
