@@ -39,12 +39,21 @@ public class Driver {
     }
 
 
+    /*
+        Referens till main panelen för att visa loading-mus-pilen på den.
+        (då det tar en stund att hämta från databasen)
+     */
+    public static void initHospital(HelperGUI helperGUI) {
+        helperGUI.getMainPanel().setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+        hospital = ioManger.loadHospitalData();
+        helperGUI.getMainPanel().setCursor(Cursor.getDefaultCursor());
+    }
+
     public static void setup(Employee employee) {
-        logInGUI.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
         currentUser = employee;
         Driver.getIOManager().query(String.format("INSERT INTO online VALUES(%s) ON DUPLICATE KEY UPDATE employee_id = employee_id;", currentUser.getId()));
 
-        hospital = ioManger.loadHospitalData();
+        initHospital(logInGUI);
 
         //lägg till alla menyer i subMenus
         //subMenus.add(new ItemsStatus());
@@ -55,7 +64,6 @@ public class Driver {
         subMenus.add(adminGUI);
 
         logInGUI.setVisible(false);
-        logInGUI.setCursor(Cursor.getDefaultCursor());
         mainMenu = new MenuGUI(employee);
     }
 
@@ -68,8 +76,6 @@ public class Driver {
     }
 
     private static void setupOS() {
-        //todo: set up stuff
-        //icon och look & feel
         if(Util.getOS().contains("windows")) { //inställningar för windows os
             try {
                 UIManager.setLookAndFeel(UtilGUI.windowsLook);

@@ -20,7 +20,7 @@ public class JTextFieldPlaceholder extends JTextField {
             return;
 
         int length = getText().length();
-        String holder = "_".repeat(length) + placeholder.substring(length);
+        String holder = getText().substring(0, length) + placeholder.substring(length);
 
         final Graphics2D g = (Graphics2D) pG;
 
