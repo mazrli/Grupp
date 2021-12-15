@@ -661,7 +661,7 @@ public class IOManager {
                         employeeList.add(emp);
 
 
-                        Booking booking = new Booking(time, patientsList, employeeList, ward, room);
+                        Booking booking = new Booking(time, patientsList, employeeList, ward, room, "");
                         System.out.println(booking.toString());
 
                         bookings.add(booking);
@@ -710,5 +710,8 @@ public class IOManager {
         }
 
         return patient;
+    }
+
+    public void saveBooking(Booking booking) {
     }
 }

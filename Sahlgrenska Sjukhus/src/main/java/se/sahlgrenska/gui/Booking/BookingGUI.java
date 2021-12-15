@@ -2,6 +2,8 @@ package se.sahlgrenska.gui.Booking;
 
 import se.sahlgrenska.gui.util.HelperGUI;
 import se.sahlgrenska.gui.util.UtilGUI;
+import se.sahlgrenska.gui.util.misc.SuggestionDropDownDecorator;
+import se.sahlgrenska.gui.util.misc.TextComponentSuggestionClient;
 import se.sahlgrenska.main.Driver;
 import se.sahlgrenska.main.Util;
 import se.sahlgrenska.sjukhus.Booking;
@@ -9,7 +11,10 @@ import se.sahlgrenska.sjukhus.Hospital;
 import se.sahlgrenska.sjukhus.Room;
 import se.sahlgrenska.sjukhus.Ward;
 import se.sahlgrenska.sjukhus.item.Item;
+import se.sahlgrenska.sjukhus.person.Person;
 import se.sahlgrenska.sjukhus.person.employee.Accessibility;
+import se.sahlgrenska.sjukhus.person.employee.Employee;
+import se.sahlgrenska.sjukhus.person.patient.Patient;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -17,9 +22,11 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class BookingGUI extends HelperGUI {
 
@@ -68,6 +75,8 @@ public class BookingGUI extends HelperGUI {
     private JButton removeItemsBtn;
     private JPanel titlePanel;
     private JScrollPane itemScrollPanel;
+    private JTextField employeeTextField;
+    private JComboBox dateBox;
     private LocalDateTime date;
 
 
@@ -80,14 +89,45 @@ public class BookingGUI extends HelperGUI {
     private boolean isActiveWard;
     private Room selectedRoom;
 
+
+    private Employee currentUser;
+    private Set<Employee> employees;
+
+
+    DefaultListModel employeeListModel = new DefaultListModel();
+    DefaultComboBoxModel timeBoxModel = new DefaultComboBoxModel();
+    DefaultComboBoxModel dateBoxModel = new DefaultComboBoxModel();
+
     public BookingGUI() {
         init(mainPanel, "Skapa bokning", new Dimension(minWindowSize, maxWindowSize), Accessibility.RECEPTIONIST);
 
+
+        currentUser = Driver.getCurrentUser();
+        userOutLbl.setText("Användare: " + currentUser.getFullName());
+        employees = Driver.getIOManager().getAllEmployees(currentUser.getLoginDetails());
+
+        SuggestionDropDownDecorator.decorate(patPersNrTxtField, new TextComponentSuggestionClient(this::getSuggestions));
+        SuggestionDropDownDecorator.decorate(employeeTextField, new TextComponentSuggestionClient(this::getEmployeeSuggestions));
+
+        participationList.setModel(employeeListModel);
+        dateBox.setModel(dateBoxModel);
+
         defaultBookingSetUp();
+
+
+        for(int hours  = 12; hours > 0; hours--)
+            timeBoxModel.addElement(hours + ":00" );
+
+
+        for(int i = 30; i > 16; i--)
+            dateBoxModel.addElement("2021-12-" + i);
+
+        bookingDurationComboBox.setModel(timeBoxModel);
 
         cancelBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                resetRoomMenu();
                 setVisible(false);
                 Driver.getMainMenu().setVisible(true);
             }
@@ -127,11 +167,6 @@ public class BookingGUI extends HelperGUI {
             }
         });
 
-
-
-
-
-
         addItemsBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -155,10 +190,84 @@ public class BookingGUI extends HelperGUI {
 
             }
         });
+        createBtn.addActionListener(e -> {
+            List<Employee> employees = new ArrayList<>();
+            List<Patient> patients = new ArrayList<>();
+
+            Patient patient = Driver.getIOManager().getPatient(patPersNrTxtField.getText());
+            LocalDateTime time = Util.parseDate(bookingDateTxtField.getText());
+
+            String note = noteTxtArea.getText();
+
+            if(patient == null) {
+                UtilGUI.error("Det finns ingen med detta personnumret.");
+            }
+
+            patients.add(patient);
+
+            Ward ward = (Ward) wardComboBox.getSelectedItem();
+            Room room = (Room) roomComboBox.getSelectedItem();
+
+            Booking booking = new Booking(time, patients, employees, ward, room, note);
+
+            System.out.println("Created booking!");
+            System.out.println(booking.toString());
+
+            Driver.getIOManager().saveBooking(booking);
+        });
+
+        addPartBtn.addActionListener(e -> {
+            employeeListModel.addElement(employeeTextField.getText());
+            employeeTextField.setText("");
+        });
+
+        removePartBtn.addActionListener(e -> {
+            employeeListModel.removeElement(participationList.getSelectedValue());
+        });
     }
 
+    private List<String> getEmployeeSuggestions(String key) {
+        if(key.isEmpty())
+            return null;
+
+        List<String> output = new ArrayList<>();
+        final String input = key.toUpperCase();
+
+        for(Person person : employees)
+            if(person.getFullName().toUpperCase().startsWith(input)
+                    || person.getFirstName().toUpperCase().startsWith(input)
+                    || person.getLastName().toUpperCase().startsWith(input)
+                    || person.getPersonNumber().startsWith(input)
+            ) {
+                output.add(person.toString());
+            }
 
 
+        return output.stream().limit(20).collect(Collectors.toList());
+    }
+
+    private List<String> getSuggestions(String key) {
+
+        if(key.isEmpty())
+            return null;
+
+        List<String> output = new ArrayList<>();
+        final String input = key.toUpperCase();
+
+        Set<Person> persons = Driver.getHospital().getPersons();
+
+        for(Person person : persons)
+            if(person.getFullName().toUpperCase().startsWith(input)
+                    || person.getFirstName().toUpperCase().startsWith(input)
+                    || person.getLastName().toUpperCase().startsWith(input)
+                    || person.getPersonNumber().startsWith(input)
+            ) {
+                output.add(person.toString());
+            }
+
+
+        return output.stream().limit(20).collect(Collectors.toList());
+    }
 
 
     private boolean checkSelectedIndexIsFirstOption(JComboBox combo) {
@@ -175,6 +284,11 @@ public class BookingGUI extends HelperGUI {
         roomComboBox.insertItemAt("Välj rum", 0);
         roomComboBox.setSelectedIndex(0);
         roomComboBox.setEnabled(false);
+        participationList.clearSelection();
+
+        patPersNrTxtField.setText("");
+        employeeListModel.clear();
+
 
 
         // removeItemsBtn.setEnabled(false);                                                         GÖR DENNA OKOMMENTERAD SENARE PHOEBS!
@@ -189,7 +303,7 @@ public class BookingGUI extends HelperGUI {
         itemsTable.setShowGrid(true);
 
 
-        removePartBtn.setEnabled(false);
+        removePartBtn.setEnabled(true); //ändrade till true.
 
         wardComboBox.insertItemAt("Välj avdelning", 0);
         fillComboBoxWards(hospital.getWards());
