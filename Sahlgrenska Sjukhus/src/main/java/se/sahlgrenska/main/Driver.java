@@ -34,9 +34,6 @@ public class Driver {
 
     public static void main(String[] args) {
 
-        System.out.println("Ta gärna bort \"false\" printen om ni hittar :)");
-
-
         setupOS();
         logInGUI = new LogInGUI();
     }
@@ -48,8 +45,6 @@ public class Driver {
         Driver.getIOManager().query(String.format("INSERT INTO online VALUES(%s) ON DUPLICATE KEY UPDATE employee_id = employee_id;", currentUser.getId()));
 
         hospital = ioManger.loadHospitalData();
-
-        System.out.println(hospital == null);
 
         //lägg till alla menyer i subMenus
         //subMenus.add(new ItemsStatus());

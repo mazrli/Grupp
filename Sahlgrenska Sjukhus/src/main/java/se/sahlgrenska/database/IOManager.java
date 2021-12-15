@@ -587,4 +587,22 @@ public class IOManager {
 
         return bookingMap;
     }
+
+    public Patient getPatient(String personNumber) {
+        Patient patient = null;
+
+        if(database.isConnected()) {
+            try {
+                Statement statement = database.getConnection().createStatement();
+                ResultSet resultSet = callProcedure("getPatient", personNumber);
+                while(resultSet.next()) {
+                    patient = getPatientPre(resultSet);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return patient;
+    }
 }
