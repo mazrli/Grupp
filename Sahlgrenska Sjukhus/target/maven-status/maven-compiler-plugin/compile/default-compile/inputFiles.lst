@@ -29,7 +29,6 @@ C:\Users\willi\code\Grupparbete\Sahlgrenska Sjukhus\src\main\java\se\sahlgrenska
 C:\Users\willi\code\Grupparbete\Sahlgrenska Sjukhus\src\main\java\se\sahlgrenska\sjukhus\person\employee\Receptionist.java
 C:\Users\willi\code\Grupparbete\Sahlgrenska Sjukhus\src\main\java\se\sahlgrenska\gui\notification\NotificationGUI.java
 C:\Users\willi\code\Grupparbete\Sahlgrenska Sjukhus\src\main\java\se\sahlgrenska\sjukhus\Room.java
-C:\Users\willi\code\Grupparbete\Sahlgrenska Sjukhus\src\main\java\se\sahlgrenska\gui\util\misc\SuggestionExampleMain.java
 C:\Users\willi\code\Grupparbete\Sahlgrenska Sjukhus\src\main\java\se\sahlgrenska\sjukhus\person\patient\Symptom.java
 C:\Users\willi\code\Grupparbete\Sahlgrenska Sjukhus\src\main\java\se\sahlgrenska\sjukhus\Booking.java
 C:\Users\willi\code\Grupparbete\Sahlgrenska Sjukhus\src\main\java\se\sahlgrenska\sjukhus\Journal.java
@@ -41,6 +40,7 @@ C:\Users\willi\code\Grupparbete\Sahlgrenska Sjukhus\src\main\java\se\sahlgrenska
 C:\Users\willi\code\Grupparbete\Sahlgrenska Sjukhus\src\main\java\se\sahlgrenska\gui\util\misc\SuggestionClient.java
 C:\Users\willi\code\Grupparbete\Sahlgrenska Sjukhus\src\main\java\se\sahlgrenska\gui\util\misc\TextComponentWordSuggestionClient.java
 C:\Users\willi\code\Grupparbete\Sahlgrenska Sjukhus\src\main\java\se\sahlgrenska\main\Util.java
+C:\Users\willi\code\Grupparbete\Sahlgrenska Sjukhus\src\main\java\se\sahlgrenska\sjukhus\person\Order.java
 C:\Users\willi\code\Grupparbete\Sahlgrenska Sjukhus\src\main\java\se\sahlgrenska\gui\admin\ManageUserGUI.java
 C:\Users\willi\code\Grupparbete\Sahlgrenska Sjukhus\src\main\java\se\sahlgrenska\database\IOManager.java
 C:\Users\willi\code\Grupparbete\Sahlgrenska Sjukhus\src\main\java\se\sahlgrenska\sjukhus\misc\Notification.java
