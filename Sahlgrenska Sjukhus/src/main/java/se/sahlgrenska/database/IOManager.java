@@ -16,6 +16,7 @@ import se.sahlgrenska.sjukhus.person.patient.Patient;
 import javax.management.Notification;
 import java.io.*;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.*;
@@ -321,7 +322,8 @@ public class IOManager {
 
     public void remember(LoginDetails loginDetails) {
         try {
-            File file = new File(getClass().getResource("/save.txt").toURI());
+            File file = new File(getClass().getResource("save.txt").toURI());
+
             BufferedWriter writer = new BufferedWriter(new FileWriter(file));
 
             if(loginDetails != null)
@@ -332,18 +334,16 @@ public class IOManager {
             writer.close();
 
         } catch (Exception e) {
-            UtilGUI.error("Fel med save.txt, kolla den är kvar eller lägg till den.");
-            e.printStackTrace();
+            System.out.println("Fel med save.txt, kolla att den är kvar eller skapa ny (i resource mappen)");
         }
     }
 
 
     public LoginDetails getRemember() {
-        LoginDetails loginDetails = null;
+        LoginDetails loginDetails = new LoginDetails("", "");
 
         try {
-            File file = new File(getClass().getResource("/save.txt").toURI());
-
+            File file = new File(getClass().getResource("save.txt").toURI());
             BufferedReader reader = new BufferedReader(new FileReader(file));
 
             String line = reader.readLine();
@@ -355,8 +355,7 @@ public class IOManager {
             }
 
         } catch (Exception e) {
-            UtilGUI.error("Fel med save.txt, kolla den är kvar eller lägg till den.2");
-            e.printStackTrace();
+            System.out.println("Fel med save.txt, kolla att den är kvar eller skapa ny (i resource mappen)");
         }
 
         return loginDetails;
@@ -369,6 +368,11 @@ public class IOManager {
     public void deleteUser(String id) {
         query(String.format("DELETE FROM employee WHERE id = %s", id));
         query(String.format("DELETE FROM login_details WHERE employee_id = %s", id));
+    }
+
+    public static File getFileFromResource(String filePath) {
+        ClassLoader classloader = Thread.currentThread().getContextClassLoader();
+        return new File(Objects.requireNonNull(classloader.getResource(filePath)).getFile());
     }
 
     public Set<Patient> getPatients() {
