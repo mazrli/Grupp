@@ -42,7 +42,7 @@ public class ManageUserGUI extends HelperGUI {
     private JButton confirmButton;
     private JButton cancelButton;
 
-    ComboBoxModel accessibilityModelBox = new DefaultComboBoxModel(Accessibility.values());
+    ComboBoxModel accessibilityModelBox = new DefaultComboBoxModel(Accessibility.getEmployeeRoles());
 
     private Employee user = null;
 
@@ -160,6 +160,7 @@ public class ManageUserGUI extends HelperGUI {
                 &&
                 accessibilityModelBox.getSelectedItem() != Accessibility.NONE;
     }
+
     private List<String> getSuggestions(String key) {
 
         if (key.isEmpty())
