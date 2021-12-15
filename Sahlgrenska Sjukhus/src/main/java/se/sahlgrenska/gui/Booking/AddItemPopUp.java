@@ -60,8 +60,8 @@ public class AddItemPopUp extends HelperGUI {
 
     public AddItemPopUp() {
         init(mainPanel, "Nytt redskap", new Dimension(350, 400), Accessibility.NONE);
+        hospital = Driver.getHospital();
 
-        setDefaultValues();
         SuggestionDropDownDecorator.decorate(searchItemTextField, new TextComponentSuggestionClient(this::getSuggestions));
 
         decreaseQuantBtn.addActionListener(new ActionListener() {
@@ -166,7 +166,7 @@ public class AddItemPopUp extends HelperGUI {
 
     private Item findSearchedItem(String itemName) {
 
-        HashMap<Item, Integer> storedItems = (HashMap) Driver.getHospital().getHospitalsStoredItems();
+        HashMap<Item, Integer> storedItems = (HashMap) hospital.getHospitalsStoredItems();
         for (Map.Entry<Item, Integer> hospitalsItems : storedItems.entrySet()) {
 
             if (hospitalsItems.getKey().getName().equalsIgnoreCase(itemName)) {
@@ -177,15 +177,12 @@ public class AddItemPopUp extends HelperGUI {
     }
 
 
-    private void setDefaultValues() {
-        hospital = Driver.getHospital();
 
-    }
-
-    private TreeMap<String, Integer> convertStoredItemMapToStringMap(Map<Item, Integer> itemsMap) {
+    private void convertStoredItemMapToStringMap(Map<Item, Integer> itemsMap) {
 
         if (itemsMap == null || itemsMap.isEmpty()) {
-            return null;
+            System.out.println("ItemsMap to be converted is null/empty");
+            return;
         }
 
         orderedHospitalStoredItems = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
@@ -195,7 +192,7 @@ public class AddItemPopUp extends HelperGUI {
             System.out.println(ent);
             orderedHospitalStoredItems.put(ent.getKey().toString(), ent.getValue());
         }
-        return orderedHospitalStoredItems;
+
     }
 
     private void printTreeMap(TreeMap<String, Integer> hospitalItemStorageOrg) {
@@ -219,16 +216,16 @@ public class AddItemPopUp extends HelperGUI {
             System.out.println(key + " returned null or was empty");
         }
 
-        orderedHospitalStoredItems = convertStoredItemMapToStringMap(Driver.getHospital().getHospitalsStoredItems());
+        convertStoredItemMapToStringMap(hospital.getHospitalsStoredItems());
         List<String> itemStorageNames;
         if (orderedHospitalStoredItems != null && orderedHospitalStoredItems.containsKey(key)) {
             System.out.println(key + " existed in hospitalStorage och sjukhuset har " + orderedHospitalStoredItems.get(key).toString());
-            itemStorageNames = new ArrayList<String>(orderedHospitalStoredItems.keySet());
+           // itemStorageNames = new ArrayList<String>(orderedHospitalStoredItems.keySet());
 
         } else {
             System.out.println(key + " DOES NOT exist in hospitalStorage");
         }
-        itemStorageNames = new ArrayList<String>();
+        itemStorageNames = new ArrayList<String>(orderedHospitalStoredItems.keySet());
 
         return itemStorageNames.stream().limit(10).collect(Collectors.toList());
 

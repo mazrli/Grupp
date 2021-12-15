@@ -139,10 +139,18 @@ public class BookingGUI extends HelperGUI {
                     System.out.println("Ingen item valdes/returnerades");
                     return;
                 }
-                System.out.println(newItem+" quantity: "+newItemQuant+" to be added");
+                System.out.println(newItem + " quantity: " + newItemQuant + " to be added");
 
+                removeItemsBtn.setEnabled(true);
+            }
+        });
+        removeItemsBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
 
-
+                for (Map.Entry<Item, Integer> hosStorage : hospital.getHospitalsStoredItems().entrySet()) {
+                    System.out.println(hosStorage);
+                }
 
             }
         });
@@ -164,7 +172,7 @@ public class BookingGUI extends HelperGUI {
         roomComboBox.setEnabled(false);
 
 
-        removeItemsBtn.setEnabled(false);
+        // removeItemsBtn.setEnabled(false);                                                         GÖR DENNA OKOMMENTERAD SENARE PHOEBS!
         addItemsBtn.setEnabled(false);
 
     }
@@ -219,7 +227,7 @@ public class BookingGUI extends HelperGUI {
                 Item item = itemsInRoom.getKey();
                 Integer itemQuantity = itemsInRoom.getValue();
 
-             //   System.out.println(item.getName() + " " + itemQuantity);
+                //   System.out.println(item.getName() + " " + itemQuantity);
                 tableModel.addRow(new Object[]{item, itemQuantity});
             }
             itemsTable.setModel(tableModel);
