@@ -398,7 +398,7 @@ public class IOManager {
         Hospital hospital = loadHospital();
         Set<Person> persons = getAllPersons();
         hospital.setPersons(persons);
-        
+
         //Set<Journal> journals;
         //Set<Patient> patients = getPatients();
         Map<Patient, List<Booking>> bookings = getBookings();
