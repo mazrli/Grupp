@@ -120,13 +120,13 @@ public class Hospital {
         if (items.containsKey(item)) {
             int maxQuantity = items.get(item);
             int availableQuantity = maxQuantity - quantity;
+
             if (availableQuantity > 0) {
                 items.put(item, availableQuantity);
                 maxQuantity = availableQuantity;
             } else {
                 items.remove(item);
             }
-            System.out.println("removing item: " + item + " reducing with" + quantity + " NOW there are only " + availableQuantity + " available");
         }
 
     }
