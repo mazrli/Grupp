@@ -128,26 +128,28 @@ public class BookingGUI extends HelperGUI {
         });
 
 
-
-
-
-
         addItemsBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 AddItemPopUp addItemPopUp = new AddItemPopUp(selectedRoom);
                 addItemPopUp.setVisible(true);
 
-                //refresha sidan!
 
+          //      tableModel.fireTableDataChanged();
+            //    fillRoomItems(selectedRoom);
                 removeItemsBtn.setEnabled(true);
             }
+
+
+
         });
 
 
         removeItemsBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+                //remove from Room and hospital add to hospital amount
 
                 for (Map.Entry<Item, Integer> hosStorage : hospital.getHospitalsStoredItems().entrySet()) {
                     System.out.println(hosStorage);
@@ -156,9 +158,6 @@ public class BookingGUI extends HelperGUI {
             }
         });
     }
-
-
-
 
 
     private boolean checkSelectedIndexIsFirstOption(JComboBox combo) {
@@ -176,8 +175,7 @@ public class BookingGUI extends HelperGUI {
         roomComboBox.setSelectedIndex(0);
         roomComboBox.setEnabled(false);
 
-
-        // removeItemsBtn.setEnabled(false);                                                         GÖR DENNA OKOMMENTERAD SENARE PHOEBS!
+        removeItemsBtn.setEnabled(false);
         addItemsBtn.setEnabled(false);
 
     }

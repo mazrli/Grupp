@@ -23,6 +23,7 @@ import se.sahlgrenska.sjukhus.person.employee.Accessibility;
 
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -114,7 +115,9 @@ public class AddItemPopUp extends HelperGUI {
 
                             hospital.removeItem(selectedItem, quantity);
                             room.addItems(selectedItem, quantity);
-                           // JOptionPane.showMessageDialog(null, "Items name: " + selectedItem.getName() + " Max amount: " + maxQuantity + " Du valde: " + quantity, "Summary", JOptionPane.INFORMATION_MESSAGE);
+                            button.doClick();
+                            //roomComboBox.getSelectedItem();
+                            // JOptionPane.showMessageDialog(null, "Items name: " + selectedItem.getName() + " Max amount: " + maxQuantity + " Du valde: " + quantity, "Summary", JOptionPane.INFORMATION_MESSAGE);
                         }
                     }
 
