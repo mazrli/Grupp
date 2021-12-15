@@ -53,6 +53,7 @@ public class AddItemPopUp extends HelperGUI {
     private Item selectedItem;
     private int quantity = 0;
     private TreeMap<String, Integer> orderedHospitalStoredItems;
+    private int maxQuantity;
 
     public AddItemPopUp() {
         init(mainPanel, "Add new item", new Dimension(350, 400), Accessibility.NONE);
@@ -64,20 +65,119 @@ public class AddItemPopUp extends HelperGUI {
             @Override
             public void keyTyped(KeyEvent e) {
                 super.keyTyped(e);
-
                 searchItemTextField.getText();
-
+                //Q: Behövs denna ens? Den gör ju typ inget...
             }
+
+
         });
 
         searchItemBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                String userInput = searchItemTextField.getText();
+
+                if (orderedHospitalStoredItems == null) {
+                    System.out.println("Nothing was entered in search bar");
+                    return;
+                }
+
                 System.out.println("searched word is: " + searchItemTextField.getText());
-                //getSuggestions();
+                if (orderedHospitalStoredItems.containsKey(userInput)) {
+
+                    selectedItem = findSearchedItem(userInput);
+                    if (selectedItem == null) {
+                        return;
+                    }
+                    quantity = orderedHospitalStoredItems.get(userInput);
+                    maxQuantity = quantity;
+
+                    quantityTxtField.setText(maxQuantity + "");
+                    keepButtonsInRange(quantity);
+
+                    System.out.println("Items name: " + selectedItem.getName() + " max amount: " + maxQuantity);
+                }
+                return;
+            }
+        });
+
+
+        quantityTxtField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                super.keyTyped(e);
+                try {
+                    int userInp = Integer.parseInt(quantityTxtField.getText());
+
+                    keepButtonsInRange(userInp);
+                    if (isValidAmount(userInp)) {
+                        quantityTxtField.setText(userInp + "");
+                        System.out.println("Yay, within range " + userInp);
+                    }
+
+                } catch (NumberFormatException exception) {
+                    System.out.println(exception.toString() + " was not an integer number! Please enter integer numerical input!");
+
+                }
+
+            }
+
+
+        });
+
+
+        decreaseQuantBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                keepButtonsInRange(--quantity);
+            }
+        });
+        increaseQuantBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                keepButtonsInRange(++quantity);
+            }
+        });
+        addItemBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                if (selectedItem != null) {
+
+                }
             }
         });
     }
+
+
+    private boolean isValidAmount(int inp) {
+        return inp <= 0 && inp >= maxQuantity;
+    }
+
+    private void keepButtonsInRange(int quantity) {
+        increaseQuantBtn.setEnabled(true);
+        decreaseQuantBtn.setEnabled(true);
+        if (quantity >= maxQuantity) {
+            increaseQuantBtn.setEnabled(false);
+        } else if (quantity <= 0) {
+            decreaseQuantBtn.setEnabled(false);
+        }
+        quantityTxtField.setText(quantity + "");
+    }
+
+
+    private Item findSearchedItem(String itemName) {
+
+        HashMap<Item, Integer> storedItems = (HashMap) Driver.getHospital().getHospitalsStoredItems();
+        for (Map.Entry<Item, Integer> hospitalsItems : storedItems.entrySet()) {
+
+            if (hospitalsItems.getKey().getName().equalsIgnoreCase(itemName)) {
+                return hospitalsItems.getKey();
+            }
+        }
+        return null;
+    }
+
 
     private void setDefaultValues() {
         hospital = Driver.getHospital();
@@ -101,18 +201,16 @@ public class AddItemPopUp extends HelperGUI {
     }
 
     private void printTreeMap(TreeMap<String, Integer> hospitalItemStorageOrg) {
-        System.out.println("TREEEEMAP");
         for (Map.Entry<String, Integer> ent : hospitalItemStorageOrg.entrySet()) {
             System.out.println(ent);
         }
     }
 
 
-    private List<String> getSuggestions(String key) { //Set<String>
+    private List<String> getSuggestions(String key) {
 
         if (key == null || key.isEmpty()) {
             System.out.println(key + " returned null or was empty");
-            // return null;
         }
 
         convertStoredItemMapToStringMap((HashMap) Driver.getHospital().getHospitalsStoredItems());
