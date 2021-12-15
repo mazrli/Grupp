@@ -48,7 +48,7 @@ public class LoginPatientGUI extends HelperGUI {
                 Patient patient = Driver.getIOManager().getPatient(personNumber);
 
                 if(patient != null) {
-                    
+
                     Driver.initHospital(this);
                     PatientGUI patientGUI = new PatientGUI(patient);
 
