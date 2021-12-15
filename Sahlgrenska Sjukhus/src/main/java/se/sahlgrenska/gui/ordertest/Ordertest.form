@@ -37,7 +37,7 @@
                     </constraints>
                     <properties>
                       <labelFor value="6e48"/>
-                      <text value="Phoebe Mellström"/>
+                      <text value=""/>
                     </properties>
                   </component>
                   <component id="8a40d" class="javax.swing.JLabel" binding="testDatom">
