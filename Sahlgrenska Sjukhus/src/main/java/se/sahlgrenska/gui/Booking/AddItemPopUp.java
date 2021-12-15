@@ -23,6 +23,7 @@ import se.sahlgrenska.sjukhus.person.employee.Accessibility;
 
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -60,7 +61,7 @@ public class AddItemPopUp extends HelperGUI {
     private int maxQuantity = 10;
 
 
-    public AddItemPopUp(Room room) {
+    public AddItemPopUp(Room room, JComboBox roomComboBox) {
         init(mainPanel, "Nytt redskap", new Dimension(350, 400), Accessibility.NONE);
         hospital = Driver.getHospital();
 
@@ -79,6 +80,7 @@ public class AddItemPopUp extends HelperGUI {
                 keepButtonsInRange(quantity++);
             }
         });
+
 
 
         addItemBtn.addActionListener(new ActionListener() {
@@ -114,7 +116,10 @@ public class AddItemPopUp extends HelperGUI {
 
                             hospital.removeItem(selectedItem, quantity);
                             room.addItems(selectedItem, quantity);
-                           // JOptionPane.showMessageDialog(null, "Items name: " + selectedItem.getName() + " Max amount: " + maxQuantity + " Du valde: " + quantity, "Summary", JOptionPane.INFORMATION_MESSAGE);
+
+                            //roomComboBox.getSelectedItem();
+                          //  roomComboBox.actionPerformed();
+                            // JOptionPane.showMessageDialog(null, "Items name: " + selectedItem.getName() + " Max amount: " + maxQuantity + " Du valde: " + quantity, "Summary", JOptionPane.INFORMATION_MESSAGE);
                         }
                     }
 
