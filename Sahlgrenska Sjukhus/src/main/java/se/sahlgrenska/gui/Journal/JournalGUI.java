@@ -138,7 +138,7 @@ public class JournalGUI extends HelperGUI {
                 String condition = TillståndTextField.getText();
                 Integer room = Integer.parseInt(RumTextField.getText());
                 String doctor = LäkareTextField.getText();
-
+                //implement ComboBox to have select value.
                 Patient patient = new Patient();
 
                 Journal journal = new Journal(patient, LocalDateTime.now(), KommentarTextArea.getText(), Driver.getCurrentUser());
