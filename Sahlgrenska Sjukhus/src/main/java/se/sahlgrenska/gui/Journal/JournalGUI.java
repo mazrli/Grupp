@@ -3,9 +3,12 @@ package se.sahlgrenska.gui.Journal;
 import com.sun.source.doctree.ThrowsTree;
 import se.sahlgrenska.gui.util.HelperGUI;
 import se.sahlgrenska.main.Driver;
+import se.sahlgrenska.sjukhus.Archive;
 import se.sahlgrenska.sjukhus.Journal;
 import se.sahlgrenska.sjukhus.item.Item;
+import se.sahlgrenska.sjukhus.person.Gender;
 import se.sahlgrenska.sjukhus.person.employee.Accessibility;
+import se.sahlgrenska.sjukhus.person.patient.BloodType;
 import se.sahlgrenska.sjukhus.person.patient.Disease;
 import se.sahlgrenska.sjukhus.person.patient.Patient;
 import se.sahlgrenska.sjukhus.person.patient.Symptom;
@@ -64,6 +67,10 @@ public class JournalGUI extends HelperGUI {
     private JScrollPane DiseaseDataScrollPane;
     private JList DiseaseDataList;
     private JScrollPane CommentScrollPane;
+    private JLabel GenderLabel;
+    private JLabel BloodTypeLabel;
+    private JComboBox GenderComboBox;
+    private JComboBox BloodTypeComboBox;
 
     List<Patient> patients;
     Journal currentJournal;
@@ -85,19 +92,13 @@ public class JournalGUI extends HelperGUI {
         }
         JournalDataList.setModel(dataList);
 
-        DefaultComboBoxModel comboBoxModel = new DefaultComboBoxModel();
-        for (int i = 0; i < 10; i++) {
-            JLabel label =new JLabel("Sjukdom" + " " + i );
-            comboBoxModel.addElement(label.getText());
-        }
-        SjukdomComboBox.setModel(comboBoxModel);
+        //Calls enum values to it selected combobox.
+        GenderComboBox.setModel(new DefaultComboBoxModel<>(Gender.values()));
+        BloodTypeComboBox.setModel(new DefaultComboBoxModel<>(BloodType.values()));
 
-        DefaultListModel diseaseList = new DefaultListModel();
-        for (int i = 0; i < 5; i++) {
-            JLabel label = new JLabel("Sjukdom" + " " + i);
-            diseaseList.add(i, label.getText());
-        }
-        DiseaseDataList.setModel(diseaseList);
+
+        //diseases =
+        //SjukdomComboBox.setModel(new DefaultComboBoxModel<>(diseases));
 
         patients = Driver.getHospital().getArchive().getPatients().get(Driver.getCurrentUser());
 
@@ -111,18 +112,7 @@ public class JournalGUI extends HelperGUI {
                 }
                 else if (DiseaseDataList.getSelectedValue() != null) {
                     //Removes a disease.
-                    diseaseList.removeElement(DiseaseDataList.getSelectedValue());
-                }
-            }
-        });
-
-        //Undo latest removed patient from list of patient(Incomplete).
-        ÅngraButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Stack<UndoManager> stack = new Stack<UndoManager>();
-                if (dataList.removeElement(JournalDataList.getSelectedValue()) == true) {
-                    stack.push(undoManager);
+                    //diseaseList.removeElement(DiseaseDataList.getSelectedValue());
                 }
             }
         });
@@ -132,13 +122,15 @@ public class JournalGUI extends HelperGUI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String name =  NamnTextField.getText();
-                Integer personN = Integer.parseInt(PersonNummerTextField.getText());
-                Integer phoneN = Integer.parseInt(TelefonNummerTextField.getText());
+                String personN = PersonNummerTextField.getText();
+                String phoneN = TelefonNummerTextField.getText();
+                Object genderType = GenderComboBox.getSelectedItem();
+                Object bloodType = BloodTypeComboBox.getSelectedItem();
                 Object disease = SjukdomComboBox.getSelectedItem();
                 String condition = TillståndTextField.getText();
                 Integer room = Integer.parseInt(RumTextField.getText());
                 String doctor = LäkareTextField.getText();
-
+                //implement ComboBox to have select value.
                 Patient patient = new Patient();
 
                 Journal journal = new Journal(patient, LocalDateTime.now(), KommentarTextArea.getText(), Driver.getCurrentUser());
@@ -171,15 +163,15 @@ public class JournalGUI extends HelperGUI {
             @Override
             public void itemStateChanged(ItemEvent e)
             {
-                try {
+                /*try {
                     if (e.getStateChange() == ItemEvent.SELECTED) {
-                        if (!comboBoxModel.getSelectedItem().toString().equals("Choose")) {
-                            JOptionPane.showMessageDialog(null, comboBoxModel.getSelectedItem().toString() + " is selected");
+                        if (!diseaseComboBox.getSelectedItem().toString().equals("Choose")) {
+                            JOptionPane.showMessageDialog(null, diseaseComboBox.getSelectedItem().toString() + " is selected");
                         }
                     }
                 } catch (Exception exception) {
                     exception.printStackTrace();
-                }
+                }*/
             }
         });
     }
