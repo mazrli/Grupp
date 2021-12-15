@@ -14,14 +14,13 @@ public class Hospital {
     private String name;
     private int maxCapacity;
     private Map<Item, Integer> items;
-
-    private final Set<Person> persons;
-
+    private Set<Person> persons;
     private Archive archive;
     private float balance;
     private Address address;
-    private ArrayList<Ward> wards;
+    private List<Ward> wards;
 
+    @Deprecated
     public Hospital(String name, int maxCapacity, Map<Item, Integer> items, Set<Person> persons, Archive archive, float balance, Address address) {
         this.name = name;
         this.maxCapacity = maxCapacity;
@@ -30,10 +29,17 @@ public class Hospital {
         this.archive = archive;
         this.balance = balance;
         this.address = address;
-        this.wards = new ArrayList<Ward>();
+        this.wards = new ArrayList<>();
         fillArrayListTempUntilDatabaseConnection();
     }
 
+    public Hospital(String name, int maxCapacity, float balance, Address address, List<Ward> wards) {
+        this.name = name;
+        this.maxCapacity = maxCapacity;
+        this.balance = balance;
+        this.address = address;
+        this.wards = wards;
+    }
 
 
     private void fillArrayListTempUntilDatabaseConnection() {
@@ -101,7 +107,7 @@ public class Hospital {
         return items;
     }
 
-    public ArrayList<Ward> getWards() {
+    public List<Ward> getWards() {
         return wards;
     }
 
@@ -114,6 +120,9 @@ public class Hospital {
         this.archive = archive;
     }
 
+    public void setPersons(Set<Person> persons) {
+        this.persons = persons;
+    }
 
     public Set<Person> getPersons() {
         return persons;

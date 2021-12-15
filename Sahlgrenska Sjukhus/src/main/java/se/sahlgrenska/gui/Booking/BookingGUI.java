@@ -16,10 +16,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
+import java.util.*;
+import java.util.List;
 
 
 import se.sahlgrenska.sjukhus.Room;
@@ -177,7 +175,7 @@ public class BookingGUI extends HelperGUI {
     }
 
 
-    private void fillComboBoxWards(ArrayList<Ward> wards) {
+    private void fillComboBoxWards(List<Ward> wards) {
         for (int i = 0; i < wards.size(); i++) {
             wardComboBox.addItem(wards.get(i));
         }
@@ -186,7 +184,7 @@ public class BookingGUI extends HelperGUI {
     private void fillComboBoxRooms(Ward ward) {
         roomComboBox.removeAllItems();
         System.out.println(ward + " was selected");
-        HashSet<Room> wardRooms = ward.getRooms();
+        Set<Room> wardRooms = ward.getRooms();
         if (wardRooms != null) {
             for (Room r : wardRooms) {
                 roomComboBox.addItem(r);
@@ -203,7 +201,7 @@ public class BookingGUI extends HelperGUI {
 
     private void fillRoomItems(Room room) {
         if (room != null) {
-            HashMap<Item, Integer> roomItems = room.getItems();
+            Map<Item, Integer> roomItems = room.getItems();
 
             for (Map.Entry<Item, Integer> itemsInRoom : roomItems.entrySet()) {
                 Item item = itemsInRoom.getKey();

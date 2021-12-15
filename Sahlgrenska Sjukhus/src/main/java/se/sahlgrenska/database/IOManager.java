@@ -2,7 +2,10 @@ package se.sahlgrenska.database;
 
 import se.sahlgrenska.gui.util.UtilGUI;
 import se.sahlgrenska.sjukhus.*;
+import se.sahlgrenska.sjukhus.item.Equipment;
 import se.sahlgrenska.sjukhus.item.Item;
+import se.sahlgrenska.sjukhus.item.ItemType;
+import se.sahlgrenska.sjukhus.item.Medicine;
 import se.sahlgrenska.sjukhus.person.Gender;
 import se.sahlgrenska.sjukhus.person.Person;
 import se.sahlgrenska.sjukhus.person.employee.*;
@@ -11,10 +14,16 @@ import se.sahlgrenska.sjukhus.person.patient.Disease;
 import se.sahlgrenska.sjukhus.person.patient.Patient;
 
 import javax.management.Notification;
+import javax.swing.plaf.nimbus.State;
+import java.awt.desktop.SystemEventListener;
+import java.awt.print.Book;
 import java.io.*;
 import java.net.URISyntaxException;
 import java.sql.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
+import java.util.Date;
 
 public class IOManager {
 
@@ -154,6 +163,24 @@ public class IOManager {
         }
 
         return employee;
+    }
+
+    private Patient getPatientPre(ResultSet resultSet) {
+        Patient patient = null;
+        try {
+            Person person = getPersonPre(resultSet);
+
+            int patient_id = resultSet.getInt("id");
+            String conditionDescription = resultSet.getString("condition_description");
+            boolean criticalCondition = resultSet.getBoolean("critical_condition");
+            BloodType bloodType = BloodType.valueOf(resultSet.getString("blood_type"));
+            //todo: diseases, notifications
+
+            patient = new Patient(person, patient_id, new ArrayList<Disease>(), new ArrayList<Notification>(), conditionDescription, criticalCondition, bloodType);
+        } catch (SQLException e) {
+        }
+
+        return patient;
     }
 
     private Person getPersonPre(ResultSet resultSet) {
@@ -355,15 +382,7 @@ public class IOManager {
 
             try {
                 while(resultSet.next()) {
-                    Person person = getPersonPre(resultSet);
-                    int patient_id = resultSet.getInt("id");
-                    String conditionDescription = resultSet.getString("condition_description");
-                    boolean criticalCondition = resultSet.getBoolean("critical_condition");
-                    BloodType bloodType = BloodType.valueOf(resultSet.getString("blood_type"));
-
-                    Patient patient = new Patient(person, patient_id, new ArrayList<Disease>(), new ArrayList<Notification>(), conditionDescription, criticalCondition, bloodType);
-                    patients.add(patient);
-
+                    patients.add(getPatientPre(resultSet));
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -376,10 +395,38 @@ public class IOManager {
 
     public Hospital loadHospitalData() {
 
+        Hospital hospital = loadHospital();
         Set<Person> persons = getAllPersons();
+        hospital.setPersons(persons);
+        
         //Set<Journal> journals;
         //Set<Patient> patients = getPatients();
+        Map<Patient, List<Booking>> bookings = getBookings();
 
+        Archive archive = new Archive();
+        archive.setBookings(bookings);
+
+        hospital.setArchive(archive);
+
+
+        return hospital;
+    }
+
+    private Address getAddress(ResultSet resultSet) {
+        Address address = null;
+        try {
+
+        String country = resultSet.getString("country");
+        String city = null;
+            city = resultSet.getString("city");
+        String street = resultSet.getString("street");
+        String zip = resultSet.getString("zip");
+
+        address = new Address(country, city, street, zip);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         Map<Patient, List<Booking>> bookings = new HashMap<>();
         Map<Patient, List<Journal>> journals = new HashMap<>();
         List<Journal> journals1 = new ArrayList<>();
@@ -388,10 +435,155 @@ public class IOManager {
         Archive archive = new Archive(journals, bookings, patients);
 
 
+        return address;
+    }
 
-        Hospital hospital = new Hospital("Sahlgrenska sjukhuset", 200, new HashMap<Item, Integer>(), persons, new Archive(), 500000, new Address("Göteborg", "Blå stråket 5", "413 45", "Åmål"));
-        hospital.setArchive(archive);
+    private Hospital loadHospital() {
+        Hospital hospital = null;
 
+        if(database.isConnected()) {
+            try {
+                Statement statement = database.getConnection().createStatement();
+                ResultSet resultSet = statement.executeQuery("SELECT * FROM hospital hos INNER JOIN address adde ON hos.address_id = adde.id");
+
+                while(resultSet.next()) {
+
+                    int id = resultSet.getInt("id");
+                    String name = resultSet.getString("name");
+                    float balance = resultSet.getFloat("balance");
+                    int maxCapacity = resultSet.getInt("max_capacity");
+
+                    List<Ward> ward = getWards(id);
+
+                    Address address = getAddress(resultSet);
+                    hospital = new Hospital(name, maxCapacity, balance, address, ward);
+                }
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+        }
         return hospital;
+    }
+
+
+    private List<Ward> getWards(int hospital_id) {
+        List<Ward> wards = new ArrayList<>();
+
+            if(database.isConnected()) {
+                try {
+                    Statement statement = database.getConnection().createStatement();
+                    ResultSet resultSet = statement.executeQuery(String.format("SELECT * FROM ward WHERE hospital_id = %s", hospital_id));
+                    while(resultSet.next()) {
+                        int ward_id = resultSet.getInt("id");
+
+                        Set<Room> roomList = getRooms(ward_id);
+
+                        Ward ward = new Ward(Integer.toString(ward_id), roomList);
+
+                        wards.add(ward);
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        return wards;
+    }
+
+    private Set<Room> getRooms(int ward_id) {
+        Set<Room> rooms = new HashSet<>();
+
+        if(database.isConnected()) {
+            try {
+
+                Statement statement = database.getConnection().createStatement();
+                ResultSet resultSet = statement.executeQuery(String.format("SELECT * FROM room r WHERE r.ward_id = %d", ward_id));
+
+                while(resultSet.next()) {
+
+                    int item_id = resultSet.getInt("item_id");
+                    int size = resultSet.getInt("size");
+                    Map<Item, Integer> items = getItems(item_id);
+                    Room room = new Room(Integer.toString(item_id), size, items);
+
+                }
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return rooms;
+    }
+
+    private Map<Item, Integer> getItems(int room_id) {
+        Map<Item, Integer> items = new HashMap<>();
+        Statement statement = null;
+        try {
+            statement = database.getConnection().createStatement();
+            ResultSet resultSet = statement.executeQuery(String.format("SELECT * FROM item i WHERE i.room_id = %s", room_id));
+            while(resultSet.next()) {
+                Item item = null;
+
+                ItemType type = ItemType.valueOf(resultSet.getString("type"));
+                String description = resultSet.getString("description");
+                String name = resultSet.getString("name");
+                int quantity = resultSet.getInt("quantity");
+                float price = resultSet.getFloat("price");
+                Date expirationDate = resultSet.getDate("expiration_date");
+                boolean reusable = resultSet.getBoolean("reusable");
+                LocalDate d = new java.sql.Date(expirationDate.getTime()).toLocalDate();
+
+                if(type == ItemType.MEDICINE)
+                    item = new Medicine(name, description, price, d);
+                else
+                    item = new Equipment(name, description, price, reusable);
+
+                items.put(item, quantity);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return items;
+    }
+
+    private Map<Patient, List<Booking>> getBookings() {
+        Map<Patient, List<Booking>> bookingMap = new HashMap<>();
+        Set<Patient> patients = getPatients();
+        if(database.isConnected()) {
+            try {
+                Statement statement = database.getConnection().createStatement();
+
+                for (Patient patient : patients) {
+                    List<Booking> bookings = new ArrayList<>();
+                    ResultSet resultSet = callProcedure("getBookings", patient.getPatientID());
+                    while (resultSet.next()) {
+
+                        int booking_id = resultSet.getInt("id");
+                        Date date = resultSet.getDate("date");
+
+                        int employee_id = resultSet.getInt("employee_id");
+
+                        Employee employee = null; //todo fix emp
+
+                        String room = resultSet.getString("room_id");
+                        String ward = resultSet.getString("room_id");
+
+                        Booking booking = null;//new Booking(date, patient, employee_id, null, null);
+
+                    }
+
+
+                }
+
+                } catch(SQLException e){
+                    e.printStackTrace();
+                }
+            }
+
+        return bookingMap;
     }
 }

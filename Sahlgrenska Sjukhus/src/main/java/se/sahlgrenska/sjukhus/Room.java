@@ -15,10 +15,10 @@ import java.util.Objects;
 public class Room {
     private String name;
     private int size;
-    private HashMap<Item, Integer> itemsInRoom = new HashMap<Item, Integer>();
+    private Map<Item, Integer> itemsInRoom = new HashMap<Item, Integer>();
 
 
-    public Room(String name, int size, HashMap<Item, Integer> itemsInRoom) {
+    public Room(String name, int size, Map<Item, Integer> itemsInRoom) {
         this.name = name;
         this.size = size;
         this.itemsInRoom = itemsInRoom;
@@ -61,7 +61,7 @@ public class Room {
     }
 
 
-    public HashMap<Item, Integer> getItems() {
+    public Map<Item, Integer> getItems() {
         return itemsInRoom;
     }
 
