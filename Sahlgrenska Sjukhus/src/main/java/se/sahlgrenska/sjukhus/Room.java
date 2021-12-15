@@ -56,9 +56,7 @@ public class Room {
             Integer currentQuantity = itemsInRoom.get(item);
             totalQuantity += currentQuantity;
         }
-
-        itemsInRoom.put(item, quantity);
-        System.out.println(item+" has been added to roomlist with "+quantity+" in quantity");
+        itemsInRoom.put(item, totalQuantity);
     }
 
 
