@@ -2,6 +2,7 @@ package se.sahlgrenska.gui.patient;
 
 import se.sahlgrenska.gui.util.HelperGUI;
 import se.sahlgrenska.main.Driver;
+import se.sahlgrenska.sjukhus.Booking;
 import se.sahlgrenska.sjukhus.person.employee.Accessibility;
 import se.sahlgrenska.sjukhus.person.patient.Patient;
 
@@ -10,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.List;
 
 public class PatientGUI extends HelperGUI {
     private JPanel topPanel;
@@ -29,6 +31,9 @@ public class PatientGUI extends HelperGUI {
 
 
         nameLabel.setText(patient.getFullName());
+
+        List<Booking> bookingList = Driver.getHospital().getArchive().getBookings().get(patient);
+
 
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {

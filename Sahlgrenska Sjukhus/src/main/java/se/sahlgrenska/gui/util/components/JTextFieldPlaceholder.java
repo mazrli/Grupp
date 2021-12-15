@@ -16,11 +16,14 @@ public class JTextFieldPlaceholder extends JTextField {
     protected void paintComponent(final Graphics pG) {
         super.paintComponent(pG);
 
-        if (placeholder == null || placeholder.length() == 0 || getText().length() > placeholder.length())
+        if (placeholder == null || placeholder.length() == 0 || getText().length() > 0)// placeholder.length())
             return;
 
         int length = getText().length();
-        String holder = getText().substring(0, length) + placeholder.substring(length);
+        String holder = placeholder;
+
+        if(false)
+            holder = getText().substring(0, length) + placeholder.substring(length);
 
         final Graphics2D g = (Graphics2D) pG;
 
