@@ -126,6 +126,7 @@
                       </grid>
                     </constraints>
                     <properties>
+                      <font/>
                       <text value=""/>
                     </properties>
                   </component>
@@ -207,7 +208,10 @@
                             <preferred-size width="150" height="-1"/>
                           </grid>
                         </constraints>
-                        <properties/>
+                        <properties>
+                          <font/>
+                          <text value=""/>
+                        </properties>
                       </component>
                       <component id="e3c0d" class="javax.swing.JLabel" binding="enterQuantityLbl">
                         <constraints>

@@ -1,7 +1,6 @@
 package se.sahlgrenska.database;
 
 import se.sahlgrenska.gui.util.UtilGUI;
-import se.sahlgrenska.main.Driver;
 import se.sahlgrenska.sjukhus.*;
 import se.sahlgrenska.sjukhus.item.Equipment;
 import se.sahlgrenska.sjukhus.item.Item;
@@ -398,12 +397,17 @@ public class IOManager {
 
         Hospital hospital = loadHospital();
         Set<Person> persons = getAllPersons();
-        Set<Patient> patients = getPatients();
-
+        hospital.setPersons(persons);
+        
+        //Set<Journal> journals;
+        //Set<Patient> patients = getPatients();
         Map<Patient, List<Booking>> bookings = getBookings();
 
         Archive archive = new Archive();
+        archive.setBookings(bookings);
+
         hospital.setArchive(archive);
+
 
         return hospital;
     }
@@ -423,6 +427,13 @@ public class IOManager {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        Map<Patient, List<Booking>> bookings = new HashMap<>();
+        Map<Patient, List<Journal>> journals = new HashMap<>();
+        List<Journal> journals1 = new ArrayList<>();
+        Map<Employee, List<Patient>> patients = new HashMap<>();
+
+        Archive archive = new Archive(journals, bookings, patients);
+
 
         return address;
     }

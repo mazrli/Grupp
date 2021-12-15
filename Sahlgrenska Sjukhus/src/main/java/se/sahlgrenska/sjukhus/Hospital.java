@@ -14,14 +14,13 @@ public class Hospital {
     private String name;
     private int maxCapacity;
     private Map<Item, Integer> items;
-
     private Set<Person> persons;
-
     private Archive archive;
     private float balance;
     private Address address;
     private List<Ward> wards;
 
+    @Deprecated
     public Hospital(String name, int maxCapacity, Map<Item, Integer> items, Set<Person> persons, Archive archive, float balance, Address address) {
         this.name = name;
         this.maxCapacity = maxCapacity;
@@ -30,7 +29,7 @@ public class Hospital {
         this.archive = archive;
         this.balance = balance;
         this.address = address;
-        this.wards = new ArrayList<Ward>();
+        this.wards = new ArrayList<>();
         fillArrayListTempUntilDatabaseConnection();
     }
 
@@ -60,6 +59,9 @@ public class Hospital {
         Room roomArr1[] = {new Room("Room 3", 15, item4,45), new Room("Room6", 40,itemsInRoom)};
         HashSet<Room> room1 = new HashSet<>(Arrays.asList(roomArr1));
         addWard(new Ward("Ward2", room1));
+
+
+        fillItemsStorageForHospital();
         System.out.println("Fake data added");
     }
 
@@ -68,6 +70,25 @@ public class Hospital {
             if(patient.getPersonNumber().equals(personnumber))
                 return patient;
         return null;
+    }
+
+
+
+    private void fillItemsStorageForHospital(){
+        Item item1 = new Equipment("Defibrilator", "Starts hearts", 2500.5f, true);
+        Item item2 = new Equipment("MRI", "Scans body", 5000.0f, true);
+        Item item5 = new Equipment("Stethoscope", "Heartbeats", 5000.0f, true);
+        Item item3 = new Medicine("Panodil", "Pain relief", 15.0f, LocalDate.now());
+        Item item4 = new Medicine("Alvedon", "Pain relief", 12.5f, LocalDate.now());
+        Item item6 = new Medicine("SARS-vaccine", "Covid", 105.2f, LocalDate.now());
+
+        items.put(item1,25);
+        items.put(item2,10);
+        items.put(item3,15);
+        items.put(item4,50);
+        items.put(item5,30);
+        items.put(item6,44);
+
     }
 
 
@@ -99,6 +120,9 @@ public class Hospital {
         this.archive = archive;
     }
 
+    public void setPersons(Set<Person> persons) {
+        this.persons = persons;
+    }
 
     public Set<Person> getPersons() {
         return persons;

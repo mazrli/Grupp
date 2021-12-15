@@ -23,7 +23,8 @@ import java.util.List;
 import se.sahlgrenska.sjukhus.Room;
 
 public class BookingGUI extends HelperGUI {
-    private Hospital hospital;
+
+
     private JPanel mainPanel;
     private JPanel bannerPanel;
     private JPanel bookingPanel;
@@ -58,7 +59,7 @@ public class BookingGUI extends HelperGUI {
     private JPanel bookingLocationPanel;
     private JPanel wardPanel;
     private JPanel roomPanel;
-    private JComboBox wardComboBox;
+    private JComboBox wardComboBox; // = new DefaultComboBoxModel<>();
     private JComboBox roomComboBox;
     private JLabel wardLbl;
     private JLabel roomLbl;
@@ -70,7 +71,7 @@ public class BookingGUI extends HelperGUI {
     private JScrollPane itemScrollPanel;
     private LocalDateTime date;
 
-
+    private Hospital hospital;
     private Booking booking;
     private int minWindowSize = 600;
     private int maxWindowSize = 700;
@@ -129,7 +130,8 @@ public class BookingGUI extends HelperGUI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Add new item button was pressed!");
-                new AddItemPopUp().setVisible(true);
+                AddItemPopUp addItemPopUp = new AddItemPopUp();
+                addItemPopUp.setVisible(true);
             }
         });
     }
