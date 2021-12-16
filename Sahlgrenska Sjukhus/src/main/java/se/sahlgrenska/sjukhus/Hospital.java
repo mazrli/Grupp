@@ -49,9 +49,6 @@ public class Hospital {
     }
 
 
-
-
-
     private void fillArrayListTempUntilDatabaseConnection() {
 
         Item item1 = new Equipment("Defibrillator", "Starts hearts", 2500.5f, true);
@@ -124,6 +121,15 @@ public class Hospital {
         return -1;
     }
 
+    public void addItem(Item item, int quantity) {
+
+        if (item != null || quantity > 0) {
+            items.put(item, quantity);
+            System.out.println("Added to hospital "+ item);
+        }
+
+    }
+
     public void removeItem(Item item, int quantity) {
 
         if (items.containsKey(item)) {
@@ -137,7 +143,6 @@ public class Hospital {
                 items.remove(item);
             }
         }
-
     }
 
 
