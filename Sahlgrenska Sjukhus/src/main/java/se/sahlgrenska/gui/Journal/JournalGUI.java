@@ -7,12 +7,14 @@ import se.sahlgrenska.sjukhus.Archive;
 import se.sahlgrenska.sjukhus.Journal;
 import se.sahlgrenska.sjukhus.item.Item;
 import se.sahlgrenska.sjukhus.person.Gender;
+import se.sahlgrenska.sjukhus.person.Person;
 import se.sahlgrenska.sjukhus.person.employee.Accessibility;
 import se.sahlgrenska.sjukhus.person.patient.BloodType;
 import se.sahlgrenska.sjukhus.person.patient.Disease;
 import se.sahlgrenska.sjukhus.person.patient.Patient;
 import se.sahlgrenska.sjukhus.person.patient.Symptom;
 
+import javax.print.attribute.standard.NumberOfInterveningJobs;
 import javax.swing.*;
 import javax.swing.event.UndoableEditListener;
 import javax.swing.text.Document;
@@ -72,11 +74,10 @@ public class JournalGUI extends HelperGUI {
     private JComboBox GenderComboBox;
     private JComboBox BloodTypeComboBox;
 
+    List<Patient> patientdatalist;
     List<Patient> patients;
-    Journal currentJournal;
-    UndoManager undoManager;
-    UndoableEdit edit;
     List<Disease> diseases;
+    List<Journal> journals;
 
     public JournalGUI() {
 
@@ -91,14 +92,22 @@ public class JournalGUI extends HelperGUI {
             dataList.add(i, label.getText());
         }
         JournalDataList.setModel(dataList);
+        // Driver.getHospital().getPatients().toArray()
+
+        /*DefaultListModel dataPatientList = new DefaultListModel();
+        dataPatientList.addElement(journals);
+        JournalDataList.setModel(dataPatientList);*/
+
+        //Closest I got to find a object to add into JournalDataList.
+        //JournalDataList.setModel(new DefaultComboBoxModel(Driver.getHospital().getPatients().toArray()));
 
         //Calls enum values to it selected combobox.
         GenderComboBox.setModel(new DefaultComboBoxModel<>(Gender.values()));
         BloodTypeComboBox.setModel(new DefaultComboBoxModel<>(BloodType.values()));
 
+        DefaultComboBoxModel diseaseComboBox = new DefaultComboBoxModel();
 
-        //diseases =
-        //SjukdomComboBox.setModel(new DefaultComboBoxModel<>(diseases));
+        SjukdomComboBox.setModel(new DefaultComboBoxModel());
 
         patients = Driver.getHospital().getArchive().getPatients().get(Driver.getCurrentUser());
 
@@ -121,23 +130,32 @@ public class JournalGUI extends HelperGUI {
         SparaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String name =  NamnTextField.getText();
-                String personN = PersonNummerTextField.getText();
-                String phoneN = TelefonNummerTextField.getText();
-                Object genderType = GenderComboBox.getSelectedItem();
-                Object bloodType = BloodTypeComboBox.getSelectedItem();
-                Object disease = SjukdomComboBox.getSelectedItem();
-                String condition = TillståndTextField.getText();
-                Integer room = Integer.parseInt(RumTextField.getText());
-                String doctor = LäkareTextField.getText();
-                //implement ComboBox to have select value.
-                Patient patient = new Patient();
+                try {
+                    String name =  NamnTextField.getText();
+                    String personN = PersonNummerTextField.getText();
+                    String phoneN = TelefonNummerTextField.getText();
+                    Object genderType = GenderComboBox.getSelectedItem();
+                    Object bloodType = BloodTypeComboBox.getSelectedItem();
+                    Object disease = SjukdomComboBox.getSelectedItem();
+                    String condition = TillståndTextField.getText();
+                    Integer room = Integer.parseInt(RumTextField.getText());
+                    String doctor = LäkareTextField.getText();
+                    //implement ComboBox to have select value.
 
-                Journal journal = new Journal(patient, LocalDateTime.now(), KommentarTextArea.getText(), Driver.getCurrentUser());
 
-                Driver.getHospital().getArchive().getJournals().get(patient).add(journal);
 
-                System.out.println(journal.toString());
+                    Patient patient = new Patient();
+
+                    Journal journal = new Journal(patient, LocalDateTime.now(), KommentarTextArea.getText(), Driver.getCurrentUser());
+                    Driver.getHospital().getArchive().AddJournal(journal, patient);
+
+                } catch (NumberFormatException Ne) {
+                    Ne.printStackTrace();
+                } catch (Exception E) {
+                    E.printStackTrace();
+                }
+                Driver.getHospital().getArchive().printJournals();
+
             }
         });
 
@@ -155,7 +173,7 @@ public class JournalGUI extends HelperGUI {
         JournalDataList.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                System.out.println(JournalDataList.getSelectedValue().toString());
+                //System.out.println(JournalDataList.getSelectedValue().toString());
             }
         });
 
@@ -181,9 +199,8 @@ public class JournalGUI extends HelperGUI {
         List<Journal> journals = new ArrayList<Journal>();
         for (Patient patient : patients) {
             journals.addAll(Driver.getHospital().getArchive().getJournals().get(patient));
-            JLabel label = new JLabel(patient.getFirstName());
+            JLabel label = new JLabel(patient.getFirstName().toString());
             JournalDataList.add(label);
         }
     }
-
 }
