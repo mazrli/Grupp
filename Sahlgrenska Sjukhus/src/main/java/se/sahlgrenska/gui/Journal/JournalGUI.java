@@ -1,28 +1,18 @@
 package se.sahlgrenska.gui.Journal;
 
-import com.sun.source.doctree.ThrowsTree;
 import se.sahlgrenska.gui.util.HelperGUI;
 import se.sahlgrenska.main.Driver;
-import se.sahlgrenska.sjukhus.Archive;
+import se.sahlgrenska.sjukhus.Address;
 import se.sahlgrenska.sjukhus.Journal;
-import se.sahlgrenska.sjukhus.item.Item;
 import se.sahlgrenska.sjukhus.person.Gender;
 import se.sahlgrenska.sjukhus.person.Person;
 import se.sahlgrenska.sjukhus.person.employee.Accessibility;
 import se.sahlgrenska.sjukhus.person.patient.BloodType;
 import se.sahlgrenska.sjukhus.person.patient.Disease;
 import se.sahlgrenska.sjukhus.person.patient.Patient;
-import se.sahlgrenska.sjukhus.person.patient.Symptom;
 
-import javax.print.attribute.standard.NumberOfInterveningJobs;
 import javax.swing.*;
-import javax.swing.event.UndoableEditListener;
-import javax.swing.text.Document;
-import javax.swing.undo.CannotUndoException;
-import javax.swing.undo.UndoManager;
-import javax.swing.undo.UndoableEdit;
 import javax.swing.JComboBox;
-import java.awt.*;
 import java.awt.event.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
@@ -50,14 +40,14 @@ public class JournalGUI extends HelperGUI {
     private JTextArea KommentarTextArea;
     private JLabel KommentarLabel;
     private JPanel InputPanel;
-    private JTextField NamnTextField;
+    private JTextField FirstNameTextField;
     private JTextField PersonNummerTextField;
     private JTextField TelefonNummerTextField;
     private JComboBox SjukdomComboBox;
     private JTextField TillståndTextField;
     private JTextField RumTextField;
     private JTextField LäkareTextField;
-    private JLabel NamnLabel;
+    private JLabel FirstNameLabel;
     private JLabel PersonNummerLabel;
     private JLabel TelefonNummerLabel;
     private JLabel SjukdomLabel;
@@ -73,6 +63,8 @@ public class JournalGUI extends HelperGUI {
     private JLabel BloodTypeLabel;
     private JComboBox GenderComboBox;
     private JComboBox BloodTypeComboBox;
+    private JLabel LastNameLabel;
+    private JTextField LastNameTextField;
 
     List<Patient> patientdatalist;
 
@@ -142,22 +134,27 @@ public class JournalGUI extends HelperGUI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    String name =  NamnTextField.getText();
+                    String firstName =  FirstNameTextField.getText();
+                    String lastName = LastNameTextField.getText();
                     String personN = PersonNummerTextField.getText();
                     String phoneN = TelefonNummerTextField.getText();
-                    Object genderType = GenderComboBox.getSelectedItem();
-                    Object bloodType = BloodTypeComboBox.getSelectedItem();
+                    String genderType = GenderComboBox.getSelectedItem().toString();
+                    String  bloodType = BloodTypeComboBox.getSelectedItem().toString();
                     Object disease = SjukdomComboBox.getSelectedItem();
                     String condition = TillståndTextField.getText();
                     Integer room = Integer.parseInt(RumTextField.getText());
                     String doctor = LäkareTextField.getText();
+                    String comment = KommentarTextArea.getText();
+                    Gender gender = Gender.valueOf(genderType);
+                    BloodType bloodType1 = BloodType.valueOf(bloodType);
                     //implement ComboBox to have select value.
 
-
-
-                    Patient patient = new Patient();
-
+                    Address address = new Address();
+                    Person person = new Person(firstName, lastName, personN, gender, phoneN, address);
+                    Patient patient = new Patient(person, 0, disease, );
                     Journal journal = new Journal(patient, LocalDateTime.now(), KommentarTextArea.getText(), Driver.getCurrentUser());
+
+
                     Driver.getHospital().getArchive().AddJournal(journal, patient);
 
                 } catch (NumberFormatException Ne) {
