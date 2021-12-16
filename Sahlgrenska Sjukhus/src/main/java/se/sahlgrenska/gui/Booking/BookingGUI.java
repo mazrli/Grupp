@@ -86,6 +86,7 @@ public class BookingGUI extends HelperGUI {
         init(mainPanel, "Skapa bokning", new Dimension(minWindowSize, maxWindowSize), Accessibility.RECEPTIONIST);
 
         defaultBookingSetUp();
+        BookingGUI booking = this;
         userOutLbl.setText(Driver.getCurrentUser().toString());
         patPersNrTxtField = new JTextFieldPlaceholder("YYYYMMDD-YYYY");
 
@@ -135,9 +136,8 @@ public class BookingGUI extends HelperGUI {
         addItemsBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                AddItemPopUp addItemPopUp = new AddItemPopUp(selectedRoom);
+                AddItemPopUp addItemPopUp = new AddItemPopUp(selectedRoom, booking);
                 addItemPopUp.setVisible(true);
-
 
                 removeItemsBtn.setEnabled(true);
 
@@ -259,9 +259,12 @@ public class BookingGUI extends HelperGUI {
         tableModel.addColumn(columnNames[0]);
         tableModel.addColumn(columnNames[1]);
     }
+    public Room getSelectedRoom(){
+        return (Room) roomComboBox.getSelectedItem();
+    }
 
 
-    private void fillRoomItems(Room room) {
+    public void fillRoomItems(Room room) {
         if (room != null) {
 
             Map<Item, Integer> roomItems = room.getItems();
