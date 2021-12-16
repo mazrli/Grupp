@@ -133,7 +133,7 @@ public class BookingGUI extends HelperGUI {
         addItemsBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                AddItemPopUp addItemPopUp = new AddItemPopUp(selectedRoom, roomComboBox);
+                AddItemPopUp addItemPopUp = new AddItemPopUp(selectedRoom);
                 addItemPopUp.setVisible(true);
 
 
@@ -169,7 +169,7 @@ public class BookingGUI extends HelperGUI {
                     System.out.println("Item fanns inte!");
                     return;
                 }
-                System.out.println(item + " was selected with the quantity " + quantity);
+                System.out.println(item + " was selected with the quantity " + hospital.getItemStorageQuantity(item));
 
                 hospital.addItem(item, quantity);
                 selectedRoom.removeItem(item, quantity);
