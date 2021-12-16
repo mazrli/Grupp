@@ -171,12 +171,12 @@ public class BookingGUI extends HelperGUI {
                     System.out.println("Item fanns inte!");
                     return;
                 }
-                System.out.println(item + " was selected with the quantity " + hospital.getItemStorageQuantity(item));
+
 
                 hospital.addItem(item, quantity);
                 selectedRoom.removeItem(item, quantity);
                 //remove from Room and hospital add to hospital amount
-
+                System.out.println(item + " was selected with the quantity " + hospital.getItemStorageQuantity(item));
                 itemsTable.clearSelection();
                 fillRoomItems(selectedRoom);
 
