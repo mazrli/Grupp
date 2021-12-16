@@ -2,6 +2,7 @@ package se.sahlgrenska.gui.Booking;
 
 import se.sahlgrenska.gui.util.HelperGUI;
 import se.sahlgrenska.gui.util.UtilGUI;
+import se.sahlgrenska.gui.util.components.JTextFieldPlaceholder;
 import se.sahlgrenska.main.Driver;
 import se.sahlgrenska.main.Util;
 import se.sahlgrenska.sjukhus.Booking;
@@ -72,7 +73,6 @@ public class BookingGUI extends HelperGUI {
     private JScrollPane itemScrollPanel;
     private LocalDateTime date;
 
-
     private Hospital hospital;
     private Booking booking;
     private int minWindowSize = 600;
@@ -86,6 +86,9 @@ public class BookingGUI extends HelperGUI {
         init(mainPanel, "Skapa bokning", new Dimension(minWindowSize, maxWindowSize), Accessibility.RECEPTIONIST);
 
         defaultBookingSetUp();
+        BookingGUI booking = this;
+        userOutLbl.setText(Driver.getCurrentUser().toString());
+        patPersNrTxtField = new JTextFieldPlaceholder("YYYYMMDD-YYYY");
 
         cancelBtn.addActionListener(new ActionListener() {
             @Override
@@ -133,9 +136,8 @@ public class BookingGUI extends HelperGUI {
         addItemsBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                AddItemPopUp addItemPopUp = new AddItemPopUp(selectedRoom);
+                AddItemPopUp addItemPopUp = new AddItemPopUp(selectedRoom, booking);
                 addItemPopUp.setVisible(true);
-
 
                 removeItemsBtn.setEnabled(true);
 
@@ -169,12 +171,12 @@ public class BookingGUI extends HelperGUI {
                     System.out.println("Item fanns inte!");
                     return;
                 }
-                System.out.println(item + " was selected with the quantity " + hospital.getItemStorageQuantity(item));
+
 
                 hospital.addItem(item, quantity);
                 selectedRoom.removeItem(item, quantity);
                 //remove from Room and hospital add to hospital amount
-
+                System.out.println(item + " was selected with the quantity " + hospital.getItemStorageQuantity(item));
                 itemsTable.clearSelection();
                 fillRoomItems(selectedRoom);
 
@@ -257,9 +259,12 @@ public class BookingGUI extends HelperGUI {
         tableModel.addColumn(columnNames[0]);
         tableModel.addColumn(columnNames[1]);
     }
+    public Room getSelectedRoom(){
+        return (Room) roomComboBox.getSelectedItem();
+    }
 
 
-    private void fillRoomItems(Room room) {
+    public void fillRoomItems(Room room) {
         if (room != null) {
 
             Map<Item, Integer> roomItems = room.getItems();
@@ -281,6 +286,7 @@ public class BookingGUI extends HelperGUI {
     private void createUIComponents() {
         // TODO: place custom component creation code here
         hospital = Driver.getHospital();
+
         Color tableHeaderColour = new Color(199, 199, 199);
 
         tableModel = new DefaultTableModel();
