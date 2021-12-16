@@ -4,6 +4,7 @@ import se.sahlgrenska.sjukhus.person.employee.Employee;
 import se.sahlgrenska.sjukhus.person.patient.Disease;
 import se.sahlgrenska.sjukhus.person.patient.Patient;
 
+import javax.swing.*;
 import java.util.*;
 
 public class Archive {
@@ -30,17 +31,17 @@ public class Archive {
     }
 
     public void AddJournal(Journal journal, Patient patient) {
-        List<Journal> journalList;
-        if (journals.containsKey(patient)) {
-            journalList = journals.get(patient);
-
-
-        } else {
+        try {
+            List<Journal> journalList;
+            if (journals.containsKey(patient)) {
+                journalList = journals.get(patient);
+            }
             journalList = new ArrayList<Journal>();
-
+            journalList.add(journal);
+            journals.put(patient, journalList);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        journalList.add(journal);
-        journals.put(patient, journalList);
     }
 
     public void printJournals() {

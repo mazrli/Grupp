@@ -75,9 +75,13 @@ public class JournalGUI extends HelperGUI {
     private JComboBox BloodTypeComboBox;
 
     List<Patient> patientdatalist;
+
     List<Patient> patients;
     List<Disease> diseases;
     List<Journal> journals;
+
+    Journal journalList;
+    Patient patientList;
 
     public JournalGUI() {
 
@@ -86,12 +90,19 @@ public class JournalGUI extends HelperGUI {
         //setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE); <--- Använd inte setDefaultCloseOperation!
 
         //Gernerates a dummylist of patients to test remove button
-        DefaultListModel dataList = new DefaultListModel();
+        /*faultListModel dataList = new DefaultListModel();
         for (int i = 0; i < 5; i++) {
             JLabel label = new JLabel("Hasse" + " " + i);
             dataList.add(i, label.getText());
+        }*/
+        try {
+            DefaultListModel dataList = new DefaultListModel();
+            dataList.addAll(Driver.getHospital().getArchive().getJournals().get(patients)); //Driver.getHospital().getArchive().getJournals().get();
+            JournalDataList.setModel(dataList);
+        } catch (Exception dLE) {
+            dLE.printStackTrace();
         }
-        JournalDataList.setModel(dataList);
+
         // Driver.getHospital().getPatients().toArray()
 
         /*DefaultListModel dataPatientList = new DefaultListModel();
@@ -117,7 +128,7 @@ public class JournalGUI extends HelperGUI {
             public void actionPerformed(ActionEvent e) {
                 if (JournalDataList.getSelectedValue() != null) {
                     //Removes a patient.
-                    dataList.removeElement(JournalDataList.getSelectedValue());
+                    //dataList.removeElement(JournalDataList.getSelectedValue());
                 }
                 else if (DiseaseDataList.getSelectedValue() != null) {
                     //Removes a disease.
@@ -199,8 +210,14 @@ public class JournalGUI extends HelperGUI {
         List<Journal> journals = new ArrayList<Journal>();
         for (Patient patient : patients) {
             journals.addAll(Driver.getHospital().getArchive().getJournals().get(patient));
-            JLabel label = new JLabel(patient.getFirstName().toString());
+            JLabel label = new JLabel(patient.getFirstName());
             JournalDataList.add(label);
         }
     }
+    /*public void LoadPatient() {
+        List<Patient> patients = new ArrayList<Patient>();
+        for (Patient patient: patients) {
+            patients.addAll(Driver.getHospital().getArchive().getPatients().toString());
+        }
+    }*/
 }
