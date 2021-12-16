@@ -21,7 +21,7 @@ public class Hospital {
     private List<Ward> wards;
     private int id;
 
-    @Deprecated
+  //  @Deprecated
     public Hospital(String name, int maxCapacity, Map<Item, Integer> items, Set<Person> persons, Archive archive, float balance, Address address) {
         this.name = name;
         this.maxCapacity = maxCapacity;
