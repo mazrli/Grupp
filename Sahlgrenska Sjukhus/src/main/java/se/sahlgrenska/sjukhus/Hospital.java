@@ -124,7 +124,7 @@ public class Hospital {
         }
         return -1;
     }
-
+/*
     public void addItem(Item item, int quantity) {
         int maxAmount = 0;
         if (items.containsKey(item)) {
@@ -134,6 +134,16 @@ public class Hospital {
             maxAmount = quantity;
         }
         items.put(item, maxAmount);
+    }*/
+
+
+    public void addItem(Item item, int quantity) {
+        int totalQuantity = quantity;
+        if (items.containsKey(item)) {
+            Integer currentQuantity = items.get(item);
+            totalQuantity += currentQuantity;
+        }
+        items.put(item, totalQuantity);
     }
 
     public void removeItem(Item item, int quantity) {

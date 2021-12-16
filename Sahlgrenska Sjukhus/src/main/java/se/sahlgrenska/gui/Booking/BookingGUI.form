@@ -219,7 +219,7 @@
                         </constraints>
                         <properties>
                           <name value=""/>
-                          <text value="YYYYMMDD-XXXX"/>
+                          <text value=""/>
                         </properties>
                       </component>
                       <vspacer id="9e9fe">
