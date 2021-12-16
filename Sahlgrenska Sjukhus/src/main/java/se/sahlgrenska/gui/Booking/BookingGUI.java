@@ -2,6 +2,7 @@ package se.sahlgrenska.gui.Booking;
 
 import se.sahlgrenska.gui.util.HelperGUI;
 import se.sahlgrenska.gui.util.UtilGUI;
+import se.sahlgrenska.gui.util.components.JTextFieldPlaceholder;
 import se.sahlgrenska.main.Driver;
 import se.sahlgrenska.main.Util;
 import se.sahlgrenska.sjukhus.Booking;
@@ -72,7 +73,6 @@ public class BookingGUI extends HelperGUI {
     private JScrollPane itemScrollPanel;
     private LocalDateTime date;
 
-
     private Hospital hospital;
     private Booking booking;
     private int minWindowSize = 600;
@@ -86,6 +86,8 @@ public class BookingGUI extends HelperGUI {
         init(mainPanel, "Skapa bokning", new Dimension(minWindowSize, maxWindowSize), Accessibility.RECEPTIONIST);
 
         defaultBookingSetUp();
+        userOutLbl.setText(Driver.getCurrentUser().toString());
+        patPersNrTxtField = new JTextFieldPlaceholder("YYYYMMDD-YYYY");
 
         cancelBtn.addActionListener(new ActionListener() {
             @Override
@@ -281,6 +283,7 @@ public class BookingGUI extends HelperGUI {
     private void createUIComponents() {
         // TODO: place custom component creation code here
         hospital = Driver.getHospital();
+
         Color tableHeaderColour = new Color(199, 199, 199);
 
         tableModel = new DefaultTableModel();
