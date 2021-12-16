@@ -117,7 +117,7 @@ public class BookingGUI extends HelperGUI {
                 }
             }
         });
-/*
+
         roomComboBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -127,7 +127,7 @@ public class BookingGUI extends HelperGUI {
                     fillRoomItems(selectedRoom);
                 }
             }
-        });*/
+        });
 
 
         addItemsBtn.addActionListener(new ActionListener() {
@@ -137,13 +137,9 @@ public class BookingGUI extends HelperGUI {
                 addItemPopUp.setVisible(true);
 
 
-                //      tableModel.fireTableDataChanged();
-                //    fillRoomItems(selectedRoom);
                 removeItemsBtn.setEnabled(true);
-             //   roomComboBox.set
+
             }
-
-
 
 
         });
@@ -152,17 +148,40 @@ public class BookingGUI extends HelperGUI {
         removeItemsBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                int outOfBoundsValue = -1;
+                int row = itemsTable.getSelectedRow();
+                int col = itemsTable.getSelectedColumn();
 
+                if (selectedRoom.getItems().isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Inget redskap finns kvar i listan", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                if (row <= outOfBoundsValue && col <= outOfBoundsValue) {
+                    JOptionPane.showMessageDialog(null, "Inget redskap har valts", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                Item item = (Item) itemsTable.getModel().getValueAt(row, 0);
+                int quantity = (Integer) itemsTable.getModel().getValueAt(row, 1);
+
+                if (item == null || quantity < 0) {
+                    System.out.println("Item fanns inte!");
+                    return;
+                }
+                System.out.println(item + " was selected with the quantity " + hospital.getItemStorageQuantity(item));
+
+                hospital.addItem(item, quantity);
+                selectedRoom.removeItem(item, quantity);
                 //remove from Room and hospital add to hospital amount
 
-                for (Map.Entry<Item, Integer> hosStorage : hospital.getHospitalsStoredItems().entrySet()) {
-                    System.out.println(hosStorage);
-                }
+                itemsTable.clearSelection();
+                fillRoomItems(selectedRoom);
 
             }
         });
 
-
+/*
         roomComboBox.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
@@ -173,7 +192,7 @@ public class BookingGUI extends HelperGUI {
                 }
             }
         });
-
+*/
 
 
     }
@@ -242,8 +261,9 @@ public class BookingGUI extends HelperGUI {
 
     private void fillRoomItems(Room room) {
         if (room != null) {
-            Map<Item, Integer> roomItems = room.getItems();
 
+            Map<Item, Integer> roomItems = room.getItems();
+            emptyItemList();
             for (Map.Entry<Item, Integer> itemsInRoom : roomItems.entrySet()) {
                 Item item = itemsInRoom.getKey();
                 Integer itemQuantity = itemsInRoom.getValue();
@@ -253,6 +273,7 @@ public class BookingGUI extends HelperGUI {
             }
             itemsTable.setModel(tableModel);
             addItemsBtn.setEnabled(true);
+            removeItemsBtn.setEnabled(true);
         }
     }
 

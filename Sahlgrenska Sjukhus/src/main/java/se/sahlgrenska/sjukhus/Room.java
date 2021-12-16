@@ -60,6 +60,27 @@ public class Room {
     }
 
 
+    public void removeItem(Item item, int quantity) {
+
+        if (item == null || quantity < 0) {
+            System.out.println("Item är null och kan inte tas bort.");
+            return;
+        }
+
+        if (itemsInRoom.containsKey(item)) {
+            int maxQuantity = itemsInRoom.get(item);
+            int availableQuantity = maxQuantity - quantity;
+
+            if (availableQuantity > 0) {
+                itemsInRoom.put(item, availableQuantity);
+                maxQuantity = availableQuantity;
+            } else {
+                itemsInRoom.remove(item);
+            }
+        }
+    }
+
+
     public Map<Item, Integer> getItems() {
         return itemsInRoom;
     }

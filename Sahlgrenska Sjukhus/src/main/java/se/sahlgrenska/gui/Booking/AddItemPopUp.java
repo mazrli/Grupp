@@ -117,6 +117,8 @@ public class AddItemPopUp extends HelperGUI {
                             hospital.removeItem(selectedItem, quantity);
                             room.addItems(selectedItem, quantity);
 
+
+                         //   comboBox.setSelectedItem(selectedItem);
                             //roomComboBox.getSelectedItem();
                           //  roomComboBox.actionPerformed();
                             // JOptionPane.showMessageDialog(null, "Items name: " + selectedItem.getName() + " Max amount: " + maxQuantity + " Du valde: " + quantity, "Summary", JOptionPane.INFORMATION_MESSAGE);
