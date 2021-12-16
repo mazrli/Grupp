@@ -122,12 +122,14 @@ public class Hospital {
     }
 
     public void addItem(Item item, int quantity) {
-
-        if (item != null || quantity > 0) {
-            items.put(item, quantity);
-            System.out.println("Added to hospital "+ item);
+        int maxAmount = 0;
+        if (items.containsKey(item)) {
+            int availableQuantity = items.get(item);
+            maxAmount = availableQuantity + quantity;
+        } else {
+            maxAmount = quantity;
         }
-
+        items.put(item, maxAmount);
     }
 
     public void removeItem(Item item, int quantity) {

@@ -61,7 +61,7 @@ public class AddItemPopUp extends HelperGUI {
     private int maxQuantity = 10;
 
 
-    public AddItemPopUp(Room room, JComboBox comboBox) {
+    public AddItemPopUp(Room room) {
         init(mainPanel, "Nytt redskap", new Dimension(350, 400), Accessibility.NONE);
         hospital = Driver.getHospital();
 
@@ -118,7 +118,7 @@ public class AddItemPopUp extends HelperGUI {
                             room.addItems(selectedItem, quantity);
 
 
-                            comboBox.setSelectedItem(selectedItem);
+                         //   comboBox.setSelectedItem(selectedItem);
                             //roomComboBox.getSelectedItem();
                           //  roomComboBox.actionPerformed();
                             // JOptionPane.showMessageDialog(null, "Items name: " + selectedItem.getName() + " Max amount: " + maxQuantity + " Du valde: " + quantity, "Summary", JOptionPane.INFORMATION_MESSAGE);
