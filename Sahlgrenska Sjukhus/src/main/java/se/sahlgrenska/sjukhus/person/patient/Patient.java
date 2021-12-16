@@ -9,7 +9,8 @@ import javax.management.Notification;
 import java.util.List;
 
 public class Patient extends Person {
-    //public List<Journal> journals;
+
+    public List<Journal> journals;
     private int patientID;
     private List<Disease> diseases;
     private List<Notification> notifications;
@@ -35,6 +36,10 @@ public class Patient extends Person {
         this.condition = condition;
         this.criticalCondition = criticalCondition;
         this.bloodType = bloodType;
+    }
+
+    public void setJournals(List<Journal> journals) {
+        this.journals = journals;
     }
 
     public List<Disease> getDiseases() {

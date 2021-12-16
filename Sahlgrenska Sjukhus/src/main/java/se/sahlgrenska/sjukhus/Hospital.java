@@ -79,6 +79,10 @@ public class Hospital {
         return null;
     }
 
+    public Set<Patient> getPatients(){
+        return archive.getBookings().keySet();
+    }
+
 
     private void fillItemsStorageForHospital() {
         Item item1 = new Equipment("Defibrilator", "Starts hearts", 2500.5f, true);
