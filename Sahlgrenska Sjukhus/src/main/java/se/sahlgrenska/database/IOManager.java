@@ -1,7 +1,6 @@
 package se.sahlgrenska.database;
 
 import org.yaml.snakeyaml.Yaml;
-import org.yaml.snakeyaml.error.YAMLException;
 import se.sahlgrenska.gui.util.UtilGUI;
 import se.sahlgrenska.sjukhus.*;
 import se.sahlgrenska.sjukhus.item.Equipment;
@@ -17,13 +16,11 @@ import se.sahlgrenska.sjukhus.person.patient.Patient;
 
 import javax.management.Notification;
 import java.io.*;
-import java.net.URISyntaxException;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.Date;
-import java.util.concurrent.locks.StampedLock;
 
 public class IOManager {
 
@@ -33,6 +30,7 @@ public class IOManager {
     public IOManager() {
         setupDB();
     }
+
 
     private void setupDB() {
         Yaml yaml = new Yaml();
@@ -191,13 +189,22 @@ public class IOManager {
             String conditionDescription = resultSet.getString("condition_description");
             boolean criticalCondition = resultSet.getBoolean("critical_condition");
             BloodType bloodType = BloodType.valueOf(resultSet.getString("blood_type"));
-            //todo: diseases, notifications
+            //todo: get diseases, notifications
 
-            patient = new Patient(person, patient_id, new ArrayList<Disease>(), new ArrayList<Notification>(), conditionDescription, criticalCondition, bloodType);
+            List<Disease> diseases = getDiseases(patient_id);
+
+            patient = new Patient(person, patient_id, diseases, new ArrayList<Notification>(), conditionDescription, criticalCondition, bloodType);
         } catch (SQLException e) {
         }
 
         return patient;
+    }
+
+    private List<Disease> getDiseases(int patient_id) {
+        List<Disease> diseases = new ArrayList<>();
+
+
+        return diseases;
     }
 
     private Person getPersonPre(ResultSet resultSet) {
@@ -720,7 +727,6 @@ public class IOManager {
 
 
                         Booking booking = new Booking(time, patientsList, employeeList, ward, room, "");
-                        System.out.println(booking.toString());
 
                         bookings.add(booking);
                     }
@@ -796,7 +802,6 @@ public class IOManager {
 
                     hospital = new Hospital(name, maxCapacity, balance, storage, address, ward, id);
 
-                    System.out.println(storage.toString());
                 }
 
             } catch (SQLException e) {
@@ -813,8 +818,6 @@ public class IOManager {
         Map<Patient, List<Booking>> bookings = getBookings(hospital);
         Map<Patient, List<Journal>> journals = getJournals();
 
-
-        System.out.println(journals.toString());
 
         Archive archive = new Archive();
 
