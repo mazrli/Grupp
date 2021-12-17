@@ -72,11 +72,13 @@ public class JournalGUI extends HelperGUI {
 
     List<Patient> patients;
     List<Disease> diseases;
+
     List<Journal> journals;
     DefaultListModel dataList;
 
-    Journal journalList;
     Patient selectedPatient;
+
+    Map<Patient, List<Journal>> journals = Driver.getHospital().getArchive().getJournals();
 
     public JournalGUI() {
 
@@ -98,10 +100,10 @@ public class JournalGUI extends HelperGUI {
             //fix
             dataList = new DefaultListModel();
 
-            Map<Patient, List<Journal>> journals = Driver.getHospital().getArchive().getJournals();
             dataList.addAll(journals.keySet());
 
             JournalDataList.setModel(dataList);
+
         } catch (Exception dLE) {
             dLE.printStackTrace();
         }
