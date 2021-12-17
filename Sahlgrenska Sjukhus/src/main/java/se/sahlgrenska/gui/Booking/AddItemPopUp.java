@@ -117,10 +117,7 @@ public class AddItemPopUp extends HelperGUI {
                             room.addItems(selectedItem, quantity);
 
                             booking.fillRoomItems(booking.getSelectedRoom());
-                            //   comboBox.setSelectedItem(selectedItem);
-                            //roomComboBox.getSelectedItem();
-                            //  roomComboBox.actionPerformed();
-                            // JOptionPane.showMessageDialog(null, "Items name: " + selectedItem.getName() + " Max amount: " + maxQuantity + " Du valde: " + quantity, "Summary", JOptionPane.INFORMATION_MESSAGE);
+
                         }
                     }
 
