@@ -113,7 +113,7 @@ public class ManageUserGUI extends HelperGUI {
         } else {
             LoginDetails loginDetails = new LoginDetails(username, password);
 
-            if(doesAccountExists(loginDetails) && createNew || !user.getLoginDetails().equals(loginDetails)) {
+            if(doesAccountExists(loginDetails) && createNew && !user.getLoginDetails().equals(loginDetails)) {
                     UtilGUI.error("Detta lösenordet eller användarnamnet är upptaget.");
             } else if (Driver.getIOManager().getEmployeeID(personnummer) != -1) {
                 UtilGUI.error("Den här användaren har redan ett konto.");
