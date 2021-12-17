@@ -1,6 +1,7 @@
 package se.sahlgrenska.main;
 
 import java.awt.*;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.List;
@@ -45,5 +46,9 @@ public class Util {
         }
 
         return results;
+    }
+
+    public static LocalDateTime parseDate(String text) {
+        return LocalDateTime.now();
     }
 }

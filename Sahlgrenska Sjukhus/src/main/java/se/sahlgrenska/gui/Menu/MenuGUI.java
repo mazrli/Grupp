@@ -155,7 +155,7 @@ public class MenuGUI extends HelperGUI {
                 onlineLabel.setText("Online: " + online.size());
                 onlineLabel.setToolTipText(online.toString());
             }
-        }, 0, 1000 * 15); // execute every 15 sec
+        }, 0, 1000 * 5); // updates every 5 second
 
     }
 
