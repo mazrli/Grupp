@@ -69,11 +69,9 @@ public class JournalGUI extends HelperGUI {
     private JCheckBox criticalTrueCheckBox;
 
     List<Patient> patientdatalist;
-
     List<Patient> patients;
     List<Disease> diseases;
 
-    List<Journal> journals;
     DefaultListModel dataList;
 
     Patient selectedPatient;
@@ -86,13 +84,6 @@ public class JournalGUI extends HelperGUI {
         setSize(550, 600);
         DoctorTextLabel.setText(Driver.getCurrentUser().toString());
         //setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE); <--- Använd inte setDefaultCloseOperation!
-
-        //Gernerates a dummylist of patients to test remove button
-        /*faultListModel dataList = new DefaultListModel();
-        for (int i = 0; i < 5; i++) {
-            JLabel label = new JLabel("Hasse" + " " + i);
-            dataList.add(i, label.getText());
-        }*/
 
         try {
 
@@ -108,15 +99,6 @@ public class JournalGUI extends HelperGUI {
             dLE.printStackTrace();
         }
 
-
-        // Driver.getHospital().getPatients().toArray()
-
-        /*DefaultListModel dataPatientList = new DefaultListModel();
-        dataPatientList.addElement(journals);
-        JournalDataList.setModel(dataPatientList);*/
-
-        //Closest I got to find a object to add into JournalDataList.
-        //Calls enum values to it selected combobox.
         genderComboBox.setModel(new DefaultComboBoxModel<>(Gender.values()));
         bloodTypeComboBox.setModel(new DefaultComboBoxModel<>(BloodType.values()));
         String[] diseaseSelect = {"Förkyld", "Kattmat"};
@@ -130,7 +112,7 @@ public class JournalGUI extends HelperGUI {
             public void actionPerformed(ActionEvent e) {
                 if (JournalDataList.getSelectedValue() != null) {
                     //Removes a patient.
-                    //dataList.removeElement(JournalDataList.getSelectedValue());
+                    dataList.removeElement(JournalDataList.getSelectedValue());
                 }
                 else if (DiseaseDataList.getSelectedValue() != null) {
                     //Removes a disease.
@@ -152,7 +134,7 @@ public class JournalGUI extends HelperGUI {
                     String  bloodType = bloodTypeComboBox.getSelectedItem().toString();
                     Object disease = diseaseComboBox.getSelectedItem();
                     String condition = conditionTextField.getText();
-                    boolean isCritial = criticalTrueCheckBox.isSelected();
+                    boolean isCritical = criticalTrueCheckBox.isSelected();
                     String comment = KommentarTextArea.getText();
                     Gender gender = Gender.valueOf(genderType);
                     BloodType bloodType1 = BloodType.valueOf(bloodType);
@@ -163,12 +145,12 @@ public class JournalGUI extends HelperGUI {
 
 
                     //ta patienten från listan och använd dess setters istället.
-                    Patient patient = null; //new Patient(person, -1, new ArrayList<Disease>(), new ArrayList<Notification>(), address);
 
-                    Journal journal = new Journal(patient, LocalDateTime.now(), comment, Driver.getCurrentUser());
+                    selectedPatient.setCondition(condition);
 
+                    Journal journal = new Journal(selectedPatient, LocalDateTime.now(), comment, Driver.getCurrentUser());
 
-                    Driver.getHospital().getArchive().AddJournal(journal, patient);
+                    Driver.getHospital().getArchive().AddJournal(journal, selectedPatient);
 
                 } catch (NumberFormatException Ne) {
                     Ne.printStackTrace();
@@ -198,21 +180,6 @@ public class JournalGUI extends HelperGUI {
             }
         });
 
-        this.diseaseComboBox.addItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent e)
-            {
-                /*try {
-                    if (e.getStateChange() == ItemEvent.SELECTED) {
-                        if (!diseaseComboBox.getSelectedItem().toString().equals("Choose")) {
-                            JOptionPane.showMessageDialog(null, diseaseComboBox.getSelectedItem().toString() + " is selected");
-                        }
-                    }
-                } catch (Exception exception) {
-                    exception.printStackTrace();
-                }*/
-            }
-        });
         JournalDataList.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -227,7 +194,6 @@ public class JournalGUI extends HelperGUI {
                 diseaseComboBox.setSelectedItem(selectedPatient.getDiseases());
                 conditionTextField.setText(selectedPatient.getCondition());
                 criticalTrueCheckBox.setSelected(selectedPatient.isCriticalCondition());
-
 
             }
         });
