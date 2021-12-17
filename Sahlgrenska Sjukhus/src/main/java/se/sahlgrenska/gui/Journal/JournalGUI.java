@@ -13,6 +13,7 @@ import se.sahlgrenska.sjukhus.person.patient.Patient;
 
 import javax.swing.*;
 import javax.swing.JComboBox;
+import java.awt.*;
 import java.awt.event.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
@@ -67,6 +68,7 @@ public class JournalGUI extends HelperGUI {
     private JLabel CrticalConditionLabel;
     private JLabel DoctorTextLabel;
     private JCheckBox criticalTrueCheckBox;
+    private JTextField journalTextFieldSearch;
 
     List<Patient> patientdatalist;
     List<Patient> patients;
@@ -80,7 +82,6 @@ public class JournalGUI extends HelperGUI {
 
     public JournalGUI() {
 
-        init(MainPanel, "Hantera journaler", Accessibility.DOCTOR);
         setSize(550, 600);
         DoctorTextLabel.setText(Driver.getCurrentUser().toString());
         //setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE); <--- Använd inte setDefaultCloseOperation!
@@ -197,6 +198,10 @@ public class JournalGUI extends HelperGUI {
 
             }
         });
+
+
+        //flytta ner denna
+        init(MainPanel, "Hantera journaler", new Dimension(500, 650), Accessibility.DOCTOR);
     }
 
     //Makes it possible to load the Journal-list into Journaldatalist, otherwise it was not possible.
