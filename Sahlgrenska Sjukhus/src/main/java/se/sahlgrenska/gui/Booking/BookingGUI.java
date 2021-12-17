@@ -177,12 +177,8 @@ public class BookingGUI extends HelperGUI {
             public void actionPerformed(ActionEvent e) {
                 AddItemPopUp addItemPopUp = new AddItemPopUp(selectedRoom, booking);
                 addItemPopUp.setVisible(true);
-
                 removeItemsBtn.setEnabled(true);
-
             }
-
-
         });
 
 
