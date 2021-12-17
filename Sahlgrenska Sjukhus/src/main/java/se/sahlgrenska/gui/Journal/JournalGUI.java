@@ -99,7 +99,7 @@ public class JournalGUI extends HelperGUI {
             dataList.addAll(journals.keySet());
 
             JournalDataList.setModel(dataList);
-            
+
         } catch (Exception dLE) {
             dLE.printStackTrace();
         }
