@@ -14,6 +14,7 @@ public class Patient extends Person {
     private int patientID;
     private List<Disease> diseases;
     private List<Notification> notifications;
+
     private String condition;
     private boolean criticalCondition;
     private BloodType bloodType;
@@ -64,5 +65,19 @@ public class Patient extends Person {
 
     public int getPatientID() {
         return patientID;
+    }
+
+
+
+    public void setCondition(String condition) {
+        this.condition = condition;
+    }
+
+    public void setCriticalCondition(boolean criticalCondition) {
+        this.criticalCondition = criticalCondition;
+    }
+
+    public void setBloodType(BloodType bloodType) {
+        this.bloodType = bloodType;
     }
 }
