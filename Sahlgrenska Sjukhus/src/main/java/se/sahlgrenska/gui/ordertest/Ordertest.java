@@ -91,18 +91,6 @@ public class Ordertest extends HelperGUI  implements ActionListener{
         setResizable(true);
 
 
-/*        addHospital( new Hospital(" Defibrillator", "Starts hearts ", " 2500.5f", " 500"));
-        addHospital( new Hospital(" MRI", "Starts hearts ", " 2500.5f", " 500"));
-        addHospital( new Hospital(" Panodil", "Starts hearts ", " 2500.5f", " 500"));
-        addHospital( new Hospital(" Alvedon", "Starts hearts ", " 2500.5f", " 500"));
-        addHospital( new Hospital(" Defibrillator", "Starts hearts ", " 2500.5f", " 500"));
-        addHospital( new Hospital(" Defibrillator", "Starts hearts ", " 2500.5f", " 500"));
-        addHospital( new Hospital(" Defibrillator", "Starts hearts ", " 2500.5f", " 500"));
-        addHospital( new Hospital(" Defibrillator", "Starts hearts ", " 2500.5f", " 500"));
-        addHospital( new Hospital(" Defibrillator", "Starts hearts ", " 2500.5f", " 500"));
-        addHospital( new Hospital(" Defibrillator", "Starts hearts ", " 2500.5f", " 500"));*/
-
-
 
         MenuBar.addAncestorListener(new AncestorListener() {
             @Override
