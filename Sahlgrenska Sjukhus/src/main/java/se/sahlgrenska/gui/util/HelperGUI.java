@@ -13,7 +13,7 @@ public abstract class HelperGUI extends JFrame {
     private Accessibility accessibility;
 
     //referens till main panelen
-    private JPanel mainPanel;
+    private JPanel mainPanelHere;
 
     //kollar om init har använts.
     private boolean init = false;
@@ -42,7 +42,7 @@ public abstract class HelperGUI extends JFrame {
         //sätt accessibility för menyn;
         this.accessibility = accessibility;
 
-        this.mainPanel = mainPanel;
+        this.mainPanelHere = mainPanel;
 
         //sätt mainPanel
         setContentPane(mainPanel);
@@ -93,6 +93,6 @@ public abstract class HelperGUI extends JFrame {
     }
 
     public JPanel getMainPanel() {
-        return mainPanel;
+        return mainPanelHere;
     }
 }

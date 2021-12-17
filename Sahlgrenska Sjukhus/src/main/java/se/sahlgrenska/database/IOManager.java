@@ -23,6 +23,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.Date;
+import java.util.concurrent.locks.StampedLock;
 
 public class IOManager {
 
@@ -186,7 +187,6 @@ public class IOManager {
         Patient patient = null;
         try {
             Person person = getPersonPre(resultSet);
-
             int patient_id = resultSet.getInt("id");
             String conditionDescription = resultSet.getString("condition_description");
             boolean criticalCondition = resultSet.getBoolean("critical_condition");
@@ -203,16 +203,16 @@ public class IOManager {
     private Person getPersonPre(ResultSet resultSet) {
         Person person = null;
         try {
-        String personNumm = resultSet.getString(1);
-        String firstName = resultSet.getString(2);
-        String lastName = resultSet.getString(3);
-        String phoneNum= resultSet.getString(4);
-        Gender gender = Gender.valueOf(resultSet.getString(5));
+        String personNumm = resultSet.getString("person_number");
+        String firstName = resultSet.getString("first_name");
+        String lastName = resultSet.getString("last_name");
+        String phoneNum= resultSet.getString("phone_number");
+        Gender gender = Gender.valueOf(resultSet.getString("gender"));
 
-        String country = resultSet.getString(6);
-        String city = resultSet.getString(7);
-        String street = resultSet.getString(8);
-        String zip = resultSet.getString(9);
+        String country = resultSet.getString("country");
+        String city = resultSet.getString("city");
+        String street = resultSet.getString("street");
+        String zip = resultSet.getString("zip");
 
         Address address = new Address(country, city, street, zip);
         person = new Person(firstName, lastName, personNumm, gender, phoneNum, address);
@@ -416,20 +416,96 @@ public class IOManager {
     }
 
 
-    public void loadHospitalData(Hospital hospital) {
+    public Employee getEmployee(int employee_id) {
+        Employee employee = null;
+        if(database.isConnected()) {
+            try {
+                Statement statement = database.getConnection().createStatement();
+                ResultSet resultSet = statement.executeQuery("SELECT * FROM employee emp INNER JOIN person per ON emp.person_id = per.person_id INNER JOIN address ad ON per.address_id = ad.id WHERE emp.id = " + employee_id);
+                employee = getEmployeePre(resultSet);
+            } catch (SQLException e) {
 
-        Set<Person> persons = getAllPersons();
+            }
+        }
+        return employee;
+    }
 
+    public Map<Patient, List<Journal>> getJournals() {
+        Map<Patient, List<Journal>> journals = new HashMap<>();
 
-        Map<Patient, List<Booking>> bookings = getBookings(hospital);
+        if(database.isConnected()) {
+            try {
+                Statement statement = database.getConnection().createStatement();
+                ResultSet resultSet = statement.executeQuery("SELECT * FROM patient pat INNER JOIN person per ON pat.person_number = per.person_number INNER JOIN address ad ON per.address_id = ad.id");
 
-        Archive archive = new Archive();
-        archive.setBookings(bookings);
+                while(resultSet.next()) {
 
+                    Patient patient = getPatientPre(resultSet);
+                    Statement statement1 = database.getConnection().createStatement();
+                    ResultSet resultJournalSet = statement1.executeQuery(String.format("SELECT * FROM journal j WHERE j.patient_id = %s", patient.getPatientID()));
 
+                    List<Journal> journalList = new ArrayList<>();
 
-        hospital.setArchive(archive);
-        hospital.setPersons(persons);
+                    while(resultJournalSet.next()) {
+                        Journal journal = getJournalPre(resultJournalSet, patient);
+                        journalList.add(journal);
+                    }
+
+                    journals.put(patient, journalList);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return journals;
+    }
+
+    private Employee getEmployeePre(ResultSet resultSet) {
+        Employee employee = null;
+        try {
+            String id = String.valueOf(resultSet.getString("id"));
+            float salary = resultSet.getFloat("salary");
+            float workingHours = resultSet.getFloat("working_hours");
+            Accessibility accessibility = Accessibility.valueOf(resultSet.getString("accessibility"));
+
+            String personNumm = resultSet.getString("person_number");
+            String firstName = resultSet.getString("first_name");
+            String lastName = resultSet.getString("last_name");
+            String phoneNum = resultSet.getString("phone_number");
+            Gender gender = Gender.valueOf(resultSet.getString("gender"));
+
+            //int addressID = resultSet.getInt(10);
+            String sweden = resultSet.getString("country");
+            String city = resultSet.getString("city");
+            String street = resultSet.getString("street");
+            String zip = resultSet.getString("zip");
+
+            Address address = new Address(sweden, city, street, zip);
+
+            Person person = new Person(firstName, lastName, personNumm, gender, phoneNum, address);
+
+            employee = new Employee(person, id, salary, workingHours, accessibility, new LoginDetails("bla", "bla"));
+        } catch (Exception e) {
+
+        }
+        return employee;
+    }
+
+    private Journal getJournalPre(ResultSet resultSet, Patient patient) {
+        Journal journal = null;
+
+            try {
+                String note = resultSet.getString("note");
+                Date date = resultSet.getDate("time");
+                Employee employee = getEmployee(resultSet.getInt("employee_id"));
+                journal = new Journal(patient, null, note, employee);
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+        return journal;
     }
 
     private Address getAddress(ResultSet resultSet) {
@@ -447,49 +523,10 @@ public class IOManager {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        Map<Patient, List<Booking>> bookings = new HashMap<>();
-        Map<Patient, List<Journal>> journals = new HashMap<>();
-        List<Journal> journals1 = new ArrayList<>();
-        Map<Employee, List<Patient>> patients = new HashMap<>();
-
-        Archive archive = new Archive(journals, bookings, patients);
-
-
         return address;
     }
 
-    public Hospital loadHospital() {
-        Hospital hospital = null;
 
-        if(database.isConnected()) {
-            try {
-                Statement statement = database.getConnection().createStatement();
-                ResultSet resultSet = statement.executeQuery("SELECT * FROM hospital hos INNER JOIN address adde ON hos.address_id = adde.id");
-
-                while(resultSet.next()) {
-
-                    int id = resultSet.getInt("id");
-                    String name = resultSet.getString("name");
-                    float balance = resultSet.getFloat("balance");
-                    int maxCapacity = resultSet.getInt("max_capacity");
-
-                    List<Ward> ward = getWards(id);
-
-                    Address address = getAddress(resultSet);
-                    Map<Item, Integer> storage = getStorage(id);
-
-                    hospital = new Hospital(name, maxCapacity, balance, storage, address, ward, id);
-
-                    System.out.println(storage.toString());
-                }
-
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-
-        }
-        return hospital;
-    }
 
 
     private List<Ward> getWards(int hospital_id) {
@@ -682,7 +719,7 @@ public class IOManager {
                         employeeList.add(emp);
 
 
-                        Booking booking = new Booking(time, patientsList, employeeList, ward, room);
+                        Booking booking = new Booking(time, patientsList, employeeList, ward, room, "");
                         System.out.println(booking.toString());
 
                         bookings.add(booking);
@@ -732,4 +769,62 @@ public class IOManager {
 
         return patient;
     }
+
+    public void saveBooking(Booking booking) {
+    }
+
+
+    public Hospital loadHospital() {
+        Hospital hospital = null;
+
+        if(database.isConnected()) {
+            try {
+                Statement statement = database.getConnection().createStatement();
+                ResultSet resultSet = statement.executeQuery("SELECT * FROM hospital hos INNER JOIN address adde ON hos.address_id = adde.id");
+
+                while(resultSet.next()) {
+
+                    int id = resultSet.getInt("id");
+                    String name = resultSet.getString("name");
+                    float balance = resultSet.getFloat("balance");
+                    int maxCapacity = resultSet.getInt("max_capacity");
+
+                    List<Ward> ward = getWards(id);
+
+                    Address address = getAddress(resultSet);
+                    Map<Item, Integer> storage = getStorage(id);
+
+                    hospital = new Hospital(name, maxCapacity, balance, storage, address, ward, id);
+
+                    System.out.println(storage.toString());
+                }
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+        }
+        return hospital;
+    }
+    public void loadHospitalData(Hospital hospital) {
+
+        Set<Person> persons = getAllPersons();
+
+        Map<Patient, List<Booking>> bookings = getBookings(hospital);
+        Map<Patient, List<Journal>> journals = getJournals();
+
+
+        System.out.println(journals.toString());
+
+        Archive archive = new Archive();
+
+        archive.setBookings(bookings);
+        archive.setJournals(journals);
+
+
+
+        hospital.setArchive(archive);
+        hospital.setPersons(persons);
+    }
 }
+

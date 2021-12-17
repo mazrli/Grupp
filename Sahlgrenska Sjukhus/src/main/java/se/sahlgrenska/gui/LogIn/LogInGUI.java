@@ -2,10 +2,7 @@ package se.sahlgrenska.gui.LogIn;
 
 import se.sahlgrenska.gui.util.HelperGUI;
 import se.sahlgrenska.gui.util.UtilGUI;
-import se.sahlgrenska.gui.util.misc.SuggestionDropDownDecorator;
-import se.sahlgrenska.gui.util.misc.TextComponentSuggestionClient;
 import se.sahlgrenska.main.Driver;
-import se.sahlgrenska.sjukhus.person.Person;
 import se.sahlgrenska.sjukhus.person.employee.*;
 
 import javax.swing.*;

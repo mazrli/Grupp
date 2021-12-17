@@ -2,9 +2,6 @@ package se.sahlgrenska.gui.admin;
 
 import se.sahlgrenska.gui.util.HelperGUI;
 import se.sahlgrenska.gui.util.UtilGUI;
-import se.sahlgrenska.gui.util.misc.SuggestionDropDownDecorator;
-import se.sahlgrenska.gui.util.misc.SuggestionExampleMain;
-import se.sahlgrenska.gui.util.misc.TextComponentSuggestionClient;
 import se.sahlgrenska.main.Driver;
 import se.sahlgrenska.main.Util;
 import se.sahlgrenska.sjukhus.person.Person;
@@ -14,10 +11,7 @@ import se.sahlgrenska.sjukhus.person.employee.Employee;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 public class AdminGUI extends HelperGUI {
     private JPanel topPanel;

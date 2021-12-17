@@ -11,6 +11,7 @@ import se.sahlgrenska.sjukhus.person.patient.BloodType;
 import se.sahlgrenska.sjukhus.person.patient.Disease;
 import se.sahlgrenska.sjukhus.person.patient.Patient;
 
+import javax.management.Notification;
 import javax.swing.*;
 import javax.swing.JComboBox;
 import java.awt.event.*;
@@ -90,7 +91,20 @@ public class JournalGUI extends HelperGUI {
             dataList.add(i, label.getText());
         }*/
 
-        getJournal();
+        try {
+
+
+            //fix
+            DefaultListModel dataList = new DefaultListModel();
+
+            Map<Patient, List<Journal>> journals = Driver.getHospital().getArchive().getJournals();
+            dataList.addAll(journals.keySet());
+
+            JournalDataList.setModel(dataList);
+        } catch (Exception dLE) {
+            dLE.printStackTrace();
+        }
+
 
         // Driver.getHospital().getPatients().toArray()
 
@@ -146,7 +160,11 @@ public class JournalGUI extends HelperGUI {
 
                     Address address = new Address();
                     Person person = new Person(firstName, lastName, personN, gender, phoneN, address);
-                    Patient patient = new Patient(/*person, 0, disease, comment, condition, */);
+
+
+                    //ta patienten från listan och använd dess setters istället.
+                    Patient patient = null; //new Patient(person, -1, new ArrayList<Disease>(), new ArrayList<Notification>(), address);
+
                     Journal journal = new Journal(patient, LocalDateTime.now(), KommentarTextArea.getText(), Driver.getCurrentUser());
 
 

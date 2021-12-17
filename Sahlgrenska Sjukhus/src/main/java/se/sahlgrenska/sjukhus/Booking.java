@@ -1,13 +1,9 @@
 package se.sahlgrenska.sjukhus;
 
-import se.sahlgrenska.gui.Booking.BookingGUI;
 import se.sahlgrenska.sjukhus.person.employee.Employee;
 import se.sahlgrenska.sjukhus.person.patient.Patient;
-import se.sahlgrenska.sjukhus.item.Item;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.List;
 
 public class Booking {
@@ -16,14 +12,16 @@ public class Booking {
     private List<Employee> employees;
     private Ward ward;
     private Room room;
+    private String note;
 
 
-    public Booking(LocalDateTime time, List<Patient> patients, List<Employee> employees, Ward ward, Room room) {
+    public Booking(LocalDateTime time, List<Patient> patients, List<Employee> employees, Ward ward, Room room, String note) {
         this.time = time;
         this.patients = patients;
         this.employees = employees;
         this.ward = ward;
         this.room = room;
+        this.note = note;
     }
 
 
@@ -41,5 +39,9 @@ public class Booking {
                 ", ward=" + ward +
                 ", room=" + room +
                 '}';
+    }
+
+    public String getNote() {
+        return note;
     }
 }
