@@ -4,6 +4,7 @@ import se.sahlgrenska.gui.util.HelperGUI;
 import se.sahlgrenska.gui.util.UtilGUI;
 import se.sahlgrenska.gui.util.misc.SuggestionDropDownDecorator;
 import se.sahlgrenska.gui.util.misc.TextComponentSuggestionClient;
+import se.sahlgrenska.gui.util.components.JTextFieldPlaceholder;
 import se.sahlgrenska.main.Driver;
 import se.sahlgrenska.main.Util;
 import se.sahlgrenska.sjukhus.Booking;
@@ -81,7 +82,6 @@ public class BookingGUI extends HelperGUI {
     private JComboBox dateBox;
     private LocalDateTime date;
 
-
     private Hospital hospital;
     private Booking booking;
     private int minWindowSize = 600;
@@ -115,6 +115,9 @@ public class BookingGUI extends HelperGUI {
         dateBox.setModel(dateBoxModel);
 
         defaultBookingSetUp();
+        BookingGUI booking = this;
+        userOutLbl.setText(Driver.getCurrentUser().toString());
+        patPersNrTxtField = new JTextFieldPlaceholder("YYYYMMDD-YYYY");
 
 
         for(int hours  = 12; hours > 0; hours--)
@@ -157,7 +160,7 @@ public class BookingGUI extends HelperGUI {
                 }
             }
         });
-/*
+
         roomComboBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -168,22 +171,16 @@ public class BookingGUI extends HelperGUI {
                 }
             }
         });
-*/
 
         addItemsBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                AddItemPopUp addItemPopUp = new AddItemPopUp(selectedRoom, roomComboBox);
+                AddItemPopUp addItemPopUp = new AddItemPopUp(selectedRoom, booking);
                 addItemPopUp.setVisible(true);
 
-
-                //      tableModel.fireTableDataChanged();
-                //    fillRoomItems(selectedRoom);
                 removeItemsBtn.setEnabled(true);
-             //   roomComboBox.set
+
             }
-
-
 
 
         });
@@ -192,12 +189,35 @@ public class BookingGUI extends HelperGUI {
         removeItemsBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                int outOfBoundsValue = -1;
+                int row = itemsTable.getSelectedRow();
+                int col = itemsTable.getSelectedColumn();
 
-                //remove from Room and hospital add to hospital amount
-
-                for (Map.Entry<Item, Integer> hosStorage : hospital.getHospitalsStoredItems().entrySet()) {
-                    System.out.println(hosStorage);
+                if (selectedRoom.getItems().isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Inget redskap finns kvar i listan", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
                 }
+
+                if (row <= outOfBoundsValue && col <= outOfBoundsValue) {
+                    JOptionPane.showMessageDialog(null, "Inget redskap har valts", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                Item item = (Item) itemsTable.getModel().getValueAt(row, 0);
+                int quantity = (Integer) itemsTable.getModel().getValueAt(row, 1);
+
+                if (item == null || quantity < 0) {
+                    System.out.println("Item fanns inte!");
+                    return;
+                }
+
+
+                hospital.addItem(item, quantity);
+                selectedRoom.removeItem(item, quantity);
+                //remove from Room and hospital add to hospital amount
+                System.out.println(item + " was selected with the quantity " + hospital.getItemStorageQuantity(item));
+                itemsTable.clearSelection();
+                fillRoomItems(selectedRoom);
 
             }
         });
@@ -219,12 +239,12 @@ public class BookingGUI extends HelperGUI {
             Ward ward = (Ward) wardComboBox.getSelectedItem();
             Room room = (Room) roomComboBox.getSelectedItem();
 
-            Booking booking = new Booking(time, patients, employees, ward, room, note);
+            Booking booking2 = new Booking(time, patients, employees, ward, room, note);
 
             System.out.println("Created booking!");
-            System.out.println(booking.toString());
+            System.out.println(booking2.toString());
 
-            Driver.getIOManager().saveBooking(booking);
+            Driver.getIOManager().saveBooking(booking2);
         });
 
         addPartBtn.addActionListener(e -> {
@@ -253,6 +273,8 @@ public class BookingGUI extends HelperGUI {
                 output.add(person.toString());
             }
 
+/*
+>>>>>>> main
         roomComboBox.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
@@ -263,7 +285,7 @@ public class BookingGUI extends HelperGUI {
                 }
             }
         });
-
+*/
 
         return output.stream().limit(20).collect(Collectors.toList());
     }
@@ -357,12 +379,16 @@ public class BookingGUI extends HelperGUI {
         tableModel.addColumn(columnNames[0]);
         tableModel.addColumn(columnNames[1]);
     }
+    public Room getSelectedRoom(){
+        return (Room) roomComboBox.getSelectedItem();
+    }
 
 
-    private void fillRoomItems(Room room) {
+    public void fillRoomItems(Room room) {
         if (room != null) {
-            Map<Item, Integer> roomItems = room.getItems();
 
+            Map<Item, Integer> roomItems = room.getItems();
+            emptyItemList();
             for (Map.Entry<Item, Integer> itemsInRoom : roomItems.entrySet()) {
                 Item item = itemsInRoom.getKey();
                 Integer itemQuantity = itemsInRoom.getValue();
@@ -372,6 +398,7 @@ public class BookingGUI extends HelperGUI {
             }
             itemsTable.setModel(tableModel);
             addItemsBtn.setEnabled(true);
+            removeItemsBtn.setEnabled(true);
         }
     }
 
@@ -379,6 +406,7 @@ public class BookingGUI extends HelperGUI {
     private void createUIComponents() {
         // TODO: place custom component creation code here
         hospital = Driver.getHospital();
+
         Color tableHeaderColour = new Color(199, 199, 199);
 
         tableModel = new DefaultTableModel();

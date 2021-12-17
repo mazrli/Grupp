@@ -4,10 +4,8 @@ import se.sahlgrenska.sjukhus.person.employee.Employee;
 import se.sahlgrenska.sjukhus.person.patient.Disease;
 import se.sahlgrenska.sjukhus.person.patient.Patient;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import javax.swing.*;
+import java.util.*;
 
 public class Archive {
     private Map<Patient, List<Journal>> journals;
@@ -30,6 +28,31 @@ public class Archive {
         this.journals = journals;
         this.bookings = bookings;
         this.patients = patients;
+    }
+
+    public void AddJournal(Journal journal, Patient patient) {
+        try {
+            List<Journal> journalList;
+            if (journals.containsKey(patient)) {
+                journalList = journals.get(patient);
+            }
+            journalList = new ArrayList<Journal>();
+            journalList.add(journal);
+            journals.put(patient, journalList);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void printJournals() {
+        for (Map.Entry<Patient, List<Journal>> patJourList : journals.entrySet()) {
+
+            List<Journal> journalList = patJourList.getValue();
+            System.out.println("Patient: " + patJourList.getKey() + " has ");
+            for (Journal jour : journalList) {
+                System.out.println(jour.toString());
+            }
+        }
     }
 
     public Map<Employee, List<Patient>> getPatients() {

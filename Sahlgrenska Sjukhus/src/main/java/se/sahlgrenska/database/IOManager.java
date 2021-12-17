@@ -1,5 +1,7 @@
 package se.sahlgrenska.database;
 
+import org.yaml.snakeyaml.Yaml;
+import org.yaml.snakeyaml.error.YAMLException;
 import se.sahlgrenska.gui.util.UtilGUI;
 import se.sahlgrenska.sjukhus.*;
 import se.sahlgrenska.sjukhus.item.Equipment;
@@ -15,6 +17,7 @@ import se.sahlgrenska.sjukhus.person.patient.Patient;
 
 import javax.management.Notification;
 import java.io.*;
+import java.net.URISyntaxException;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -25,7 +28,25 @@ import java.util.concurrent.locks.StampedLock;
 public class IOManager {
 
 
-    private final Database database = new Database("gamebacon.net", "guest4life", "Lp3jRWB4FQrjC4z", "sahlgrenska");
+    private Database database;
+
+    public IOManager() {
+        setupDB();
+    }
+
+    private void setupDB() {
+        Yaml yaml = new Yaml();
+        InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream("database.yml");
+        Map<String, String> obj = yaml.load(inputStream);
+
+        String host = obj.get("host");
+        String user = obj.get("username");
+        String password = obj.get("password");
+
+        database = new Database(host, user, password, "sahlgrenska");
+    }
+
+
 
     public Set<Employee> getOnline() {
         if(database.isConnected()) {
@@ -502,14 +523,6 @@ public class IOManager {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        Map<Patient, List<Booking>> bookings = new HashMap<>();
-        Map<Patient, List<Journal>> journals = new HashMap<>();
-        List<Journal> journals1 = new ArrayList<>();
-        Map<Employee, List<Patient>> patients = new HashMap<>();
-
-        Archive archive = new Archive(journals, bookings, patients);
-
-
         return address;
     }
 
@@ -797,7 +810,6 @@ public class IOManager {
 
         Set<Person> persons = getAllPersons();
 
-
         Map<Patient, List<Booking>> bookings = getBookings(hospital);
         Map<Patient, List<Journal>> journals = getJournals();
 
@@ -805,6 +817,7 @@ public class IOManager {
         System.out.println(journals.toString());
 
         Archive archive = new Archive();
+
         archive.setBookings(bookings);
         archive.setJournals(journals);
 
