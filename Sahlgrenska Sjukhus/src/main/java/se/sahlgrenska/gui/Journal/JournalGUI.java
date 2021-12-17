@@ -65,6 +65,8 @@ public class JournalGUI extends HelperGUI {
     private JComboBox BloodTypeComboBox;
     private JLabel LastNameLabel;
     private JTextField LastNameTextField;
+    private JComboBox CriticalConditionComboBox;
+    private JLabel CrticalConditionLabel;
 
     List<Patient> patientdatalist;
 
@@ -87,13 +89,8 @@ public class JournalGUI extends HelperGUI {
             JLabel label = new JLabel("Hasse" + " " + i);
             dataList.add(i, label.getText());
         }*/
-        try {
-            DefaultListModel dataList = new DefaultListModel();
-            dataList.addAll(Driver.getHospital().getArchive().getJournals().get(patients)); //Driver.getHospital().getArchive().getJournals().get();
-            JournalDataList.setModel(dataList);
-        } catch (Exception dLE) {
-            dLE.printStackTrace();
-        }
+
+        getJournal();
 
         // Driver.getHospital().getPatients().toArray()
 
@@ -102,8 +99,6 @@ public class JournalGUI extends HelperGUI {
         JournalDataList.setModel(dataPatientList);*/
 
         //Closest I got to find a object to add into JournalDataList.
-        //JournalDataList.setModel(new DefaultComboBoxModel(Driver.getHospital().getPatients().toArray()));
-
         //Calls enum values to it selected combobox.
         GenderComboBox.setModel(new DefaultComboBoxModel<>(Gender.values()));
         BloodTypeComboBox.setModel(new DefaultComboBoxModel<>(BloodType.values()));
@@ -151,7 +146,7 @@ public class JournalGUI extends HelperGUI {
 
                     Address address = new Address();
                     Person person = new Person(firstName, lastName, personN, gender, phoneN, address);
-                    Patient patient = new Patient(person, 0, disease, );
+                    Patient patient = new Patient(/*person, 0, disease, comment, condition, */);
                     Journal journal = new Journal(patient, LocalDateTime.now(), KommentarTextArea.getText(), Driver.getCurrentUser());
 
 
@@ -211,10 +206,16 @@ public class JournalGUI extends HelperGUI {
             JournalDataList.add(label);
         }
     }
-    /*public void LoadPatient() {
-        List<Patient> patients = new ArrayList<Patient>();
-        for (Patient patient: patients) {
-            patients.addAll(Driver.getHospital().getArchive().getPatients().toString());
+    public JList getJournal() {
+        DefaultListModel dataList = new DefaultListModel();
+        try {
+
+            dataList.addAll(Driver.getHospital().getArchive().getJournals());
+            JournalDataList.setModel(dataList);//Driver.getHospital().getArchive().getJournals().get();
+
+        } catch (Exception dLE) {
+            dLE.printStackTrace();
         }
-    }*/
+        return JournalDataList;
+    }
 }
