@@ -3,7 +3,7 @@
   <grid id="27dc6" binding="MainPanel" layout-manager="GridLayoutManager" row-count="4" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
-      <xy x="155" y="134" width="580" height="800"/>
+      <xy x="155" y="134" width="624" height="800"/>
     </constraints>
     <properties>
       <maximumSize width="900" height="1000"/>
@@ -196,7 +196,7 @@
           </component>
         </children>
       </grid>
-      <grid id="74cca" binding="InputPanel" layout-manager="GridLayoutManager" row-count="22" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+      <grid id="74cca" binding="InputPanel" layout-manager="GridLayoutManager" row-count="19" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="0" left="0" bottom="15" right="15"/>
         <constraints>
           <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="3" indent="0" use-parent-layout="true"/>
@@ -208,16 +208,16 @@
         <children>
           <component id="6ac99" class="javax.swing.JLabel" binding="FirstNameLabel">
             <constraints>
-              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <font name="JetBrains Mono ExtraBold"/>
               <text value="Förnamn:"/>
             </properties>
           </component>
-          <component id="bd4a2" class="javax.swing.JTextField" binding="FirstNameTextField">
+          <component id="bd4a2" class="javax.swing.JTextField" binding="firstNameTextField">
             <constraints>
-              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
+              <grid row="1" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="150" height="-1"/>
               </grid>
             </constraints>
@@ -225,16 +225,16 @@
           </component>
           <component id="a5527" class="javax.swing.JLabel" binding="PersonNummerLabel">
             <constraints>
-              <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="4" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <font name="JetBrains Mono ExtraBold"/>
               <text value="Personnummer:"/>
             </properties>
           </component>
-          <component id="37c78" class="javax.swing.JTextField" binding="PersonNummerTextField">
+          <component id="37c78" class="javax.swing.JTextField" binding="personNumberTextField">
             <constraints>
-              <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+              <grid row="5" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="150" height="-1"/>
               </grid>
             </constraints>
@@ -242,16 +242,16 @@
           </component>
           <component id="2f175" class="javax.swing.JLabel" binding="TelefonNummerLabel">
             <constraints>
-              <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="6" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <font name="JetBrains Mono ExtraBold"/>
               <text value="Telefonnummer:"/>
             </properties>
           </component>
-          <component id="4292f" class="javax.swing.JTextField" binding="TelefonNummerTextField">
+          <component id="4292f" class="javax.swing.JTextField" binding="phoneNumberTextField">
             <constraints>
-              <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+              <grid row="7" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="150" height="-1"/>
               </grid>
             </constraints>
@@ -259,48 +259,31 @@
           </component>
           <component id="6fdee" class="javax.swing.JLabel" binding="SjukdomLabel">
             <constraints>
-              <grid row="12" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="12" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <font name="JetBrains Mono ExtraBold"/>
               <text value="Sjukdom:"/>
             </properties>
           </component>
-          <component id="bedc3" class="javax.swing.JComboBox" binding="SjukdomComboBox">
+          <component id="bedc3" class="javax.swing.JComboBox" binding="diseaseComboBox">
             <constraints>
-              <grid row="13" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+              <grid row="13" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties/>
           </component>
           <component id="e8eb0" class="javax.swing.JLabel" binding="TillståndLabel">
             <constraints>
-              <grid row="14" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="14" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <font name="JetBrains Mono ExtraBold"/>
               <text value="Tillstånd:"/>
             </properties>
           </component>
-          <component id="4478a" class="javax.swing.JTextField" binding="TillståndTextField">
+          <component id="4478a" class="javax.swing.JTextField" binding="conditionTextField">
             <constraints>
-              <grid row="15" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                <preferred-size width="150" height="-1"/>
-              </grid>
-            </constraints>
-            <properties/>
-          </component>
-          <component id="5d12d" class="javax.swing.JLabel" binding="RumLabel">
-            <constraints>
-              <grid row="18" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <font name="JetBrains Mono ExtraBold"/>
-              <text value="Rum:"/>
-            </properties>
-          </component>
-          <component id="df47b" class="javax.swing.JTextField" binding="RumTextField">
-            <constraints>
-              <grid row="19" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+              <grid row="15" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="150" height="-1"/>
               </grid>
             </constraints>
@@ -308,24 +291,16 @@
           </component>
           <component id="bebcf" class="javax.swing.JLabel" binding="LäkareLabel">
             <constraints>
-              <grid row="20" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="18" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <font name="JetBrains Mono ExtraBold"/>
               <text value="Läkare:"/>
             </properties>
           </component>
-          <component id="4a6b0" class="javax.swing.JTextField" binding="LäkareTextField">
-            <constraints>
-              <grid row="21" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                <preferred-size width="150" height="-1"/>
-              </grid>
-            </constraints>
-            <properties/>
-          </component>
           <component id="1ce13" class="javax.swing.JLabel" binding="GenderLabel">
             <constraints>
-              <grid row="10" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="10" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <font name="JetBrains Mono ExtraBold"/>
@@ -334,37 +309,37 @@
           </component>
           <component id="562bb" class="javax.swing.JLabel" binding="BloodTypeLabel">
             <constraints>
-              <grid row="8" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="8" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <font name="JetBrains Mono ExtraBold"/>
               <text value="Blod Grupp:"/>
             </properties>
           </component>
-          <component id="6c025" class="javax.swing.JComboBox" binding="GenderComboBox">
+          <component id="6c025" class="javax.swing.JComboBox" binding="genderComboBox">
             <constraints>
-              <grid row="11" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+              <grid row="11" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties/>
           </component>
-          <component id="8ce5b" class="javax.swing.JComboBox" binding="BloodTypeComboBox">
+          <component id="8ce5b" class="javax.swing.JComboBox" binding="bloodTypeComboBox">
             <constraints>
-              <grid row="9" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+              <grid row="9" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties/>
           </component>
           <component id="613d5" class="javax.swing.JLabel" binding="LastNameLabel">
             <constraints>
-              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="2" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <font name="JetBrains Mono ExtraBold"/>
               <text value="Efternamn:"/>
             </properties>
           </component>
-          <component id="8dc41" class="javax.swing.JTextField" binding="LastNameTextField">
+          <component id="8dc41" class="javax.swing.JTextField" binding="lastNameTextField">
             <constraints>
-              <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+              <grid row="3" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="150" height="-1"/>
               </grid>
             </constraints>
@@ -372,19 +347,40 @@
           </component>
           <component id="89de2" class="javax.swing.JLabel" binding="CrticalConditionLabel">
             <constraints>
-              <grid row="16" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="16" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <font name="JetBrains Mono ExtraBold"/>
               <text value="Kritiskt tillstånd:"/>
             </properties>
           </component>
-          <component id="61593" class="javax.swing.JComboBox" binding="CriticalConditionComboBox">
+          <component id="a5343" class="javax.swing.JLabel" binding="DoctorTextLabel">
             <constraints>
-              <grid row="17" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+              <grid row="18" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
-            <properties/>
+            <properties>
+              <font name="JetBrains Mono ExtraBold"/>
+              <text value=""/>
+            </properties>
           </component>
+          <hspacer id="ed9d">
+            <constraints>
+              <grid row="18" column="2" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+          </hspacer>
+          <component id="1cc9c" class="javax.swing.JCheckBox" binding="criticalTrueCheckBox">
+            <constraints>
+              <grid row="17" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Ja"/>
+            </properties>
+          </component>
+          <hspacer id="9213e">
+            <constraints>
+              <grid row="17" column="2" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+          </hspacer>
         </children>
       </grid>
       <vspacer id="c68c0">
