@@ -237,6 +237,7 @@ public class AddItemPopUp extends HelperGUI {
 
         return itemStorageNames.stream().limit(10).collect(Collectors.toList());
 
+
     }
 
 }

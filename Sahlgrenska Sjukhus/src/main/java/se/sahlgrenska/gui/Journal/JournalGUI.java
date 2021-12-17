@@ -1,28 +1,19 @@
 package se.sahlgrenska.gui.Journal;
 
-import com.sun.source.doctree.ThrowsTree;
 import se.sahlgrenska.gui.util.HelperGUI;
 import se.sahlgrenska.main.Driver;
-import se.sahlgrenska.sjukhus.Archive;
+import se.sahlgrenska.sjukhus.Address;
 import se.sahlgrenska.sjukhus.Journal;
-import se.sahlgrenska.sjukhus.item.Item;
 import se.sahlgrenska.sjukhus.person.Gender;
 import se.sahlgrenska.sjukhus.person.Person;
 import se.sahlgrenska.sjukhus.person.employee.Accessibility;
 import se.sahlgrenska.sjukhus.person.patient.BloodType;
 import se.sahlgrenska.sjukhus.person.patient.Disease;
 import se.sahlgrenska.sjukhus.person.patient.Patient;
-import se.sahlgrenska.sjukhus.person.patient.Symptom;
 
-import javax.print.attribute.standard.NumberOfInterveningJobs;
+import javax.management.Notification;
 import javax.swing.*;
-import javax.swing.event.UndoableEditListener;
-import javax.swing.text.Document;
-import javax.swing.undo.CannotUndoException;
-import javax.swing.undo.UndoManager;
-import javax.swing.undo.UndoableEdit;
 import javax.swing.JComboBox;
-import java.awt.*;
 import java.awt.event.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
@@ -50,14 +41,14 @@ public class JournalGUI extends HelperGUI {
     private JTextArea KommentarTextArea;
     private JLabel KommentarLabel;
     private JPanel InputPanel;
-    private JTextField NamnTextField;
+    private JTextField FirstNameTextField;
     private JTextField PersonNummerTextField;
     private JTextField TelefonNummerTextField;
     private JComboBox SjukdomComboBox;
     private JTextField TillståndTextField;
     private JTextField RumTextField;
     private JTextField LäkareTextField;
-    private JLabel NamnLabel;
+    private JLabel FirstNameLabel;
     private JLabel PersonNummerLabel;
     private JLabel TelefonNummerLabel;
     private JLabel SjukdomLabel;
@@ -73,11 +64,19 @@ public class JournalGUI extends HelperGUI {
     private JLabel BloodTypeLabel;
     private JComboBox GenderComboBox;
     private JComboBox BloodTypeComboBox;
+    private JLabel LastNameLabel;
+    private JTextField LastNameTextField;
 
     List<Patient> patientdatalist;
+
     List<Patient> patients;
     List<Disease> diseases;
-    List<Journal> journals;
+
+
+    Journal journalList;
+    Patient patientList;
+
+    Map<Patient, List<Journal>> journals = Driver.getHospital().getArchive().getJournals();
 
     public JournalGUI() {
 
@@ -86,12 +85,25 @@ public class JournalGUI extends HelperGUI {
         //setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE); <--- Använd inte setDefaultCloseOperation!
 
         //Gernerates a dummylist of patients to test remove button
-        DefaultListModel dataList = new DefaultListModel();
+        /*faultListModel dataList = new DefaultListModel();
         for (int i = 0; i < 5; i++) {
             JLabel label = new JLabel("Hasse" + " " + i);
             dataList.add(i, label.getText());
+        }*/
+        try {
+
+
+            //fix
+            DefaultListModel dataList = new DefaultListModel();
+
+            dataList.addAll(journals.keySet());
+
+            JournalDataList.setModel(dataList);
+
+        } catch (Exception dLE) {
+            dLE.printStackTrace();
         }
-        JournalDataList.setModel(dataList);
+
         // Driver.getHospital().getPatients().toArray()
 
         /*DefaultListModel dataPatientList = new DefaultListModel();
@@ -117,7 +129,7 @@ public class JournalGUI extends HelperGUI {
             public void actionPerformed(ActionEvent e) {
                 if (JournalDataList.getSelectedValue() != null) {
                     //Removes a patient.
-                    dataList.removeElement(JournalDataList.getSelectedValue());
+                    //dataList.removeElement(JournalDataList.getSelectedValue());
                 }
                 else if (DiseaseDataList.getSelectedValue() != null) {
                     //Removes a disease.
@@ -131,22 +143,29 @@ public class JournalGUI extends HelperGUI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    String name =  NamnTextField.getText();
+                    String firstName =  FirstNameTextField.getText();
+                    String lastName = LastNameTextField.getText();
                     String personN = PersonNummerTextField.getText();
                     String phoneN = TelefonNummerTextField.getText();
-                    Object genderType = GenderComboBox.getSelectedItem();
-                    Object bloodType = BloodTypeComboBox.getSelectedItem();
+                    String genderType = GenderComboBox.getSelectedItem().toString();
+                    String  bloodType = BloodTypeComboBox.getSelectedItem().toString();
                     Object disease = SjukdomComboBox.getSelectedItem();
                     String condition = TillståndTextField.getText();
                     Integer room = Integer.parseInt(RumTextField.getText());
                     String doctor = LäkareTextField.getText();
+                    String comment = KommentarTextArea.getText();
+                    Gender gender = Gender.valueOf(genderType);
+                    BloodType bloodType1 = BloodType.valueOf(bloodType);
                     //implement ComboBox to have select value.
 
+                    Address address = new Address();
+                    Person person = new Person(firstName, lastName, personN, gender, phoneN, address);
 
-
-                    Patient patient = new Patient();
-
+                    //ta patienten från listan och använd dess setters istället.
+                    Patient patient = null; //new Patient(person, -1, new ArrayList<Disease>(), new ArrayList<Notification>(), address);
                     Journal journal = new Journal(patient, LocalDateTime.now(), KommentarTextArea.getText(), Driver.getCurrentUser());
+
+
                     Driver.getHospital().getArchive().AddJournal(journal, patient);
 
                 } catch (NumberFormatException Ne) {
@@ -199,8 +218,14 @@ public class JournalGUI extends HelperGUI {
         List<Journal> journals = new ArrayList<Journal>();
         for (Patient patient : patients) {
             journals.addAll(Driver.getHospital().getArchive().getJournals().get(patient));
-            JLabel label = new JLabel(patient.getFirstName().toString());
+            JLabel label = new JLabel(patient.getFirstName());
             JournalDataList.add(label);
         }
     }
+    /*public void LoadPatient() {
+        List<Patient> patients = new ArrayList<Patient>();
+        for (Patient patient: patients) {
+            patients.addAll(Driver.getHospital().getArchive().getPatients().toString());
+        }
+    }*/
 }
